@@ -141,8 +141,15 @@
 			},
 			methods: {
 				getCuentas: function(){
-					this.$http.get('catalogo-de-cuentas-contables').then((response)=>{
+					this.$http.get('catalogo-de-cuentas-contables/crud', {before(request){
+						toastr.info("Espera mientras se carga el catálogo de cuentas <i class = 'fa fa-refresh fa-spin'></i>", '¡Espera...!', {timeOut: 0});
+						if(this.previousRequest){
+							this.previousRequest.abort();
+						}
+						this.previousRequest = request;
+					}}).then((response)=>{
 						this.$set('treeData', response.data);
+						toastr.clear();
 					});
 				}
 			}

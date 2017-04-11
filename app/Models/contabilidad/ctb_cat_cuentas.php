@@ -11,7 +11,6 @@ class ctb_cat_cuentas extends Model{
 	public $fillable = [
 		'cve_compania',
 		'cuenta_contable',
-		'tipo_cuenta',
 		'naturaleza',
 		'descripcion',
 		'id_cuenta_padre',
@@ -20,9 +19,12 @@ class ctb_cat_cuentas extends Model{
 		'estatus'
 	];
 	public static function getCuentas(){
-		$cuentas = DB::table('ctb_cat_cuenta')
-			->where('id_cuenta_padre', null)
-			->select('id_cuenta', 'cuenta_contable', 'tipo_cuenta', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+		$cuentas = DB::table('ctb_cat_cuentas')
+			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+			->where([
+					['cve_compania', '019'],
+					['id_cuenta_padre', null]
+				])
 			->get();
 		foreach($cuentas as $cuenta){
 			$cuenta->children = self::getHijas($cuenta->id_cuenta);
@@ -30,9 +32,12 @@ class ctb_cat_cuentas extends Model{
 		return $cuentas;
 	}
 	public static function getHijas($id_cuenta_padre){
-		$cuentasHijas = DB::table('ctb_cat_cuenta')
-			->where('id_cuenta_padre', $id_cuenta_padre)
-			->select('id_cuenta', 'cuenta_contable', 'tipo_cuenta', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+		$cuentasHijas = DB::table('ctb_cat_cuentas')
+			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+			->where([
+					['cve_compania', '019'],
+					['id_cuenta_padre', $id_cuenta_padre]
+				])
 			->get();
 		foreach($cuentasHijas as $cuentaHija){
 			$cuentaHija->children = self::getHijas($cuentaHija->id_cuenta);
