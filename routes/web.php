@@ -1,16 +1,16 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+	return view('main');
 });
+# Contabilidad #############################
+	Route::group(['middleware'=>['web']], function(){
+		Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
+		Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
+	});
+# Tesoreria ################################
+# Nomina ###################################
+# Compras ##################################
+# Ventas ###################################
+# Inventarios ##############################
+# Produccion ###############################
+# Configuracion ############################
