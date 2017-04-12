@@ -9,7 +9,10 @@ class ctb_cat_bancosController extends Controller{
 		return view('tesoreria.ctb_cat_bancos');
 	}
 	public function index(Request $request){
-		$bancos = ctb_cat_bancos::paginate(10);
+		$bancos = ctb_cat_bancos::paginate($request['xPag']);
+		foreach($bancos as $banco){
+			$banco->active_class = false;
+		}
 		$response = [
 			'pagination' => [
 				'total'=>$bancos->total(),

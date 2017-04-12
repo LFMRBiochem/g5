@@ -6,7 +6,7 @@
 		<meta name = 'viewport' content = 'width = device-width, initial-scale = 1'>
 		<meta id = 'token' name = 'token' value = '{{csrf_token()}}'>
 		<title>@yield('page_title')</title>
-		<link rel = 'stylesheet' type = 'text/css' href = "{{asset('bootstrap/css/bootstrap-edit.css')}}">
+		<link rel = 'stylesheet' type = 'text/css' href = "{{asset('bootstrap/css/bootstrap.css')}}">
 		<link rel = 'stylesheet' type = 'text/css' href = "{{asset('font-awesome/css/font-awesome.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('smartmenus/addons/bootstrap/jquery.smartmenus.bootstrap.css')}}">
 		<link rel = 'stylesheet' type = 'text/css' href = "{{asset('toastr/toastr.min.css')}}">
