@@ -101,7 +101,6 @@
 					<div class = 'col-xs-5 col-sm-3 col-md-3 col-lg-3'>
 					<div class = 'input-group'>
 						<select class = 'form-control' name = 'xPag' v-model = 'xPag'>
-							<option>5</option>
 							<option>10</option>
 							<option>20</option>
 							<option>100</option>
@@ -128,7 +127,7 @@
 	</div>
 @stop
 @section('extra_js')
-	<script type='text/x-template' id = 'grid-template'>
+	<script type='text/template' id = 'grid-template'>
 		<table class = 'table table-hover table-condensed table-bordered'>
 			<thead>
 				<tr>
@@ -194,7 +193,7 @@
 					to: 0,
 					current_page: 1
 				},
-				xPag: 5,
+				xPag: 10,
 				offset: 4,
 				row:{'id_banco':'', 'cve_banco':'', 'nom_corto_banco':'', 'nom_banco':'', 'active_class': ''},
 			},

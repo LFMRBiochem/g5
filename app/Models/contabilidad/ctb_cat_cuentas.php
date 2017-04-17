@@ -18,29 +18,35 @@ class ctb_cat_cuentas extends Model{
 		'cve_moneda',
 		'estatus'
 	];
-	public static function getCuentas(){
+	public static function getPadres(){
 		$cuentas = DB::table('ctb_cat_cuentas')
-			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion', 'cve_moneda', 'estatus')
 			->where([
 					['cve_compania', '019'],
-					['id_cuenta_padre', null]
+					['id_cuenta_padre', null],
+					['nivel', 0]
 				])
 			->get();
+		return $cuentas;
+	}
+	public static function getCuentas($nivel){
+		$cuentas = self::getPadres();
 		foreach($cuentas as $cuenta){
-			$cuenta->children = self::getHijas($cuenta->id_cuenta);
+			$cuenta->children = self::getHijas($cuenta->id_cuenta, $nivel);
 		}
 		return $cuentas;
 	}
-	public static function getHijas($id_cuenta_padre){
+	public static function getHijas($id_cuenta_padre, $nivel){
 		$cuentasHijas = DB::table('ctb_cat_cuentas')
-			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion as name', 'cve_moneda', 'estatus')
+			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion', 'cve_moneda', 'estatus')
 			->where([
 					['cve_compania', '019'],
-					['id_cuenta_padre', $id_cuenta_padre]
+					['id_cuenta_padre', $id_cuenta_padre],
+					['nivel', '<=', 1]
 				])
 			->get();
 		foreach($cuentasHijas as $cuentaHija){
-			$cuentaHija->children = self::getHijas($cuentaHija->id_cuenta);
+			$cuentaHija->children = self::getHijas($cuentaHija->id_cuenta, $nivel);
 		}
 		return $cuentasHijas;
 	}
