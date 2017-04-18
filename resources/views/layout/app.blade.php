@@ -54,7 +54,7 @@
                         <!--<li class="active"><a href="bootstrap-navbar.html">Default</a></li>-->
 
                         <li><a href="#">Administracion <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
+<!--                            <ul class="dropdown-menu">
                                 <li><a href="{{URL::to('/').'/autentificacion/usuarios' }}"> Usuarios</a></li>
                                 <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> Compañias</a></li>
 
@@ -68,7 +68,7 @@
 
 
 
-                            </ul>
+                            </ul>-->
                         </li>
 
                         <li><a href="#">Compras <span class="caret"></span></a>

@@ -13,8 +13,8 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''},
-        fillItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''}
+        newItem: {'impuesto': '', 'porcentaje': '', 'descripcion': '', 'id_reserva': ''},
+        fillItem: {'impuesto': '', 'porcentaje': '', 'descripcion': '', 'id_reserva': '', 'id_impuesto': ''}
     },
     computed: {
         isActived: function () {
@@ -45,16 +45,16 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_monedasC?page=' + page).then((response) => {
+            this.$http.get('ctb_reservacfdiC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_monedasC', input).then((response) => {
+            this.$http.post('ctb_reservacfdiC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'impuesto': '', 'porcentaje': '', 'descripcion': '', 'id_reserva': '', 'id_impuesto': ''};
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
@@ -62,24 +62,24 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_monedasC/' + item.cve_moneda).then((response) => {
+            this.$http.delete('ctb_reservacfdiC/' + item.id_impuesto).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-            this.fillItem.cve_moneda = item.cve_moneda;
-            this.fillItem.nombre_moneda = item.nombre_moneda;
-            this.fillItem.simbolo = item.simbolo;
-            this.fillItem.posicion = item.posicion;
-            this.fillItem.numero_decimales = item.numero_decimales;
+            this.fillItem.id_impuesto = item.id_impuesto;
+            this.fillItem.id_reserva = item.id_reserva;
+            this.fillItem.descripcion = item.descripcion;
+            this.fillItem.porcentaje = item.porcentaje;
+            this.fillItem.impuesto = item.impuesto;
             $("#edit-item").modal('show');
         },
-        updateItem: function (cve_moneda) {
+        updateItem: function (id_impuesto) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_monedasC/' + cve_moneda, input).then((response) => {
+            this.$http.put('ctb_reservacfdiC/' + id_impuesto, input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'impuesto': '', 'porcentaje': '', 'descripcion': '', 'id_reserva': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {

@@ -45,14 +45,14 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_concepto_financieroController?page=' + page).then((response) => {
+            this.$http.get('ctb_cat_concepto_financieroC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_concepto_financieroController', input).then((response) => {
+            this.$http.post('ctb_cat_concepto_financieroC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.newItem =  {'cve_compania': '', 'cve_concepto_financiero': '','catalogo_sat': '','nombre_concepto': '', 'naturaleza':'', 'estatus':''};
                 $("#create-item").modal('hide');
@@ -62,7 +62,7 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_concepto_financieroController/' + item.id_concepto_financiero).then((response) => {
+            this.$http.delete('ctb_cat_concepto_financieroC/' + item.id_concepto_financiero).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Concepto financiero eliminado correctamente.', 'Cambio realizado!', {timeOut: 5000});
             });
@@ -78,7 +78,7 @@ new Vue({
         },
         updateItem: function (cve_moneda) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_concepto_financieroController/' + id_concepto_financiero, input).then((response) => {
+            this.$http.put('ctb_cat_concepto_financieroC/' + id_concepto_financiero, input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.newItem =  {'cve_compania': '', 'cve_concepto_financiero': '','catalogo_sat': '','nombre_concepto': '', 'naturaleza':'', 'estatus':''};
                 $("#edit-item").modal('hide');

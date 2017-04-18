@@ -13,8 +13,8 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''},
-        fillItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''}
+        newItem: {'razon_social': '', 'nombre_corto': '', 'rfc': ''},
+        fillItem: {'razon_social': '', 'nombre_corto': '', 'rfc': '', 'cve_compania': ''}
     },
     computed: {
         isActived: function () {
@@ -45,16 +45,16 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_monedasC?page=' + page).then((response) => {
+            this.$http.get('glx_companiasC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_monedasC', input).then((response) => {
+            this.$http.post('glx_companiasC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'razon_social': '', 'nombre_corto': '', 'rfc': '', 'cve_compania': ''};
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
@@ -62,24 +62,23 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_monedasC/' + item.cve_moneda).then((response) => {
+            this.$http.delete('glx_companiasC/' + item.cve_compania).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-            this.fillItem.cve_moneda = item.cve_moneda;
-            this.fillItem.nombre_moneda = item.nombre_moneda;
-            this.fillItem.simbolo = item.simbolo;
-            this.fillItem.posicion = item.posicion;
-            this.fillItem.numero_decimales = item.numero_decimales;
+            this.fillItem.cve_compania = item.cve_compania;
+            this.fillItem.razon_social = item.razon_social;
+            this.fillItem.nombre_corto = item.nombre_corto;
+            this.fillItem.rfc = item.rfc;
             $("#edit-item").modal('show');
         },
-        updateItem: function (cve_moneda) {
+        updateItem: function (cve_compania) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_monedasC/' + cve_moneda, input).then((response) => {
+            this.$http.put('glx_companiasC/' + cve_compania, input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'razon_social': '', 'nombre_corto': '', 'rfc': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {

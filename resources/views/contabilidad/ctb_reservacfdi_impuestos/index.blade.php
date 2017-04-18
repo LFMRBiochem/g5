@@ -3,7 +3,7 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar ctb_cat_monedas</h1>
+        <h1>Listar ctb_reservacfdi</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
@@ -47,19 +47,17 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_moneda</th>
-                        <th>nombre_moneda</th>
-                        <th>simbolo</th>
-                        <th>posicion</th>
-                        <th>numero_decimales</th>
+                        <th>id_impuesto</th>
+                        <th>descripcion</th>
+                        <th>porcentaje</th>
+                        <th>impuesto</th>
                         <th>Actions</th>
                     </tr>
                     <tr v-for="item in items">
-                        <td>@{{ item.cve_moneda }}</td>
-                        <td>@{{ item.nombre_moneda }}</td>
-                        <td>@{{ item.simbolo }}</td>
-                        <td>@{{ item.posicion }}</td>
-                        <td>@{{ item.numero_decimales }}</td>
+                        <td>@{{ item.id_impuesto }}</td>
+                        <td>@{{ item.descripcion }}</td>
+                        <td>@{{ item.porcentaje }}</td>
+                        <td>@{{ item.impuesto }}</td>
                         <td>
                             <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
@@ -110,45 +108,41 @@
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
                     <div class="form-group">
-                        <label for="cve_moneda">cve_moneda:</label>
-                        <input type="text" name="cve_moneda" class="form-control" v-model="newItem.cve_moneda" />
-                        <span v-if="formErrors['cve_moneda']" class="error text-danger">
-                            @{{ formErrors['cve_moneda'] }}
+
+                        <label for="id_reserva">id_reserva:</label>
+                        <select class="form-control" name="id_reserva" v-model="newItem.id_reserva">
+                            <option selected> Selecciona</option>
+                            <?php foreach ($data['ctb_reserva_cfdi'] as $fila) { ?>
+                                <option value="<?= $fila->id_reserva ?>"> <?= $fila->id_reserva ?></option>
+                            <?php } ?>
+                        </select>
+                        <span v-if="formErrors['id_reserva']" class="error text-danger">
+                            @{{ formErrors['id_reserva'] }}
+                        </span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">descripcion:</label>
+                        <input type="text" name="descripcion" class="form-control" v-model="newItem.descripcion" />
+                        <span v-if="formErrors['descripcion']" class="error text-danger">
+                            @{{ formErrors['descripcion'] }}
                         </span>
                     </div>
 
                     <div class="form-group">
-                        <label for="nombre_moneda">nombre_moneda:</label>
-                        <input type="text" name="nombre_moneda" class="form-control" v-model="newItem.nombre_moneda" />
-                        <span v-if="formErrors['nombre_moneda']" class="error text-danger">
-                            @{{ formErrors['nombre_moneda'] }}
+                        <label for="porcentaje">porcentaje:</label>
+                        <input type="text" name="porcentaje" class="form-control" v-model="newItem.porcentaje" />
+                        <span v-if="formErrors['porcentaje']" class="error text-danger">
+                            @{{ formErrors['porcentaje'] }}
                         </span>
                     </div>
-
                     <div class="form-group">
-                        <label for="simbolo">simbolo:</label>
-                        <input type="text" name="simbolo" class="form-control" v-model="newItem.simbolo" />
-                        <span v-if="formErrors['simbolo']" class="error text-danger">
-                            @{{ formErrors['simbolo'] }}
+                        <label for="impuesto">impuesto:</label>
+                        <input type="text" name="impuesto" class="form-control" v-model="newItem.impuesto" />
+                        <span v-if="formErrors['impuesto']" class="error text-danger">
+                            @{{ formErrors['impuesto'] }}
                         </span>
                     </div>
-
-                    <div class="form-group">
-                        <label for="posicion">posicion:</label>
-                        <input type="text" name="posicion" class="form-control" v-model="newItem.posicion" />
-                        <span v-if="formErrors['posicion']" class="error text-danger">
-                            @{{ formErrors['posicion'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="numero_decimales">numero_decimales:</label>
-                        <input type="text" name="numero_decimales" class="form-control" v-model="newItem.numero_decimales" />
-                        <span v-if="formErrors['numero_decimales']" class="error text-danger">
-                            @{{ formErrors['numero_decimales'] }}
-                        </span>
-                    </div>
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
@@ -168,44 +162,43 @@
                 <h4 class="modal-title" id="myModalLabel">Editar usuario</h4>
             </div>
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.cve_moneda)">
+                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_impuesto)">
                     <div class="form-group">
-                        <label for="cve_moneda">cve_moneda:</label>
-                        <input type="text" name="cve_moneda" class="form-control" v-model="fillItem.cve_moneda" />
-                        <span v-if="formErrors['cve_moneda']" class="error text-danger">
-                            @{{ formErrors['cve_moneda'] }}
+
+                        <label for="id_reserva">id_reserva:</label>
+                        <select class="form-control" name="id_reserva" v-model="fillItem.id_reserva">
+
+                            <?php foreach ($data['ctb_reserva_cfdi'] as $fila) { ?>
+
+                                <option  value="<?= $fila->id_reserva ?>"> <?= $fila->id_reserva ?></option>
+            
+                            <?php } ?>
+                        </select>
+                        <span v-if="formErrors['id_reserva']" class="error text-danger">
+                            @{{ formErrors['id_reserva'] }}
                         </span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nombre_moneda">nombre_moneda:</label>
-                        <input type="text" name="nombre_moneda" class="form-control" v-model="fillItem.nombre_moneda" />
-                        <span v-if="formErrors['nombre_moneda']" class="error text-danger">
-                            @{{ formErrors['nombre_moneda'] }}
-                        </span>
-                    </div>
 
                     <div class="form-group">
-                        <label for="simbolo">simbolo:</label>
-                        <input type="text" name="simbolo" class="form-control" v-model="fillItem.simbolo" />
-                        <span v-if="formErrors['simbolo']" class="error text-danger">
-                            @{{ formErrors['simbolo'] }}
+                        <label for="descripcion">descripcion:</label>
+                        <input type="text" name="descripcion" class="form-control" v-model="fillItem.descripcion" />
+                        <span v-if="formErrorsUpdate['descripcion']" class="error text-danger">
+                            @{{ formErrorsUpdate['descripcion'] }}
                         </span>
                     </div>
-
                     <div class="form-group">
-                        <label for="posicion">posicion:</label>
-                        <input type="text" name="posicion" class="form-control" v-model="fillItem.posicion" />
-                        <span v-if="formErrors['posicion']" class="error text-danger">
-                            @{{ formErrors['posicion'] }}
+                        <label for="porcentaje">porcentaje:</label>
+                        <input type="text" name="porcentaje" class="form-control" v-model="fillItem.porcentaje" />
+                        <span v-if="formErrorsUpdate['porcentaje']" class="error text-danger">
+                            @{{ formErrorsUpdate['porcentaje'] }}
                         </span>
                     </div>
-
                     <div class="form-group">
-                        <label for="numero_decimales">numero_decimales:</label>
-                        <input type="text" name="numero_decimales" class="form-control" v-model="fillItem.numero_decimales" />
-                        <span v-if="formErrors['numero_decimales']" class="error text-danger">
-                            @{{ formErrors['numero_decimales'] }}
+                        <label for="impuesto">impuesto:</label>
+                        <input type="text" name="impuesto" class="form-control" v-model="fillItem.impuesto" />
+                        <span v-if="formErrorsUpdate['impuesto']" class="error text-danger">
+                            @{{ formErrorsUpdate['impuesto'] }}
                         </span>
                     </div>
 
@@ -220,5 +213,5 @@
 @stop
 
 @section('javascript')
-<script type="text/javascript" src="{{ asset('js/ctb_cat_monedas.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/ctb_reservacfdi_impuestos.js') }}"></script>
 @stop

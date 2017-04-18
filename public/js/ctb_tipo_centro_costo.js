@@ -13,8 +13,8 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''},
-        fillItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''}
+        newItem: {'tipo_cc': '', 'cve_tipoCentroCosto': ''},
+        fillItem: {'tipo_cc': '', 'cve_tipoCentroCosto': ''}
     },
     computed: {
         isActived: function () {
@@ -45,16 +45,16 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_monedasC?page=' + page).then((response) => {
+            this.$http.get('ctb_tipos_centrosC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_monedasC', input).then((response) => {
+            this.$http.post('ctb_tipos_centrosC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'tipo_cc': '', 'cve_tipoCentroCosto': ''};
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
@@ -62,24 +62,21 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_monedasC/' + item.cve_moneda).then((response) => {
+            this.$http.delete('ctb_tipos_centrosC/' + item.cve_tipoCentroCosto).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-            this.fillItem.cve_moneda = item.cve_moneda;
-            this.fillItem.nombre_moneda = item.nombre_moneda;
-            this.fillItem.simbolo = item.simbolo;
-            this.fillItem.posicion = item.posicion;
-            this.fillItem.numero_decimales = item.numero_decimales;
+            this.fillItem.cve_tipoCentroCosto = item.cve_tipoCentroCosto;
+            this.fillItem.tipo_cc = item.tipo_cc;
             $("#edit-item").modal('show');
         },
-        updateItem: function (cve_moneda) {
+        updateItem: function (cve_tipoCentroCosto) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_monedasC/' + cve_moneda, input).then((response) => {
+            this.$http.put('ctb_tipos_centrosC/' + cve_tipoCentroCosto, input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = {'tipo_cc': '', 'cve_tipoCentroCosto': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {

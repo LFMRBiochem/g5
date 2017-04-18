@@ -3,7 +3,7 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar ctb_cat_monedas</h1>
+        <h1>Listar SAT bancos</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
@@ -47,19 +47,18 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_moneda</th>
-                        <th>nombre_moneda</th>
-                        <th>simbolo</th>
-                        <th>posicion</th>
-                        <th>numero_decimales</th>
+                        <th>cve_banco</th>
+                        <th>nombre_banco</th>
+                        <th>razon_social</th>
+
                         <th>Actions</th>
                     </tr>
                     <tr v-for="item in items">
-                        <td>@{{ item.cve_moneda }}</td>
-                        <td>@{{ item.nombre_moneda }}</td>
-                        <td>@{{ item.simbolo }}</td>
-                        <td>@{{ item.posicion }}</td>
-                        <td>@{{ item.numero_decimales }}</td>
+
+                        <th>@{{ item.cve_banco}}</th>
+                        <th>@{{ item.nombre_banco}}</th>
+                        <th>@{{ item.razon_social}}</th>
+
                         <td>
                             <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
@@ -74,6 +73,7 @@
         </div>
     </div>
 </div>
+
 <div class="text-center">
     <nav>
         <ul class="pagination">
@@ -110,42 +110,24 @@
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
                     <div class="form-group">
-                        <label for="cve_moneda">cve_moneda:</label>
-                        <input type="text" name="cve_moneda" class="form-control" v-model="newItem.cve_moneda" />
-                        <span v-if="formErrors['cve_moneda']" class="error text-danger">
-                            @{{ formErrors['cve_moneda'] }}
+                        <label for="cve_banco">cve_banco:</label>
+                        <input type="text" name="cve_banco" class="form-control" v-model="newItem.cve_banco" />
+                        <span v-if="formErrors['cve_banco']" class="error text-danger">
+                            @{{ formErrors['cve_banco'] }}
                         </span>
                     </div>
-
                     <div class="form-group">
-                        <label for="nombre_moneda">nombre_moneda:</label>
-                        <input type="text" name="nombre_moneda" class="form-control" v-model="newItem.nombre_moneda" />
-                        <span v-if="formErrors['nombre_moneda']" class="error text-danger">
-                            @{{ formErrors['nombre_moneda'] }}
+                        <label for="nombre_banco">nombre_banco:</label>
+                        <input type="text" name="nombre_banco" class="form-control" v-model="newItem.nombre_banco" />
+                        <span v-if="formErrors['nombre_banco']" class="error text-danger">
+                            @{{ formErrors['nombre_banco'] }}
                         </span>
                     </div>
-
                     <div class="form-group">
-                        <label for="simbolo">simbolo:</label>
-                        <input type="text" name="simbolo" class="form-control" v-model="newItem.simbolo" />
-                        <span v-if="formErrors['simbolo']" class="error text-danger">
-                            @{{ formErrors['simbolo'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="posicion">posicion:</label>
-                        <input type="text" name="posicion" class="form-control" v-model="newItem.posicion" />
-                        <span v-if="formErrors['posicion']" class="error text-danger">
-                            @{{ formErrors['posicion'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="numero_decimales">numero_decimales:</label>
-                        <input type="text" name="numero_decimales" class="form-control" v-model="newItem.numero_decimales" />
-                        <span v-if="formErrors['numero_decimales']" class="error text-danger">
-                            @{{ formErrors['numero_decimales'] }}
+                        <label for="razon_social">razon_social:</label>
+                        <input type="text" name="razon_social" class="form-control" v-model="newItem.razon_social" />
+                        <span v-if="formErrors['razon_social']" class="error text-danger">
+                            @{{ formErrors['razon_social'] }}
                         </span>
                     </div>
 
@@ -168,46 +150,23 @@
                 <h4 class="modal-title" id="myModalLabel">Editar usuario</h4>
             </div>
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.cve_moneda)">
+                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.cve_banco)">
+
                     <div class="form-group">
-                        <label for="cve_moneda">cve_moneda:</label>
-                        <input type="text" name="cve_moneda" class="form-control" v-model="fillItem.cve_moneda" />
-                        <span v-if="formErrors['cve_moneda']" class="error text-danger">
-                            @{{ formErrors['cve_moneda'] }}
+                        <label for="nombre_banco">nombre_banco:</label>
+                        <input type="text" name="nombre_banco" class="form-control" v-model="fillItem.nombre_banco" />
+                        <span v-if="formErrors['nombre_banco']" class="error text-danger">
+                            @{{ formErrors['nombre_banco'] }}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="razon_social">razon_social:</label>
+                        <input type="text" name="razon_social" class="form-control" v-model="fillItem.razon_social" />
+                        <span v-if="formErrors['razon_social']" class="error text-danger">
+                            @{{ formErrors['razon_social'] }}
                         </span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nombre_moneda">nombre_moneda:</label>
-                        <input type="text" name="nombre_moneda" class="form-control" v-model="fillItem.nombre_moneda" />
-                        <span v-if="formErrors['nombre_moneda']" class="error text-danger">
-                            @{{ formErrors['nombre_moneda'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="simbolo">simbolo:</label>
-                        <input type="text" name="simbolo" class="form-control" v-model="fillItem.simbolo" />
-                        <span v-if="formErrors['simbolo']" class="error text-danger">
-                            @{{ formErrors['simbolo'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="posicion">posicion:</label>
-                        <input type="text" name="posicion" class="form-control" v-model="fillItem.posicion" />
-                        <span v-if="formErrors['posicion']" class="error text-danger">
-                            @{{ formErrors['posicion'] }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="numero_decimales">numero_decimales:</label>
-                        <input type="text" name="numero_decimales" class="form-control" v-model="fillItem.numero_decimales" />
-                        <span v-if="formErrors['numero_decimales']" class="error text-danger">
-                            @{{ formErrors['numero_decimales'] }}
-                        </span>
-                    </div>
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
@@ -220,5 +179,5 @@
 @stop
 
 @section('javascript')
-<script type="text/javascript" src="{{ asset('js/ctb_cat_monedas.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/nmn_sat_catbanco.js') }}"></script>
 @stop

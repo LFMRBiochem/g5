@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Contabilidad;
+namespace App\Modelss\Contabilidad;
 
 use Illuminate\Database\Eloquent\Model;
 

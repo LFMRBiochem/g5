@@ -13,8 +13,8 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''},
-        fillItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''}
+        newItem: {'fecha': '', 'cve_moneda': '', 'tipo_cambio': ''},
+        fillItem: {'fecha': '', 'cve_moneda': '', 'tipo_cambio': '', 'id_tipo_cambio': ''}
     },
     computed: {
         isActived: function () {
@@ -45,16 +45,16 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_monedasC?page=' + page).then((response) => {
+            this.$http.get('ctb_tipos_cambioC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_monedasC', input).then((response) => {
+            this.$http.post('ctb_tipos_cambioC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem =  {'fecha': '', 'cve_moneda': '', 'tipo_cambio': ''};
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
@@ -62,24 +62,23 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_monedasC/' + item.cve_moneda).then((response) => {
+            this.$http.delete('ctb_tipos_cambioC/' + item.id_tipo_cambio).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
             });
         },
         editItem: function (item) {
+            this.fillItem.fecha = item.fecha;
             this.fillItem.cve_moneda = item.cve_moneda;
-            this.fillItem.nombre_moneda = item.nombre_moneda;
-            this.fillItem.simbolo = item.simbolo;
-            this.fillItem.posicion = item.posicion;
-            this.fillItem.numero_decimales = item.numero_decimales;
+            this.fillItem.tipo_cambio = item.tipo_cambio;
+            this.fillItem.id_tipo_cambio = item.id_tipo_cambio;
             $("#edit-item").modal('show');
         },
-        updateItem: function (cve_moneda) {
+        updateItem: function (id_tipo_cambio) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_monedasC/' + cve_moneda, input).then((response) => {
+            this.$http.put('ctb_tipos_cambioC/' + id_tipo_cambio, input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem =  {'fecha': '', 'cve_moneda': '', 'tipo_cambio': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\contabilidad;
+namespace App\Modelss\contabilidad;
 use Illuminate\Database\Eloquent\Model;
 
 class ctb_bitacoracontable_encabezado extends Model{

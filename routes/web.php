@@ -1,28 +1,77 @@
 <?php
-Route::get('/', function () {
-	return view('main');
-});
-# Contabilidad #############################
-	Route::group(['middleware'=>['web']], function(){
-		Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
-		Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
-	});
-# Tesoreria ################################
-	# Catalogo de bancos
-	Route::group(['middleware' => ['web']], function() {
-		Route::get('catalogo-de-bancos', 'tesoreria\ctb_cat_bancosController@Bancos');
-		Route::resource('crud-bancos', 'tesoreria\ctb_cat_bancosController');
-	});
 
-	Route::get('/contabilidad/ctb_cat_monedas', 'contabilidad\ctb_cat_monedasController@listar');
-	Route::resource('/contabilidad/ctb_cat_monedasController', 'contabilidad\ctb_cat_monedasController');
+Route::get('/', 'Autentificacion\loginController@index');
 
 
-	Route::get('/contabilidad/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
-	Route::resource('/contabilidad/ctb_cat_concepto_financieroController', 'contabilidad\ctb_cat_concepto_financieroController');
+
+//
 # Nomina ###################################
 # Compras ##################################
 # Ventas ###################################
 # Inventarios ##############################
 # Produccion ###############################
 # Configuracion ############################
+// ------------------------------------------------------------------------------
+
+Route::get('autentificacion/login', 'Autentificacion\loginController@index');
+Route::post('autentificacion/logincontroller', 'Autentificacion\loginController@login');
+Route::get('autentificacion/logincontroller/logout', 'Autentificacion\loginController@logout');
+
+
+
+Route::group(['middleware' => 'Autentificacion'], function () {
+
+    # Contabilidad #############################
+
+    Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
+    Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
+
+# Tesoreria ################################
+# Catalogo de bancos
+
+    Route::get('/catalogo-de-bancos', 'tesoreria\ctb_cat_bancosController@Bancos');
+    Route::resource('crud-bancos', 'tesoreria\ctb_cat_bancosController');
+
+
+    Route::get('/ctb_cat_monedas', 'contabilidad\ctb_cat_monedasController@listar');
+    Route::resource('/ctb_cat_monedasC', 'contabilidad\ctb_cat_monedasController');
+
+
+    Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
+    Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
+
+    Route::get('/autentificacion/usuarios', 'Autentificacion\usuariosController@listar');
+    Route::resource('autentificacion/usuariosC', 'Autentificacion\usuariosController');
+
+    Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catbancoController@listar');
+    Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catbancoController');
+
+    Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
+    Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
+
+    Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
+    Route::resource('/ctb_tipos_cambioC', 'contabilidad\ctb_tipos_cambioController');
+
+    Route::get('/ctb_cat_centros_costo', 'contabilidad\ctb_cat_centros_costoController@listar');
+    Route::resource('/ctb_cat_centros_costoC', 'contabilidad\ctb_cat_centros_costoController');
+
+    Route::get('/ctb_tipos_centros', 'contabilidad\ctb_tipos_centros_costoController@listar');
+    Route::resource('/ctb_tipos_centrosC', 'contabilidad\ctb_tipos_centros_costoController');
+
+    Route::get('/ctb_documentos_partidas', 'contabilidad\ctb_documentos_partidasController@listar');
+    Route::resource('/ctb_documentos_partidasC', 'contabilidad\ctb_documentos_partidasController');
+
+    Route::get('/ctb_reservacfdi', 'contabilidad\ctb_reservacfdi_impuestosController@listar');
+    Route::resource('/ctb_reservacfdiC', 'contabilidad\ctb_reservacfdi_impuestosController');
+
+    Route::get('/ctb_reserva_cfdi', 'contabilidad\ctb_reserva_cfdiController@listar');
+    Route::resource('/ctb_reserva_cfdiC', 'contabilidad\ctb_reserva_cfdiController');
+
+    
+    //falta acomodar
+    Route::get('/glx_companias', 'Administracion\glx_companiasController@listar');
+    Route::resource('/glx_companiasC', 'Administracion\glx_companiasController');
+
+    Route::get('/syscat_usuariostransacciones/{cve_usuario}', 'Administracion\syscat_usuariostransaccionesController@index');
+    Route::resource('/syscat_usuariostransaccionesC', 'Administracion\syscat_usuariostransaccionesController');
+});

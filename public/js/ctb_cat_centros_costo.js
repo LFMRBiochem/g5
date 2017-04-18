@@ -13,8 +13,8 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''},
-        fillItem: {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''}
+        newItem: {'cve_compania': '', 'id_centrocosto': '', 'nombre_centrocosto': '', 'id_centrocosto_padre': '', 'cve_tipoCentroCosto': '', 'catalogo_sat': ''},
+        fillItem: {'cve_compania': '', 'id_centrocosto': '', 'nombre_centrocosto': '', 'id_centrocosto_padre': '', 'cve_tipoCentroCosto': '', 'catalogo_sat': ''}
     },
     computed: {
         isActived: function () {
@@ -45,16 +45,16 @@ new Vue({
     },
     methods: {
         getVueItems: function (page) {
-            this.$http.get('ctb_cat_monedasC?page=' + page).then((response) => {
+            this.$http.get('ctb_cat_centros_costoC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
         },
         createItem: function () {
             var input = this.newItem;
-            this.$http.post('ctb_cat_monedasC', input).then((response) => {
+            this.$http.post('ctb_cat_centros_costoC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem ={'cve_compania': '', 'id_centrocosto': '', 'nombre_centrocosto': '', 'id_centrocosto_padre': '', 'cve_tipoCentroCosto': '', 'catalogo_sat': ''};
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
@@ -62,24 +62,25 @@ new Vue({
             });
         },
         deleteItem: function (item) {
-            this.$http.delete('ctb_cat_monedasC/' + item.cve_moneda).then((response) => {
+            this.$http.delete('ctb_cat_centros_costoC/' + item.cve_compania).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-            this.fillItem.cve_moneda = item.cve_moneda;
-            this.fillItem.nombre_moneda = item.nombre_moneda;
-            this.fillItem.simbolo = item.simbolo;
-            this.fillItem.posicion = item.posicion;
-            this.fillItem.numero_decimales = item.numero_decimales;
+            this.fillItem.id_centrocosto = item.id_centrocosto;
+            this.fillItem.nombre_centrocosto = item.nombre_centrocosto;
+            this.fillItem.id_centrocosto_padre = item.id_centrocosto_padre;
+            this.fillItem.cve_tipoCentroCosto = item.cve_tipoCentroCosto;
+            this.fillItem.catalogo_sat = item.catalogo_sat;
+            this.fillItem.cve_compania = item.cve_compania;
             $("#edit-item").modal('show');
         },
-        updateItem: function (cve_moneda) {
+        updateItem: function (cve_compania) {
             var input = this.fillItem;
-            this.$http.put('ctb_cat_monedasC/' + cve_moneda, input).then((response) => {
+            this.$http.put('ctb_cat_centros_costoC/' + cve_compania, input).then((response) => {
                 this.changePage(this.pagination.current_page);
-                this.newItem =  {'cve_moneda': '', 'nombre_moneda': '',  'simbolo': '','posicion': '','numero_decimales': ''};
+                this.newItem = { 'id_centrocosto': '', 'nombre_centrocosto': '', 'id_centrocosto_padre': '', 'cve_tipoCentroCosto': '', 'catalogo_sat': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
