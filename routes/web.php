@@ -2,7 +2,10 @@
 
 Route::get('/', 'Autentificacion\loginController@index');
 
-
+use App\Models\contabilidad\ctb_cat_concepto_financiero;
+Route::get('/conceptos', function(){
+    return  ctb_cat_concepto_financiero::where('catalogo_sat', 'like', '105.%')->count();
+});
 
 //
 # Nomina ###################################

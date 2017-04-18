@@ -18,7 +18,8 @@ class ctb_cat_cuentas extends Model{
 		'cve_moneda',
 		'estatus'
 	];
-	public static function getPadres(){
+# Metodo para obtener las cuentas de mayor del catalogo de cuentas
+	public static function getMayor(){
 		$cuentas = DB::table('ctb_cat_cuentas')
 			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion', 'cve_moneda', 'estatus')
 			->where([
@@ -29,20 +30,22 @@ class ctb_cat_cuentas extends Model{
 			->get();
 		return $cuentas;
 	}
+# Funcion para obtener el catalogo de cuentas segun el nivel solicitado
 	public static function getCuentas($nivel){
-		$cuentas = self::getPadres();
+		$cuentas = self::getMayor();
 		foreach($cuentas as $cuenta){
 			$cuenta->children = self::getHijas($cuenta->id_cuenta, $nivel);
 		}
 		return $cuentas;
 	}
+# Metodo recursivo para obtener todo el arbol de la cuenta contable pasada
 	public static function getHijas($id_cuenta_padre, $nivel){
 		$cuentasHijas = DB::table('ctb_cat_cuentas')
 			->select('id_cuenta', 'cuenta_contable', 'naturaleza', 'descripcion', 'cve_moneda', 'estatus')
 			->where([
 					['cve_compania', '019'],
 					['id_cuenta_padre', $id_cuenta_padre],
-					['nivel', '<=', 1]
+					['nivel', '<=', $nivel]
 				])
 			->get();
 		foreach($cuentasHijas as $cuentaHija){

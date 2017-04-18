@@ -56,10 +56,10 @@
 		<script>
 			$(document).ready(function(){
 				// Configuracion inicial del panel de parametros del reporte
-				$('#btn_show_panel').bigSlide({
+				var bigSlideAPI = ($('#btn_show_panel').bigSlide({
 					easyClose: true,
 					state: 'closed'
-				});
+				})).bigSlideAPI;
 			});
 		</script>
 		<!-- Yield para incrustar codigo javascript adicional a la vista -->

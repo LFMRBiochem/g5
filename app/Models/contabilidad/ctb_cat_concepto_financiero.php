@@ -11,8 +11,18 @@ class ctb_cat_concepto_financiero extends Model{
 		'cve_compania',
 		'cve_concepto_financiero',
 		'catalogo_sat',
-		'nombre_concepto'
+		'nombre_concepto',
 		'naturaleza',
 		'estatus'
 	];
+	public static function getConceptos($catalogo_sat){
+		$cuentas = DB::table('ctb_cat_concepto_financiero')
+			->select('id_conceptofinanciero as id_cuenta', 'cve_concepto_financiero as cuenta_contable', 'naturaleza', 'nombre_concepto as descripcion', "'MXN' as cve_moneda", 'estatus')
+			->where([
+					['cve_compania', '019'],
+					['catalogo_sat', 'like', $catalogo_sat.'.%']
+				])
+			->get();
+		return $cuentas;
+	}
 }

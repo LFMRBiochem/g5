@@ -1,5 +1,10 @@
 body{
-	padding-top: 42px
+	padding-top: 42px;
+	background: url('Reachcore-Facturacion.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 .panel-menu{
 	padding-top: 10px;
@@ -7,7 +12,7 @@ body{
 	z-index: 4;
 	padding-left: 10px;
 	padding-right: 10px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 1);
 	border-color: #fff;
 	border-radius: 4px;
 	border-width: 1px;
@@ -60,3 +65,27 @@ body{
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
 	background-color: #9acfea;
 }
+    .panel-default-transparente{
+        background: rgba(255,254,240,0.8);
+        border: 0px;
+
+    }
+
+    .well{
+        background: rgba(34,34,34,0.2);
+        border: 1px solid rgba(245,245,245,0.2);
+
+    }
+
+    li {
+        list-style-type: none
+    }
+
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+    }
