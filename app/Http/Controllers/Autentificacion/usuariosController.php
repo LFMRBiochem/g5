@@ -61,8 +61,8 @@ class usuariosController extends Controller {
     public function store(Request $request) {
         //
         $this->validate($request, [
-            'Cve_usuario' => 'required|unique:syscat_usuarios|max:100',
-            'Nombre' => 'required|unique:syscat_usuarios|max:100',
+            'Cve_usuario' => 'required|unique:SYSCAT_USUARIOS|max:100',
+            'Nombre' => 'required|unique:SYSCAT_USUARIOS|max:100',
             'Password' => 'required|max:15|min:4',
         ]);
 

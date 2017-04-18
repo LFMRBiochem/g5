@@ -61,7 +61,7 @@
                             <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
                                 <span class="glyphicon glyphicon-trash"></span> Delete
                             </button>
-                            <a href="{{ URL::to('/').'/administracion/syscat_usuariostransacciones/'}}@{{ item.Cve_usuario }}" class="btn btn-default btn-sm"><i class="fa fa-exchange" aria-hidden="true"></i> Transacciones</a>
+                            <a href="{{ URL::to('/').'/syscat_usuariostransacciones/'}}@{{ item.Cve_usuario }}" class="btn btn-default btn-sm"><i class="fa fa-exchange" aria-hidden="true"></i> Transacciones</a>
                         </td>
                     </tr>
                 </table>

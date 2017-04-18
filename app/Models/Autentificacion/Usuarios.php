@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuarios extends Model {
 
-    protected $table = 'syscat_usuarios';
+    protected $table = 'SYSCAT_USUARIOS';
     public $fillable = ['Cve_usuario', 'Nombre','Password'];
 //    protected $guarded = ['cve_proveedor'];
 //  public $fillable = ['cve_compania','nombre_proveedor'];

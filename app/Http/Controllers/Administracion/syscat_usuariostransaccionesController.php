@@ -16,10 +16,10 @@ class syscat_usuariostransaccionesController extends Controller {
      */
     public function index(Request $request, $cve_usuario) {
 //compañia agregar la variable de session
-        $data['syscat_roles'] = DB::table('syscat_roles')->where('syscat_roles.cve_compania', 1)->get()->toArray();
-        $data['syscat_usuarios'] = DB::table('syscat_usuarios')->select('Cve_usuario', 'Nombre')->where('Cve_usuario', $cve_usuario)->first();
-        $data['syscat_transacciones'] = DB::table('syscat_transacciones')->get()->toArray();
-        $data['syscat_usuariostransacciones_array'] = DB::table('syscat_usuariostransacciones')->select('Cve_transaccion')->where('Cve_usuario', $cve_usuario)->get()->toArray();
+        $data['syscat_roles'] = DB::table('SYSCAT_ROLES')->where('SYSCAT_ROLES.cve_compania', '019')->get()->toArray();
+        $data['syscat_usuarios'] = DB::table('SYSCAT_USUARIOS')->select('Cve_usuario', 'Nombre')->where('Cve_usuario', $cve_usuario)->first();
+        $data['syscat_transacciones'] = DB::table('SYSCAT_TRANSACCIONES')->get()->toArray();
+        $data['syscat_usuariostransacciones_array'] = DB::table('SYSCAT_USUARIOSTRANSACCIONES')->select('Cve_transaccion')->where('Cve_usuario', $cve_usuario)->get()->toArray();
 
         $data['syscat_usuariostransacciones'] = array(0 => '');
         foreach ($data['syscat_usuariostransacciones_array'] as $fila) {
@@ -27,7 +27,7 @@ class syscat_usuariostransaccionesController extends Controller {
         }
 
         foreach ($data['syscat_roles'] as $file) {
-            $file->Cve_transaccion = DB::table('syscat_rolestransacciones')->select('Cve_transaccion')->where('Nombre_roll', $file->Nombre_roll)->get()->toArray();
+            $file->Cve_transaccion = DB::table('SYSCAT_ROLESTRANSACCIONES')->select('Cve_transaccion')->where('Nombre_roll', $file->Nombre_roll)->get()->toArray();
             $file_2 = array();
             foreach ($file->Cve_transaccion as $value) {
                 array_push($file_2, "'" . $value->Cve_transaccion . "'" . ":'1'");
@@ -38,7 +38,7 @@ class syscat_usuariostransaccionesController extends Controller {
 //        echo implode( ',',  $data['syscat_roles'][0]->Cve_transaccion);
 //        echo '</pre>';
 
-        return view('administracion.syscat_usuariostransacciones.index', ['data' => $data]);
+        return view('Administracion.syscat_usuariostransacciones.index', ['data' => $data]);
     }
 
     /**
@@ -63,7 +63,7 @@ class syscat_usuariostransaccionesController extends Controller {
                 'Nombre_roll' => 'required|max:30',
             ]);
 //compañia agregar la variable de session
-            DB::table('syscat_roles')->insert(array('Nombre_roll' => $request->input('Nombre_roll'), 'cve_compania' => '1'));
+            DB::table('SYSCAT_ROLES')->insert(array('Nombre_roll' => $request->input('Nombre_roll'), 'cve_compania' => '1'));
 
             if (is_array($request->input('Cve_transaccion')) || is_object($request->input('Cve_transaccion'))) {
                 $data2['Nombre_roll'] = $request->input('Nombre_roll');
@@ -76,7 +76,7 @@ class syscat_usuariostransaccionesController extends Controller {
         }
 
 
-        DB::table('syscat_usuariostransacciones')->where('Cve_usuario', $request->input('Cve_usuario'))->delete();
+        DB::table('SYSCAT_USUARIOSTRANSACCIONES')->where('Cve_usuario', $request->input('Cve_usuario'))->delete();
 
         $data['Cve_usuario'] = $request->input('Cve_usuario');
         //compañia agregar la variable de session
