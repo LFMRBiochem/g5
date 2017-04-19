@@ -38,7 +38,7 @@ class nmn_cat_empleadosController extends Controller {
 //        $value = $request->session()->get('key');
 //        Borrar variable de session
 //        $request->session()->flush() ;
-        return view('nomina/nmn_cat_empleados/index');
+        return view('Nomina/nmn_cat_empleados/index');
     }
 
     /**

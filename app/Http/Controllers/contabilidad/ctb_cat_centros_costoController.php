@@ -33,7 +33,7 @@ class ctb_cat_centros_costoController extends Controller {
 
     public function listar() {
 
-        return view('Contabilidad/ctb_cat_centros_costo/index');
+        return view('contabilidad/ctb_cat_centros_costo/index');
     }
 
     /**

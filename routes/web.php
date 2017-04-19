@@ -1,6 +1,8 @@
 <?php
 
-Route::get('/', 'Autentificacion\loginController@index');
+Route::get('/', function(){
+	return redirect('autentificacion/login');
+});
 
 use App\Models\contabilidad\ctb_cat_concepto_financiero;
 Route::get('/conceptos', function(){
@@ -46,11 +48,11 @@ Route::group(['middleware' => 'Autentificacion'], function () {
     Route::get('/autentificacion/usuarios', 'Autentificacion\usuariosController@listar');
     Route::resource('autentificacion/usuariosC', 'Autentificacion\usuariosController');
 
-    Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catbancoController@listar');
-    Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catbancoController');
+    Route::get('/nmn_sat_catbanco', 'Nomina\nmn_sat_catbancoController@listar');
+    Route::resource('/nmn_sat_catbancoC', 'Nomina\nmn_sat_catbancoController');
 
-    Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
-    Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
+    Route::get('/nmn_cat_empleados', 'Nomina\nmn_cat_empleadosController@listar');
+    Route::resource('/nmn_cat_empleadosC', 'Nomina\nmn_cat_empleadosController');
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
     Route::resource('/ctb_tipos_cambioC', 'contabilidad\ctb_tipos_cambioController');
