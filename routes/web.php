@@ -48,8 +48,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/autentificacion/usuarios', 'autentificacion\usuariosController@listar');
     Route::resource('autentificacion/usuariosC', 'autentificacion\usuariosController');
 
-    Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catbancoController@listar');
-    Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catbancoController');
+    Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catBancoController@listar');
+    Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catBancoController');
 
     Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');

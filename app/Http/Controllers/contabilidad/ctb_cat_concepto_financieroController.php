@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_cat_concepto_financiero;
+use App\Models\contabilidad\ctb_cat_concepto_financiero;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,7 @@ class ctb_cat_concepto_financieroController extends Controller
     public function index()
     {
         //
-        $items = Ctb_cat_concepto_financiero::paginate(6);
+        $items = ctb_cat_concepto_financiero::paginate(6);
 
         $response = [
             'pagination' => [
@@ -65,7 +65,7 @@ class ctb_cat_concepto_financieroController extends Controller
             'estatus' => 'required|max:1',
         ]);
 
-        $create = Ctb_cat_concepto_financiero::create($request->all());
+        $create = ctb_cat_concepto_financiero::create($request->all());
 
         return response()->json($create);
     }
@@ -87,7 +87,7 @@ class ctb_cat_concepto_financieroController extends Controller
      * @param  \App\Models\contabilidad\Ctb_cat_concepto_financiero  $ctb_cat_concepto_financiero
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ctb_cat_concepto_financiero $ctb_cat_concepto_financiero)
+    public function edit(ctb_cat_concepto_financiero $ctb_cat_concepto_financiero)
     {
         //
     }
@@ -96,7 +96,7 @@ class ctb_cat_concepto_financieroController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\contabilidad\Ctb_cat_concepto_financiero  $ctb_cat_concepto_financiero
+     * @param  \App\Models\contabilidad\ctb_cat_concepto_financiero  $ctb_cat_concepto_financiero
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -109,7 +109,7 @@ class ctb_cat_concepto_financieroController extends Controller
             'naturaleza' => 'required|max:1',
             'estatus' => 'required|max:1',
         ]);
-        $edit = Ctb_cat_concepto_financiero::find($id)->update($request->all());
+        $edit = ctb_cat_concepto_financiero::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -121,7 +121,7 @@ class ctb_cat_concepto_financieroController extends Controller
      */
     public function destroy( $id)
     {
-        Ctb_cat_concepto_financiero::find($id)->delete();
+        ctb_cat_concepto_financiero::find($id)->delete();
         return response()->json(['done']);
     }
 }
