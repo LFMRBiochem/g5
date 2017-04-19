@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Nomina;
+namespace App\Http\Controllers\nomina;
 
-use App\Models\Nomina\Nmn_cat_empleados;
+use App\Models\nomina\Nmn_cat_empleados;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,7 +38,7 @@ class nmn_cat_empleadosController extends Controller {
 //        $value = $request->session()->get('key');
 //        Borrar variable de session
 //        $request->session()->flush() ;
-        return view('Nomina/nmn_cat_empleados/index');
+        return view('nomina/nmn_cat_empleados/index');
     }
 
     /**
@@ -92,7 +92,7 @@ class nmn_cat_empleadosController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Nomina\nmn_cat_empleados  $nmn_cat_empleados
+     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
      * @return \Illuminate\Http\Response
      */
     public function show(nmn_cat_empleados $nmn_cat_empleados) {
@@ -102,7 +102,7 @@ class nmn_cat_empleadosController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Nomina\nmn_cat_empleados  $nmn_cat_empleados
+     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
      * @return \Illuminate\Http\Response
      */
     public function edit(nmn_cat_empleados $nmn_cat_empleados) {
@@ -113,7 +113,7 @@ class nmn_cat_empleadosController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Nomina\nmn_cat_empleados  $nmn_cat_empleados
+     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -150,7 +150,7 @@ class nmn_cat_empleadosController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Nomina\nmn_cat_empleados  $nmn_cat_empleados
+     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

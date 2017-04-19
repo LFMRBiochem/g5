@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Contabilidad;
+namespace App\Http\Controllers\contabilidad;
 
-use App\Models\Contabilidad\Ctb_reserva_cfdi;
+use App\Models\contabilidad\Ctb_reserva_cfdi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +34,7 @@ class Ctb_reserva_cfdiController extends Controller {
 
     public function listar() {
 
-        return view('Contabilidad/ctb_reserva_cfdi/index');
+        return view('contabilidad/ctb_reserva_cfdi/index');
     }
 
     /**
@@ -78,7 +78,7 @@ class Ctb_reserva_cfdiController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
+     * @param  \App\Model\contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
      * @return \Illuminate\Http\Response
      */
     public function show(ctb_reserva_cfdi $ctb_reserva_cfdi) {
@@ -88,7 +88,7 @@ class Ctb_reserva_cfdiController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
+     * @param  \App\Model\contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
      * @return \Illuminate\Http\Response
      */
     public function edit(ctb_reserva_cfdi $ctb_reserva_cfdi) {
@@ -99,7 +99,7 @@ class Ctb_reserva_cfdiController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
+     * @param  \App\Model\contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -126,7 +126,7 @@ class Ctb_reserva_cfdiController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
+     * @param  \App\Model\contabilidad\ctb_reserva_cfdi  $ctb_reserva_cfdi
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

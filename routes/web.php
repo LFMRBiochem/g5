@@ -10,23 +10,23 @@ Route::get('/conceptos', function(){
 });
 
 //
-# Nomina ###################################
-# Compras ##################################
+# nomina ###################################
+# compras ##################################
 # Ventas ###################################
 # Inventarios ##############################
 # Produccion ###############################
 # Configuracion ############################
 // ------------------------------------------------------------------------------
 
-Route::get('autentificacion/login', 'Autentificacion\loginController@index');
-Route::post('autentificacion/logincontroller', 'Autentificacion\loginController@login');
-Route::get('autentificacion/logincontroller/logout', 'Autentificacion\loginController@logout');
+Route::get('autentificacion/login', 'autentificacion\loginController@index');
+Route::post('autentificacion/logincontroller', 'autentificacion\loginController@login');
+Route::get('autentificacion/logincontroller/logout', 'autentificacion\loginController@logout');
 
 
 
-Route::group(['middleware' => 'Autentificacion'], function () {
+Route::group(['middleware' => 'autentificacion'], function () {
 
-    # Contabilidad #############################
+    # contabilidad #############################
 
     Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
     Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
@@ -45,14 +45,14 @@ Route::group(['middleware' => 'Autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
-    Route::get('/autentificacion/usuarios', 'Autentificacion\usuariosController@listar');
-    Route::resource('autentificacion/usuariosC', 'Autentificacion\usuariosController');
+    Route::get('/autentificacion/usuarios', 'autentificacion\usuariosController@listar');
+    Route::resource('autentificacion/usuariosC', 'autentificacion\usuariosController');
 
-    Route::get('/nmn_sat_catbanco', 'Nomina\nmn_sat_catbancoController@listar');
-    Route::resource('/nmn_sat_catbancoC', 'Nomina\nmn_sat_catbancoController');
+    Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catbancoController@listar');
+    Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catbancoController');
 
-    Route::get('/nmn_cat_empleados', 'Nomina\nmn_cat_empleadosController@listar');
-    Route::resource('/nmn_cat_empleadosC', 'Nomina\nmn_cat_empleadosController');
+    Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
+    Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
     Route::resource('/ctb_tipos_cambioC', 'contabilidad\ctb_tipos_cambioController');
@@ -74,9 +74,9 @@ Route::group(['middleware' => 'Autentificacion'], function () {
 
     
     //falta acomodar
-    Route::get('/glx_companias', 'Administracion\glx_companiasController@listar');
-    Route::resource('/glx_companiasC', 'Administracion\glx_companiasController');
+    Route::get('/glx_companias', 'administracion\glx_companiasController@listar');
+    Route::resource('/glx_companiasC', 'administracion\glx_companiasController');
 
-    Route::get('/syscat_usuariostransacciones/{cve_usuario}', 'Administracion\syscat_usuariostransaccionesController@index');
-    Route::resource('/syscat_usuariostransaccionesC', 'Administracion\syscat_usuariostransaccionesController');
+    Route::get('/syscat_usuariostransacciones/{cve_usuario}', 'administracion\syscat_usuariostransaccionesController@index');
+    Route::resource('/syscat_usuariostransaccionesC', 'administracion\syscat_usuariostransaccionesController');
 });

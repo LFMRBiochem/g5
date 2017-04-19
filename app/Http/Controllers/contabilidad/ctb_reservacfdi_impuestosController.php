@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Contabilidad;
+namespace App\Http\Controllers\contabilidad;
 
-use App\Models\Contabilidad\Ctb_reservacfdi_impuestos;
+use App\Models\contabilidad\Ctb_reservacfdi_impuestos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +70,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
+     * @param  \App\Model\contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
      * @return \Illuminate\Http\Response
      */
     public function show(Ctb_reservacfdi_impuestos $ctb_reservacfdi_impuestos) {
@@ -80,7 +80,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
+     * @param  \App\Model\contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
      * @return \Illuminate\Http\Response
      */
     public function edit(Ctb_reservacfdi_impuestos $ctb_reservacfdi_impuestos) {
@@ -91,7 +91,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
+     * @param  \App\Model\contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -109,7 +109,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
+     * @param  \App\Model\contabilidad\Ctb_reservacfdi_impuestos  $ctb_reservacfdi_impuestos
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ctb_reservacfdi_impuestos $ctb_reservacfdi_impuestos) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Compras;
+namespace App\Http\Controllers\compras;
 
-use App\Models\Compras\Cmp_cat_proveedores;
+use App\Models\compras\Cmp_cat_proveedores;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -42,7 +42,7 @@ class cmp_cat_proveedoresController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Compras\Cmp_cat_proveedores  $cmp_cat_proveedores
+     * @param  \App\Model\compras\Cmp_cat_proveedores  $cmp_cat_proveedores
      * @return \Illuminate\Http\Response
      */
     public function show(Cmp_cat_proveedores $cmp_cat_proveedores)
@@ -53,7 +53,7 @@ class cmp_cat_proveedoresController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Compras\Cmp_cat_proveedores  $cmp_cat_proveedores
+     * @param  \App\Model\compras\Cmp_cat_proveedores  $cmp_cat_proveedores
      * @return \Illuminate\Http\Response
      */
     public function edit(Cmp_cat_proveedores $cmp_cat_proveedores)
@@ -65,7 +65,7 @@ class cmp_cat_proveedoresController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Compras\Cmp_cat_proveedores  $cmp_cat_proveedores
+     * @param  \App\Model\compras\Cmp_cat_proveedores  $cmp_cat_proveedores
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cmp_cat_proveedores $cmp_cat_proveedores)
@@ -76,7 +76,7 @@ class cmp_cat_proveedoresController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Compras\Cmp_cat_proveedores  $cmp_cat_proveedores
+     * @param  \App\Model\compras\Cmp_cat_proveedores  $cmp_cat_proveedores
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cmp_cat_proveedores $cmp_cat_proveedores)

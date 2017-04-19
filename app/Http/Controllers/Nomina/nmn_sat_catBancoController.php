@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Nomina;
+namespace App\Http\Controllers\nomina;
 
-use App\Models\Nomina\Nmn_sat_catBanco;
+use App\Models\nomina\Nmn_sat_catBanco;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,7 +38,7 @@ class nmn_sat_catBancoController extends Controller {
 //        $value = $request->session()->get('key');
 //        Borrar variable de session
 //        $request->session()->flush() ;
-        return view('Nomina/nmn_sat_catbanco/index');
+        return view('nomina/nmn_sat_catbanco/index');
     }
 
     /**
@@ -72,7 +72,7 @@ class nmn_sat_catBancoController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
+     * @param  \App\Model\nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
      * @return \Illuminate\Http\Response
      */
     public function show(Nmn_sat_catBanco $nmn_sat_catBanco) {
@@ -82,7 +82,7 @@ class nmn_sat_catBancoController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
+     * @param  \App\Model\nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
      * @return \Illuminate\Http\Response
      */
     public function edit(Nmn_sat_catBanco $nmn_sat_catBanco) {
@@ -93,7 +93,7 @@ class nmn_sat_catBancoController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
+     * @param  \App\Model\nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -109,7 +109,7 @@ class nmn_sat_catBancoController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
+     * @param  \App\Model\nomina\Nmn_sat_catBanco  $nmn_sat_catBanco
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

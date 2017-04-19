@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Contabilidad;
+namespace App\Http\Controllers\contabilidad;
 
-use App\Models\Contabilidad\Ctb_cat_centros_costo;
+use App\Models\contabilidad\Ctb_cat_centros_costo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -70,7 +70,7 @@ class ctb_cat_centros_costoController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
+     * @param  \App\Model\contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
      * @return \Illuminate\Http\Response
      */
     public function show(Ctb_cat_centros_costo $ctb_cat_centros_costo) {
@@ -80,7 +80,7 @@ class ctb_cat_centros_costoController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
+     * @param  \App\Model\contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
      * @return \Illuminate\Http\Response
      */
     public function edit(Ctb_cat_centros_costo $ctb_cat_centros_costo) {
@@ -91,7 +91,7 @@ class ctb_cat_centros_costoController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
+     * @param  \App\Model\contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -110,7 +110,7 @@ class ctb_cat_centros_costoController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
+     * @param  \App\Model\contabilidad\Ctb_cat_centros_costo  $ctb_cat_centros_costo
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

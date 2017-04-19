@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Nomina;
+namespace App\Models\nomina;
 
 use Illuminate\Database\Eloquent\Model;
 

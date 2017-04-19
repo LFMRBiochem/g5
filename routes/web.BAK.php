@@ -2,7 +2,7 @@
 Route::get('/', function () {
 	return view('main');
 });
-# Contabilidad #############################
+# contabilidad #############################
 	Route::group(['middleware'=>['web']], function(){
 		Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
 		Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
@@ -21,8 +21,8 @@ Route::get('/', function () {
 	Route::get('/contabilidad/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
 	Route::resource('/contabilidad/ctb_cat_concepto_financieroController', 'contabilidad\ctb_cat_concepto_financieroController');
 
-# Nomina ###################################
-# Compras ##################################
+# nomina ###################################
+# compras ##################################
 # Ventas ###################################
 # Inventarios ##############################
 # Produccion ###############################

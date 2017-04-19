@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Contabilidad;
+namespace App\Http\Controllers\contabilidad;
 
-use App\Models\Contabilidad\Ctb_documentos_partidas;
+use App\Models\contabilidad\Ctb_documentos_partidas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -80,7 +80,7 @@ class ctb_documentos_partidasController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
+     * @param  \App\Model\contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
      * @return \Illuminate\Http\Response
      */
     public function show(Ctb_documentos_partidas $ctb_documentos_partidas) {
@@ -90,7 +90,7 @@ class ctb_documentos_partidasController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
+     * @param  \App\Model\contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
      * @return \Illuminate\Http\Response
      */
     public function edit(Ctb_documentos_partidas $ctb_documentos_partidas) {
@@ -101,7 +101,7 @@ class ctb_documentos_partidasController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
+     * @param  \App\Model\contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -125,7 +125,7 @@ class ctb_documentos_partidasController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
+     * @param  \App\Model\contabilidad\Ctb_documentos_partidas  $ctb_documentos_partidas
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

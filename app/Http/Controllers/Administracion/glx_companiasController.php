@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Administracion;
+namespace App\Http\Controllers\administracion;
 
-use App\Models\Administracion\Glx_companias;
+use App\Models\administracion\Glx_companias;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -75,7 +75,7 @@ class glx_companiasController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Administracion\Glx_companias  $glx_companias
+     * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
     public function show(Glx_companias $glx_companias) {
@@ -85,7 +85,7 @@ class glx_companiasController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Administracion\Glx_companias  $glx_companias
+     * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
     public function edit(Glx_companias $glx_companias) {
@@ -96,7 +96,7 @@ class glx_companiasController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Administracion\Glx_companias  $glx_companias
+     * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -114,7 +114,7 @@ class glx_companiasController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Administracion\Glx_companias  $glx_companias
+     * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Administracion;
+namespace App\Http\Controllers\administracion;
 
-use App\Models\Administracion\Syscat_usuariostransacciones;
+use App\Models\administracion\Syscat_usuariostransacciones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +38,7 @@ class syscat_usuariostransaccionesController extends Controller {
 //        echo implode( ',',  $data['syscat_roles'][0]->Cve_transaccion);
 //        echo '</pre>';
 
-        return view('Administracion.syscat_usuariostransacciones.index', ['data' => $data]);
+        return view('administracion.syscat_usuariostransacciones.index', ['data' => $data]);
     }
 
     /**
@@ -94,7 +94,7 @@ class syscat_usuariostransaccionesController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
+     * @param  \App\Model\administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
      * @return \Illuminate\Http\Response
      */
     public function show(syscat_usuariostransacciones $syscat_usuariostransacciones) {
@@ -104,7 +104,7 @@ class syscat_usuariostransaccionesController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
+     * @param  \App\Model\administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
      * @return \Illuminate\Http\Response
      */
     public function edit(syscat_usuariostransacciones $syscat_usuariostransacciones) {
@@ -115,7 +115,7 @@ class syscat_usuariostransaccionesController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
+     * @param  \App\Model\administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, syscat_usuariostransacciones $syscat_usuariostransacciones) {
@@ -125,7 +125,7 @@ class syscat_usuariostransaccionesController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
+     * @param  \App\Model\administracion\syscat_usuariostransacciones  $syscat_usuariostransacciones
      * @return \Illuminate\Http\Response
      */
     public function destroy(syscat_usuariostransacciones $syscat_usuariostransacciones) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Autentificacion;
+namespace App\Http\Controllers\autentificacion;
 
-use App\Models\Autentificacion\Login;
+use App\Models\autentificacion\Login;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -15,7 +15,7 @@ class loginController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('Autentificacion.login');
+        return view('autentificacion.login');
     }
 
     public function login(Request $request) {

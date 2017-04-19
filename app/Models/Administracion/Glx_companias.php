@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Administracion;
+namespace App\Models\administracion;
 
 use Illuminate\Database\Eloquent\Model;
 

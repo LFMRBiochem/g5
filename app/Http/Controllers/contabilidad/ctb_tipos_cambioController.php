@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Contabilidad;
+namespace App\Http\Controllers\contabilidad;
 
-use App\Models\Contabilidad\Ctb_tipos_cambio;
+use App\Models\contabilidad\Ctb_tipos_cambio;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,7 +33,7 @@ class ctb_tipos_cambioController extends Controller {
 
     public function listar() {
 
-        return view('Contabilidad/ctb_tipos_cambio/index');
+        return view('contabilidad/ctb_tipos_cambio/index');
     }
 
     /**
@@ -67,7 +67,7 @@ class ctb_tipos_cambioController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
+     * @param  \App\Model\contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
      * @return \Illuminate\Http\Response
      */
     public function show(Cbt_tipos_cambio $cbt_tipos_cambio) {
@@ -77,7 +77,7 @@ class ctb_tipos_cambioController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
+     * @param  \App\Model\contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
      * @return \Illuminate\Http\Response
      */
     public function edit(Cbt_tipos_cambio $cbt_tipos_cambio) {
@@ -88,7 +88,7 @@ class ctb_tipos_cambioController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
+     * @param  \App\Model\contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -105,7 +105,7 @@ class ctb_tipos_cambioController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
+     * @param  \App\Model\contabilidad\Cbt_tipos_cambio  $cbt_tipos_cambio
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

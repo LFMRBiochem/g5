@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Autentificacion;
+namespace App\Http\Controllers\autentificacion;
 
-use App\Models\Autentificacion\Usuarios;
+use App\Models\autentificacion\Usuarios;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,7 +40,7 @@ class usuariosController extends Controller {
 //        $value = $request->session()->get('key');
 //        Borrar variable de session
 //        $request->session()->flush() ;
-        return view('Autentificacion/index');
+        return view('autentificacion/index');
     }
 
     /**
@@ -74,7 +74,7 @@ class usuariosController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Autentificacion\Usuarios  $usuarios
+     * @param  \App\Model\autentificacion\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
     public function show(Usuarios $usuarios) {
@@ -84,7 +84,7 @@ class usuariosController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Autentificacion\Usuarios  $usuarios
+     * @param  \App\Model\autentificacion\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
     public function edit(Usuarios $usuarios) {
@@ -95,7 +95,7 @@ class usuariosController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Autentificacion\Usuarios  $usuarios
+     * @param  \App\Model\autentificacion\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
@@ -111,7 +111,7 @@ class usuariosController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Autentificacion\Usuarios  $usuarios
+     * @param  \App\Model\autentificacion\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

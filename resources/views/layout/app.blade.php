@@ -53,7 +53,7 @@
                     <ul class="nav navbar-nav">
                         <!--<li class="active"><a href="bootstrap-navbar.html">Default</a></li>-->
 
-                        <li><a href="#">Administracion <span class="caret"></span></a>
+                        <li><a href="#">administracion <span class="caret"></span></a>
 <!--                            <ul class="dropdown-menu">
                                 <li><a href="{{URL::to('/').'/autentificacion/usuarios' }}"> Usuarios</a></li>
                                 <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> Compañias</a></li>
@@ -71,7 +71,7 @@
                             </ul>-->
                         </li>
 
-                        <li><a href="#">Compras <span class="caret"></span></a>
+                        <li><a href="#">compras <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
@@ -95,7 +95,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#">Contabilidad <span class="caret"></span></a>
+                        <li><a href="#">contabilidad <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
