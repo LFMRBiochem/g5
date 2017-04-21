@@ -206,7 +206,7 @@
                     <div class="form-group">
                         <label for="Cve_entidad">Entidad:</label>
                         <!--<input type="text" name="Cve_entidad" class="form-control" v-model="newItem.Cve_entidad" />-->
-                        <v-select :value.sync="selected" :options="entidades"  placeholder="Search Mexican states..." >
+                        <v-select :value.sync="selectedEntidad" :options="entidad"  placeholder="Seleccione..." >
                         </v-select>
 
                         <span v-if="formErrors['Cve_entidad']" class="error text-danger">
@@ -217,11 +217,8 @@
                     <div class="form-group">
                         <label for="Cve_municipio">Municipio:</label>
                         <!--<input type="text" name="Cve_municipio" class="form-control" v-model="newItem.Cve_municipio" />-->
-                        <select class="form-control" id="municipio" name="Cve_municipio" v-model="newItem.Cve_municipio">
-
-                            <option v-for="municipio in municipios">@{{Nom_municipio}}</option>
-
-                        </select> 
+                         <v-select :value.sync="selectedMunicipio" :options="municipio"  placeholder="Seleccione..." >
+                        </v-select>
                         <span v-if="formErrors['Cve_municipio']" class="error text-danger">
                             @{{ formErrors['Cve_municipio'] }}
                         </span>
@@ -230,8 +227,8 @@
                     <div class="form-group">
                         <label for="Cve_localidad">Localidad:</label>
                         <!--<input type="text" name="Cve_localidad" class="form-control" v-model="newItem.Cve_localidad" />-->
-                        <select class="form-control" id="localidad" name="Cve_localidad" v-model="newItem.Cve_localidad">
-                        </select> 
+                        <v-select :value.sync="selectedLocalidad" :options="localidad"  placeholder="Seleccione..." >
+                        </v-select>
 
                         <span v-if="formErrors['Cve_localidad']" class="error text-danger">
                             @{{ formErrors['Cve_localidad'] }}
@@ -240,8 +237,8 @@
                     <div class="form-group">
                         <label for="Codigo_postal">Código postal:</label>
                         <!--<input type="text" name="Codigo_postal" class="form-control" v-model="newItem.Codigo_postal" />-->
-                        <select class="form-control" id="codigo_postal" name="Codigo_postal" v-model="newItem.Codigo_postal">
-                        </select>
+                       <v-select :value.sync="selectedCodigo_postal" :options="codigo_postal"  placeholder="Seleccione..." >
+                        </v-select>
                         <span v-if="formErrors['Codigo_postal']" class="error text-danger">
                             @{{ formErrors['Codigo_postal'] }}
                         </span>

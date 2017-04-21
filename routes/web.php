@@ -88,6 +88,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
 
     Route::get('/cmp_cat_proveedores/entidad/', 'compras\cmp_cat_proveedoresController@get_entidad');
+    Route::get('/cmp_cat_proveedores/municipio/{entidad}', 'compras\cmp_cat_proveedoresController@get_municipio');
+    Route::get('/cmp_cat_proveedores/localidad/{municipio}/{entidad}', 'compras\cmp_cat_proveedoresController@get_localidad');
+    Route::get('/cmp_cat_proveedores/codigo_postal/{municipio}/{entidad}', 'compras\cmp_cat_proveedoresController@get_codigo_postal');
     
 //    Route::get('/cmp_cat_proveedoresC/entidad/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_entidad');
 //    Route::get('/cmp_cat_proveedoresC/municipio/{Cve_municipio}/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_municipio');

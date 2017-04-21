@@ -3,8 +3,16 @@ Vue.component('v-select', VueSelect.VueSelect);
 new Vue({
     el: '#manage-vue',
     data: {
-        selected: null,
-        entidades: [],
+        selectedEntidad: null,
+        selectedMunicipio: null,
+        selectedLocalidad: null,
+        selectedCodigo_postal: null,
+        
+        entidad: [],
+        municipio: [],
+        localidad: [],
+        codigo_postal: [],
+        
         items: [],
         pagination: {
             total: 0,
@@ -91,11 +99,69 @@ new Vue({
     },
     watch: {
 
-        selected: function (val, oldVal) {
-            if(val !== null){
+        selectedEntidad: function (val, oldVal) {
+            if (val !== null) {
                 this.newItem.Cve_entidad = val.value;
-            }else{
+// limpiar select
+                this.municipio = [];
+                this.selectedMunicipio = null;
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+
+                this.getMunicipio(val.value);
+            } else {
                 this.newItem.Cve_entidad = '';
+// limpiar select
+                this.municipio = [];
+                this.selectedMunicipio = null;
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+            }
+
+        },
+        selectedMunicipio: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.Cve_municipio = val.value;
+
+                // limpiar select
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+
+                this.getLocalidad(val.value, this.newItem.Cve_entidad);
+                this.getCodigo_postal(val.value, this.newItem.Cve_entidad);
+            } else {
+                this.newItem.Cve_municipio = '';
+
+                // limpiar select
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+
+            }
+
+        },
+        selectedLocalidad: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.Cve_localidad = val.value;
+            } else {
+                this.newItem.Cve_localidad = '';
+
+            }
+
+        },
+        selectedCodigo_postal: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.Codigo_postal = val.value;
+            } else {
+                this.newItem.Codigo_postal = '';
+
             }
 
         }
@@ -107,10 +173,25 @@ new Vue({
     methods: {
         getEntidad: function () {
             this.$http.get('cmp_cat_proveedores/entidad').then((response) => {
-//                this.entidades = response.data;
-                this.$set('entidades', response.data);
+                this.$set('entidad', response.data);
             });
         },
+        getMunicipio: function (entidad) {
+            this.$http.get('cmp_cat_proveedores/municipio/' + entidad).then((response) => {
+                this.$set('municipio', response.data);
+            });
+        },
+        getLocalidad: function (municipio, entidad) {
+            this.$http.get('cmp_cat_proveedores/localidad/' + municipio + '/' + entidad).then((response) => {
+                this.$set('localidad', response.data);
+            });
+        },
+        getCodigo_postal: function (municipio, entidad) {
+            this.$http.get('cmp_cat_proveedores/codigo_postal/' + municipio + '/' + entidad).then((response) => {
+                this.$set('codigo_postal', response.data);
+            });
+        },
+
         getVueItems: function (page) {
             this.$http.get('cmp_cat_proveedoresC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
@@ -144,11 +225,9 @@ new Vue({
                     'CLABE': '',
                     'estatus': ''};
                 $("#create-item").modal('hide');
-                console.log(response.data);
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {
                 this.formErrors = response.data;
-                console.log(response);
             });
         },
         deleteItem: function (item) {

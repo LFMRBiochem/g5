@@ -35,17 +35,23 @@ class cmp_cat_proveedoresController extends Controller {
     public function listar() {
         return view('compras/cmp_cat_proveedores/index');
     }
-    
+
     public function get_entidad() {
         $create = DB::table('dgis_CAT_ENTIDADES')->select('Cve_entidad as value', 'Estado as label')->get();
         return response()->json($create);
     }
-    
-//    public function get_entidad($Cve_entidad) {
-//        $create = DB::table('dgis_CAT_MUNICIPIOS')->where('Cve_entidad', $Cve_entidad)->orderBy('Nom_municipio')->select('Nom_municipio', 'Cve_municipio')->get();
-//
-//        return response()->json($create);
-//    }
+
+    public function get_municipio($Cve_entidad) {
+        $create = DB::table('dgis_CAT_MUNICIPIOS')->where('Cve_entidad', $Cve_entidad)->orderBy('Nom_municipio')->select('Nom_municipio as label', 'Cve_municipio as value')->get();
+
+        return response()->json($create);
+    }
+
+    public function get_localidad($Cve_municipio, $Cve_entidad) {
+        $create = DB::table('dgis_CAT_LOCALIDADES')->where('Cve_municipio', $Cve_municipio)->where('Cve_entidad', $Cve_entidad)->orderBy('Nom_localidad')->select('Nom_localidad as label', 'Cve_localidad as value')->get();
+
+        return response()->json($create);
+    }
 
 //    public function get_municipio($Cve_municipio, $Cve_entidad) {
 //        $create = DB::table('dgis_CAT_LOCALIDADES')->where('Cve_municipio', $Cve_municipio)->where('Cve_entidad', $Cve_entidad)->orderBy('Nom_localidad')->select('Nom_localidad', 'Cve_localidad')->get();
@@ -53,19 +59,17 @@ class cmp_cat_proveedoresController extends Controller {
 //        return response()->json($create);
 //    }
 
-//    public function get_municipio_entidad($Cve_municipio, $Cve_estado) {
-//        $create = DB::table('dgis_CODIGO_POSTAL')->where([
-//                    ['Cve_municipio', '=', $Cve_municipio],
-//                    ['Cve_estado', '=', $Cve_estado],])->select('Codigo_postal','Asentamiento','Tipo_asentamiento')->get();
-//
-//        return response()->json($create);
-//    }
+    public function get_codigo_postal($Cve_municipio, $entidad) {
+        $values = DB::table('dgis_CODIGO_POSTAL')->where([
+                    ['Cve_municipio', $Cve_municipio],
+                    ['Cve_estado', $entidad],])->select('Codigo_postal', 'Asentamiento', 'Tipo_asentamiento')->get();
 
-    
-    
-    
-    
-    
+        $create = array();
+        foreach ($values as $fila) {
+            array_push($create, array('value' => $fila->Codigo_postal . '|' . $fila->Asentamiento . '|' . $fila->Tipo_asentamiento, 'label' => '[' . $fila->Codigo_postal . '] ' . $fila->Asentamiento . ', ' . $fila->Tipo_asentamiento));
+        }
+        return response()->json($create);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -111,7 +115,6 @@ class cmp_cat_proveedoresController extends Controller {
 //        ]);
 //
 //        $create = cmp_cat_proveedores::create($request->all());
-
 //        return response()->json($create);
         return response()->json($request->all());
     }
@@ -158,4 +161,3 @@ class cmp_cat_proveedoresController extends Controller {
     }
 
 }
-
