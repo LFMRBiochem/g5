@@ -9,6 +9,7 @@
         <!-- Bootstrap -->
         <link href="{{ asset('bootstrap/dist/css/bootstrap-edit.css') }}" rel="stylesheet">
         <link href="{{ asset('font-awesome-4.7.0/css/font-awesome.css') }}" rel="stylesheet">
+
         <!--<link href="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.css') }}" rel="stylesheet">-->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,21 +55,21 @@
                         <!--<li class="active"><a href="bootstrap-navbar.html">Default</a></li>-->
 
                         <li><a href="#">administracion <span class="caret"></span></a>
-<!--                            <ul class="dropdown-menu">
-                                <li><a href="{{URL::to('/').'/autentificacion/usuarios' }}"> Usuarios</a></li>
-                                <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> Compañias</a></li>
-
-                                <li><a href="{{URL::to('/').'/nomina/nmn_sat_catbanco' }}"> nmn_sat_catbanco</a></li>
-                                <li><a href="{{URL::to('/').'/nomina/nmn_cat_empleados' }}"> nmn_cat_empleados</a></li>
-                                <li><a href="{{URL::to('/').'/contabilidad/ctb_reservacfdi' }}"> ctb_reservacfdi_impuestos</a></li>
-                                <li><a href="{{URL::to('/').'/contabilidad/ctb_reserva_cfdi' }}"> ctb_reserva_cfdi</a></li>
-
-                                <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> glx_companias</a></li>
-
-
-
-
-                            </ul>-->
+                            <!--                            <ul class="dropdown-menu">
+                                                            <li><a href="{{URL::to('/').'/autentificacion/usuarios' }}"> Usuarios</a></li>
+                                                            <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> Compañias</a></li>
+                            
+                                                            <li><a href="{{URL::to('/').'/nomina/nmn_sat_catbanco' }}"> nmn_sat_catbanco</a></li>
+                                                            <li><a href="{{URL::to('/').'/nomina/nmn_cat_empleados' }}"> nmn_cat_empleados</a></li>
+                                                            <li><a href="{{URL::to('/').'/contabilidad/ctb_reservacfdi' }}"> ctb_reservacfdi_impuestos</a></li>
+                                                            <li><a href="{{URL::to('/').'/contabilidad/ctb_reserva_cfdi' }}"> ctb_reserva_cfdi</a></li>
+                            
+                                                            <li><a href="{{URL::to('/').'/administracion/glx_companias' }}"> glx_companias</a></li>
+                            
+                            
+                            
+                            
+                                                        </ul>-->
                         </li>
 
                         <li><a href="#">compras <span class="caret"></span></a>
@@ -258,7 +259,6 @@
 
         <script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}" ></script>
 
-
 <!--        <script src="{{ asset('fullCalendar/moment/moment.js')}}"></script>
         <script src="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.js')}}"></script>
         <script src="{{ asset('fullCalendar/fullcalendar/dist/locale/es.js')}}"></script>-->
@@ -269,9 +269,13 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
+          <script src="https://unpkg.com/vue-select@1.3.3"></script>
+          
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.js"></script>
 
+      
+        
         @yield('javascript')
 
 <!--<script type="text/javascript" src="{{ asset('js/autentificacion.js') }}"></script>-->

@@ -1,12 +1,13 @@
 <?php
 
-Route::get('/', function(){
-	return redirect('autentificacion/login');
+Route::get('/', function() {
+    return redirect('autentificacion/login');
 });
 
 use App\Models\contabilidad\ctb_cat_concepto_financiero;
-Route::get('/conceptos', function(){
-    return  ctb_cat_concepto_financiero::where('catalogo_sat', 'like', '105.%')->count();
+
+Route::get('/conceptos', function() {
+    return ctb_cat_concepto_financiero::where('catalogo_sat', 'like', '105.%')->count();
 });
 
 //
@@ -27,8 +28,12 @@ Route::get('autentificacion/logincontroller/logout', 'autentificacion\loginContr
 Route::group(['middleware' => 'autentificacion'], function () {
 
     # contabilidad #############################
+    Route::get('/inicio', function () {
+        return view('welcome');
+    });
 
-    Route::get('catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
+
+    Route::get('/catalogo-de-cuentas-contables', 'contabilidad\ctb_cat_cuentasController@ArbolDeCuentas');
     Route::resource('catalogo-de-cuentas-contables/crud', 'contabilidad\ctb_cat_cuentasController');
 
 # Tesoreria ################################
@@ -72,7 +77,16 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_reserva_cfdi', 'contabilidad\ctb_reserva_cfdiController@listar');
     Route::resource('/ctb_reserva_cfdiC', 'contabilidad\ctb_reserva_cfdiController');
 
+    Route::get('/cmp_cat_proveedores', 'compras\cmp_cat_proveedoresController@listar');
+    Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
+
+    Route::get('/cmp_cat_proveedores/entidad/', 'compras\cmp_cat_proveedoresController@get_entidad');
     
+//    Route::get('/cmp_cat_proveedoresC/entidad/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_entidad');
+//    Route::get('/cmp_cat_proveedoresC/municipio/{Cve_municipio}/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_municipio');
+//    Route::get('/cmp_cat_proveedoresC/municipio_entidad/{Cve_municipio}/{Cve_estado}', 'compras\cmp_cat_proveedoresController@get_municipio_entidad');
+//    Route::get('/cmp_cat_proveedoresC/localidad/{Cve_localidad}', 'compras\cmp_cat_proveedoresController@get_localidad');
+
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');
     Route::resource('/glx_companiasC', 'administracion\glx_companiasController');

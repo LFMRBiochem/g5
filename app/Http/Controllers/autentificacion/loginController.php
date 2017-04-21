@@ -36,7 +36,7 @@ class loginController extends Controller {
                                 ->withInput();
             } else {
                 $this->session_login($request, $v);
-                return redirect('autentificacion/usuarios');
+                return redirect('/inicio');
             }
         }
         

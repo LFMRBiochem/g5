@@ -1,95 +1,169 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout.app')
+        <link href="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.css') }}" rel="stylesheet">
+@section('content')
 
-        <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<style>
+    .panel-default{
+        background: rgba(255,254,240,0.3);
+        border: 0px;
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+    }
 
-            .full-height {
-                height: 100vh;
-            }
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid rgba(255,254,240,0.3);
+        margin: 1em 0;
+        padding: 0; 
+    }
+    .well{
+        background: rgba(34,34,34,0.2);
+        border: 1px solid rgba(245,245,245,0.2);
+   
+    }
+</style>
+<div class="row">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background: rgba(255,254,240,0.5);border: 0px"><a><strong><i class="fa fa-bolt"></i> Acceso rapido</strong></a></div>
+            <div class="panel-body">
+                <!--<a href="#"><strong><i class="glyphicon glyphicon-comment"></i> Acceso rapido</strong></a>-->
 
-            .position-ref {
-                position: relative;
-            }
+                <!--<hr>-->
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
+                <small>Proceso 1</small>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%">
+                        <span class="sr-only">72% Complete</span>
+                    </div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <small>Proceso 2</small>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                        <span class="sr-only">20% Complete</span>
+                    </div>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <small>Proceso 3</small>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                        <span class="sr-only">60% Complete (warning)</span>
+                    </div>
+                </div>
+                <small>Proceso 4</small>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                        <span class="sr-only">80% Complete</span>
+                    </div>
+                </div>
+                <small>Proceso 5</small>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                        <span class="sr-only">50% Complete</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background: rgba(245,245,245,0.5);border: 0px"><a><strong><i class="fa fa-bell"></i> Mensajes</strong></a></div>
+            <!--<div class="panel-body">-->
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(3 mins ago)</small> Alta de proveedor <strong>LABORATORIO, S.A DE C.V.</strong></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(1 hour ago)</small> Nuevo usuario</a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(2 hrs ago)</small> Nuevo medicamento</a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(4 hrs ago)</small> Nuevo Producto</a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(yesterday)</small> Alta de proveedor <strong>CENTRAL, S.A. DE C.V.</strong>.</a></li>
+                    <li class="list-group-item"><a href="#"><i class="fa fa-bell-o"></i> <small>(yesterday)</small> Alta de proveedor <strong>LABORATORIO, S.A DE C.V.</strong></a></li>
+                </ul>
+            <!--</div>-->
+        </div>
+        
+    </div>
+
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+       
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@stop
+
+@section('javascript')
+<script type="text/javascript" src="{{ asset('js/nmn_cat_empleados.js') }}"></script>
+
+        <script src="{{ asset('fullCalendar/moment/moment.js')}}"></script>
+        <script src="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.js')}}"></script>
+        <script src="{{ asset('fullCalendar/fullcalendar/dist/locale/es.js')}}"></script>
+       <script>
+$(document).ready(function () {
+
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        eventClick: function (event, element) {
+
+            $('#calendar').fullCalendar('removeEvents', event._id)
+
+
+        },
+
+        events: [
+            {
+                title: 'Event1',
+                start: '2017-04-12',
+                resourceEditable: true // resource not editable for this event
+            },
+            {
+                title: 'Event2',
+                start: '2017-04-12',
+                end: '2017-04-12',
+                resourceEditable: false // resource not editable for this event
+            }
+            // etc...
+        ],
+
+//        defaultDate: '2017-04-12',
+//        navLinks: true, // can click day/week names to navigate views
+        selectable: true,
+
+        select: function (start, end) {
+            var title = prompt('Event Title:');
+            var eventData;
+            if (title) {
+                eventData = {
+                    title: title,
+                    start: start,
+                    end: end
+                };
+
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+
+
+        },
+        locale: 'es',
+
+        eventColor: 'rgb(255,107,107)',
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+
+
+    });
+
+
+
+
+});
+        </script>
+@stop
