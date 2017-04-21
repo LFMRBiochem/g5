@@ -206,7 +206,7 @@
                     <div class="form-group">
                         <label for="Cve_entidad">Entidad:</label>
                         <!--<input type="text" name="Cve_entidad" class="form-control" v-model="newItem.Cve_entidad" />-->
-                        <v-select :options="entidades"  :on-search="getEntidad" placeholder="Search Mexican states..." >
+                        <v-select :value.sync="selected" :options="entidades"  placeholder="Search Mexican states..." >
                         </v-select>
 
                         <span v-if="formErrors['Cve_entidad']" class="error text-danger">

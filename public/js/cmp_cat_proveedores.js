@@ -3,6 +3,7 @@ Vue.component('v-select', VueSelect.VueSelect);
 new Vue({
     el: '#manage-vue',
     data: {
+        selected: null,
         entidades: [],
         items: [],
         pagination: {
@@ -88,10 +89,26 @@ new Vue({
         this.getVueItems(this.pagination.current_page);
         this.getEntidad();
     },
+    watch: {
+
+        selected: function (val, oldVal) {
+            if(val !== null){
+                this.newItem.Cve_entidad = val.value;
+            }else{
+                this.newItem.Cve_entidad = '';
+            }
+
+        }
+
+//        'newItem.Cve_entidad': function (val, oldVal) {
+//            console.log(val.label);
+//        },
+    },
     methods: {
         getEntidad: function () {
             this.$http.get('cmp_cat_proveedores/entidad').then((response) => {
-                this.entidades = response.data;
+//                this.entidades = response.data;
+                this.$set('entidades', response.data);
             });
         },
         getVueItems: function (page) {
