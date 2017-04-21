@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 namespace App\Http\Controllers\compras;
@@ -158,3 +159,4 @@ class cmp_cat_proveedoresController extends Controller {
     }
 
 }
+
