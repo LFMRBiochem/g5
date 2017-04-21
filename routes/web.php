@@ -14,7 +14,7 @@ Route::get('/conceptos', function() {
 # nomina ###################################
 # compras ##################################
     Route::group(['middleware' => ['web']], function() {
-        Route::get('solicitud-pagos', 'compras\cmp_solicitud_pagoController@listar');
+        Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
     });
 
     Route::get('/cmp_solicitud_pagoController/beneficiario', 'compras\cmp_solicitud_pagoController@get_beneficiarios');

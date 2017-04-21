@@ -86,11 +86,11 @@
 
                             <table id="tableConceptos" name="tableConceptos" class="table table-holder" v-model="newItem.tableConceptos">
                                 <thead>
-                                <tr align='center'>
-                                    <td class='warning'><strong>Concepto</strong></td>
-                                    <td class='warning'><strong>Descripcion Complementaria</strong></td>
-                                    <td class='warning'><strong>Cantidad</strong></td>
-                                    <td class='warning'><strong>Monto</strong></td>
+                                <tr style="background: rgba(245,245,245,0.5);border: 0px" align='center'>
+                                    <td><strong>Concepto</strong></td>
+                                    <td><strong>Descripcion Complementaria</strong></td>
+                                    <td><strong>Cantidad</strong></td>
+                                    <td><strong>Monto</strong></td>
                                 </tr>
                                 </thead>
                                 <tbody>
