@@ -9,7 +9,7 @@
         <!-- Bootstrap -->
         <link href="{{ asset('bootstrap/dist/css/bootstrap-edit.css') }}" rel="stylesheet">
         <link href="{{ asset('font-awesome-4.7.0/css/font-awesome.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('toastr/toastr.min.css') }}" rel="stylesheet">
         <!--<link href="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.css') }}" rel="stylesheet">-->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -255,28 +255,25 @@
         </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaSccsipt plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-        <script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}" ></script>
+        <script type="text/javascript"  src="{{ asset('jquery/jquery-2.2.4.min.js') }}"></script>
+        <script type="text/javascript"  src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}" ></script>
 
 <!--        <script src="{{ asset('fullCalendar/moment/moment.js')}}"></script>
         <script src="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.js')}}"></script>
         <script src="{{ asset('fullCalendar/fullcalendar/dist/locale/es.js')}}"></script>-->
 
-        <script type="text/javascript" src="http://vadikom.github.io/smartmenus/src/jquery.smartmenus.js"></script>
-        <script type="text/javascript" src="http://vadikom.github.io/smartmenus/src/addons/bootstrap/jquery.smartmenus.bootstrap.js"></script>
+        <script type="text/javascript"  src="{{ asset('smartmenus/jquery.smartmenus.min.js') }}"></script>
+        <script type="text/javascript"  src="{{ asset('smartmenus/addons/bootstrap/jquery.smartmenus.bootstrap.min.js') }}"></script>
 
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+        <script type="text/javascript" src="{{ asset('toastr/toastr.min.js') }}"></script>
 
         <!--<script src="{{ asset('js/vue-select.js') }}" ></script>-->
-          <script src="https://unpkg.com/vue-select@1.3.3"></script>
-          
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.js"></script>
+        <script type="text/javascript"  src="{{ asset('vue-select/vue-select@1.3.3.js')}}"></script>
 
-      
-        
+        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
+
+
         @yield('javascript')
 
 <!--<script type="text/javascript" src="{{ asset('js/autentificacion.js') }}"></script>-->

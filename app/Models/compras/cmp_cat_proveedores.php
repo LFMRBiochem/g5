@@ -12,6 +12,7 @@ class Cmp_cat_proveedores extends Model {
         'cve_compania',
         'id_centrocosto',
         'rfc',
+        'tipo_persona',
         'razon_social',
         'Codigo_pais',
         'Cve_entidad',

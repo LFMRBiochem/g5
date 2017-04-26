@@ -13,13 +13,13 @@ Route::get('/conceptos', function() {
 //
 # nomina ###################################
 # compras ##################################
-    Route::group(['middleware' => ['web']], function() {
-        Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
-    });
+Route::group(['middleware' => ['web']], function() {
+    Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
+});
 
-    Route::get('/cmp_solicitud_pagoController/beneficiario', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
+Route::get('/cmp_solicitud_pagoController/beneficiario', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
 
-    Route::get('/cmp_solicitud_pagoController/conceptos', 'compras\cmp_solicitud_pagoController@get_conceptos');
+Route::get('/cmp_solicitud_pagoController/conceptos', 'compras\cmp_solicitud_pagoController@get_conceptos');
 # Ventas ###################################
 # Inventarios ##############################
 # Produccion ###############################
@@ -85,18 +85,18 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::resource('/ctb_reserva_cfdiC', 'contabilidad\ctb_reserva_cfdiController');
 
     Route::get('/cmp_cat_proveedores', 'compras\cmp_cat_proveedoresController@listar');
+    Route::get('/cmp_cat_proveedores/edit/{id_proveedores}', 'compras\cmp_cat_proveedoresController@get_proveedor_edit');
     Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
 
-    Route::get('/cmp_cat_proveedores/entidad/', 'compras\cmp_cat_proveedoresController@get_entidad');
-    Route::get('/cmp_cat_proveedores/municipio/{entidad}', 'compras\cmp_cat_proveedoresController@get_municipio');
-    Route::get('/cmp_cat_proveedores/localidad/{municipio}/{entidad}', 'compras\cmp_cat_proveedoresController@get_localidad');
-    Route::get('/cmp_cat_proveedores/codigo_postal/{municipio}/{entidad}', 'compras\cmp_cat_proveedoresController@get_codigo_postal');
-    
-//    Route::get('/cmp_cat_proveedoresC/entidad/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_entidad');
-//    Route::get('/cmp_cat_proveedoresC/municipio/{Cve_municipio}/{Cve_entidad}', 'compras\cmp_cat_proveedoresController@get_municipio');
-//    Route::get('/cmp_cat_proveedoresC/municipio_entidad/{Cve_municipio}/{Cve_estado}', 'compras\cmp_cat_proveedoresController@get_municipio_entidad');
-//    Route::get('/cmp_cat_proveedoresC/localidad/{Cve_localidad}', 'compras\cmp_cat_proveedoresController@get_localidad');
+    Route::get('/tabla_recurrente/entidad/', 'tabla_recurrente\tbl_recurrenteController@get_entidad');
+    Route::get('/tabla_recurrente/municipio/{entidad}', 'tabla_recurrente\tbl_recurrenteController@get_municipio');
+    Route::get('/tabla_recurrente/localidad/{municipio}/{entidad}', 'tabla_recurrente\tbl_recurrenteController@get_localidad');
+    Route::get('/tabla_recurrente/codigo_postal/{municipio}/{entidad}', 'tabla_recurrente\tbl_recurrenteController@get_codigo_postal');
+    Route::get('/tabla_recurrente/banco/', 'tabla_recurrente\tbl_recurrenteController@get_banco');
+    Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
 
+    
+   
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');
     Route::resource('/glx_companiasC', 'administracion\glx_companiasController');

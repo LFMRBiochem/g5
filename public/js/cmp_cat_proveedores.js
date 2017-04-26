@@ -1,18 +1,34 @@
 Vue.http.headers.common['X-CSRF-TOKEN'] = $("#token").attr("value");
 Vue.component('v-select', VueSelect.VueSelect);
+
 new Vue({
     el: '#manage-vue',
     data: {
+        municipio_edit: null,
+        localida_edit: null,
+        codigo_postal_edit: null,
+
         selectedEntidad: null,
         selectedMunicipio: null,
         selectedLocalidad: null,
         selectedCodigo_postal: null,
-        
+        selectedBanco: null,
+        selectedRazon_social: null,
+
+        selectedEntidadEdit: null,
+        selectedMunicipioEdit: null,
+        selectedLocalidadEdit: null,
+        selectedCodigo_postalEdit: null,
+        selectedBancoEdit: null,
+        selectedRazon_socialEdit: null,
+
         entidad: [],
         municipio: [],
         localidad: [],
         codigo_postal: [],
-        
+        banco: [],
+        razon_social: [],
+
         items: [],
         pagination: {
             total: 0,
@@ -27,6 +43,7 @@ new Vue({
         newItem: {'id_proveedor': '',
             'cve_compania': '',
             'id_centrocosto': '',
+            'tipo_persona': '',
             'rfc': '',
             'razon_social': '',
             'Codigo_pais': '',
@@ -50,6 +67,7 @@ new Vue({
             'cve_compania': '',
             'id_centrocosto': '',
             'rfc': '',
+            'tipo_persona': '',
             'razon_social': '',
             'Codigo_pais': '',
             'Cve_entidad': '',
@@ -91,11 +109,14 @@ new Vue({
                 from++;
             }
             return pagesArray;
-        }
+        },
+
     },
     ready: function () {
         this.getVueItems(this.pagination.current_page);
         this.getEntidad();
+        this.getBanco();
+        this.getRazon_social();
     },
     watch: {
 
@@ -123,6 +144,7 @@ new Vue({
             }
 
         },
+
         selectedMunicipio: function (val, oldVal) {
             if (val !== null) {
                 this.newItem.Cve_municipio = val.value;
@@ -145,8 +167,8 @@ new Vue({
                 this.selectedCodigo_postal = null;
 
             }
-
         },
+
         selectedLocalidad: function (val, oldVal) {
             if (val !== null) {
                 this.newItem.Cve_localidad = val.value;
@@ -158,40 +180,183 @@ new Vue({
         },
         selectedCodigo_postal: function (val, oldVal) {
             if (val !== null) {
-                this.newItem.Codigo_postal = val.value;
+                var data = val.value.split("|");
+
+                this.newItem.Asentamiento = data[1];
+                this.newItem.Tipo_asentamiento = data[2];
+                this.newItem.Codigo_postal = data[0];
             } else {
+                this.newItem.Asentamiento = '';
+                this.newItem.Tipo_asentamiento = '';
                 this.newItem.Codigo_postal = '';
 
             }
 
-        }
+        },
 
-//        'newItem.Cve_entidad': function (val, oldVal) {
-//            console.log(val.label);
-//        },
+        selectedRazon_social: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.razon_social = val.value;
+            } else {
+                this.newItem.razon_social = '';
+            }
+
+        },
+
+        selectedBanco: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.id_banco = val.value;
+            } else {
+                this.newItem.id_banco = '';
+            }
+
+        },
+
+///EDIT
+
+        selectedEntidadEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.Cve_entidad = val.value;
+// limpiar select
+                this.municipio = [];
+                this.selectedMunicipioEdit = null;
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+                this.getMunicipio(val.value);
+
+            } else {
+                this.fillItem.Cve_entidad = '';
+// limpiar select
+                this.municipio = [];
+                this.selectedMunicipioEdit = null;
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+            }
+
+        },
+
+        selectedMunicipioEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.Cve_municipio = val.value;
+
+                // limpiar select
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+                this.getLocalidad(val.value, this.fillItem.Cve_entidad);
+                this.getCodigo_postal(val.value, this.fillItem.Cve_entidad);
+            } else {
+                this.fillItem.Cve_municipio = '';
+
+                // limpiar select
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+            }
+        },
+
+        selectedLocalidadEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.Cve_localidad = val.value;
+            } else {
+                this.fillItem.Cve_localidad = '';
+
+            }
+
+        },
+        selectedCodigo_postalEdit: function (val, oldVal) {
+            if (val !== null) {
+                var data = val.value.split("|");
+
+                this.fillItem.Asentamiento = data[1];
+                this.fillItem.Tipo_asentamiento = data[2];
+                this.fillItem.Codigo_postal = data[0];
+            } else {
+                this.fillItem.Asentamiento = '';
+                this.fillItem.Tipo_asentamiento = '';
+                this.fillItem.Codigo_postal = '';
+
+            }
+
+        },
+
+        selectedRazon_socialEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.razon_social = val.value;
+            } else {
+                this.fillItem.razon_social = '';
+            }
+
+        },
+
+        selectedBancoEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.id_banco = val.value;
+            } else {
+                this.fillItem.id_banco = '';
+            }
+
+        },
+
     },
     methods: {
+        razon_social_search: function (data) {
+            if (data !== null || data !== '') {
+                this.newItem.razon_social = '' + data;
+            } else {
+                this.newItem.razon_social = '';
+            }
+        },
+        razon_social_searchEdit: function (data) {
+            if (data !== null || data !== '') {
+                this.fillItem.razon_social = '' + data;
+            } else {
+                this.fillItem.razon_social = '';
+            }
+        },
+
+        getRazon_social: function () {
+            this.$http.get('tabla_recurrente/razon_social').then((response) => {
+                this.$set('razon_social', response.data);
+            });
+        },
+        getBanco: function () {
+            this.$http.get('tabla_recurrente/banco').then((response) => {
+                this.$set('banco', response.data);
+            });
+        },
         getEntidad: function () {
-            this.$http.get('cmp_cat_proveedores/entidad').then((response) => {
+            this.$http.get('tabla_recurrente/entidad').then((response) => {
                 this.$set('entidad', response.data);
             });
         },
         getMunicipio: function (entidad) {
-            this.$http.get('cmp_cat_proveedores/municipio/' + entidad).then((response) => {
+            this.$http.get('tabla_recurrente/municipio/' + entidad).then((response) => {
                 this.$set('municipio', response.data);
+                this.selectedMunicipioEdit = this.municipio_edit;
             });
         },
         getLocalidad: function (municipio, entidad) {
-            this.$http.get('cmp_cat_proveedores/localidad/' + municipio + '/' + entidad).then((response) => {
+            this.$http.get('tabla_recurrente/localidad/' + municipio + '/' + entidad).then((response) => {
                 this.$set('localidad', response.data);
+                this.selectedLocalidadEdit = this.localida_edit;
             });
         },
         getCodigo_postal: function (municipio, entidad) {
-            this.$http.get('cmp_cat_proveedores/codigo_postal/' + municipio + '/' + entidad).then((response) => {
+            this.$http.get('tabla_recurrente/codigo_postal/' + municipio + '/' + entidad).then((response) => {
                 this.$set('codigo_postal', response.data);
+                this.selectedCodigo_postalEdit = this.codigo_postal_edit;
             });
         },
-
         getVueItems: function (page) {
             this.$http.get('cmp_cat_proveedoresC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
@@ -205,6 +370,7 @@ new Vue({
                 this.newItem = {'id_proveedor': '',
                     'cve_compania': '',
                     'id_centrocosto': '',
+                    'tipo_persona': '',
                     'rfc': '',
                     'razon_social': '',
                     'Codigo_pais': '',
@@ -237,30 +403,28 @@ new Vue({
             });
         },
         editItem: function (item) {
-            this.fillItem.id_proveedor = item.id_proveedor;
-            this.fillItem.cve_compania = item.cve_compania;
-            this.fillItem.id_centrocosto = item.id_centrocosto;
-            this.fillItem.rfc = item.rfc;
-            this.fillItem.razon_social = item.razon_social;
-            this.fillItem.Codigo_pais = item.Codigo_pais;
 
-            this.fillItem.Cve_entidad = item.Cve_entidad;
-            this.fillItem.Cve_municipio = item.Cve_municipio;
-            this.fillItem.Cve_localidad = item.Cve_localidad;
-            this.fillItem.Codigo_postal = item.Codigo_postal;
-            this.fillItem.Asentamiento = item.Asentamiento;
-            this.fillItem.Tipo_asentamiento = item.Tipo_asentamiento;
+            this.$http.get('cmp_cat_proveedores/edit/' + item.id_proveedor).then((response) => {
+                this.fillItem.id_proveedor = response.data.id_proveedor;
 
-            this.fillItem.telefonos = item.telefonos;
-            this.fillItem.email = item.email;
-            this.fillItem.origen_bienes = item.origen_bienes;
-            this.fillItem.limite_credito = item.limite_credito;
-            this.fillItem.dias_credito = item.dias_credito;
-            this.fillItem.atencion_pagos = item.atencion_pagos;
+                this.selectedRazon_socialEdit = {value: response.data.razon_social, label: response.data.razon_social.replace("|", " ")};
+                this.fillItem.rfc = response.data.rfc;
+                this.selectedEntidadEdit = {value: response.data.Cve_entidad, label: response.data.Estado};
+                this.municipio_edit = {value: response.data.Cve_municipio, label: response.data.Nom_municipio};
+                this.localida_edit = {value: response.data.Cve_localidad, label: response.data.Nom_localidad};
+                this.codigo_postal_edit = {value: response.data.Codigo_postal + '|' + response.data.Asentamiento + '|' + response.data.Tipo_asentamiento, label: '[' + response.data.Codigo_postal + '] ' + response.data.Asentamiento + ', ' + response.data.Tipo_asentamiento};
+                this.fillItem.telefonos = item.telefonos;
+                this.fillItem.email = item.email;
+                this.fillItem.tipo_persona = item.tipo_persona,
+                        this.fillItem.limite_credito = item.limite_credito;
+                this.fillItem.origen_bienes = response.data.origen_bienes;
+                this.fillItem.dias_credito = item.dias_credito;
+                this.fillItem.atencion_pagos = item.atencion_pagos;
+                this.fillItem.CLABE = item.CLABE;
+                this.fillItem.atencion_ventas = item.atencion_ventas;
+                this.selectedBancoEdit = {value: response.data.id_banco, label: response.data.nom_corto_banco};
 
-            this.fillItem.atencion_ventas = item.atencion_ventas;
-            this.fillItem.id_banco = item.id_banco;
-            this.fillItem.CLABE = item.CLABE;
+            });
             $("#edit-item").modal('show');
         },
         updateItem: function (id_proveedor) {
@@ -270,6 +434,7 @@ new Vue({
                 this.newItem = {'id_proveedor': '',
                     'cve_compania': '',
                     'id_centrocosto': '',
+                    'tipo_persona': '',
                     'rfc': '',
                     'razon_social': '',
                     'Codigo_pais': '',
@@ -288,7 +453,7 @@ new Vue({
                     'atencion_ventas': '',
                     'id_banco': '',
                     'CLABE': '',
-                    'estatus': '', };
+                    'estatus': ''};
                 $("#edit-item").modal('hide');
                 toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
             }, (response) => {

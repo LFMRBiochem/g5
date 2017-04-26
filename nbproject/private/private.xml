@@ -6,9 +6,10 @@
             <file>file:/C:/xampp/htdocs/bizlink-git/resources/views/compras/cmp_cat_proveedores/index.blade.php</file>
             <file>file:/C:/xampp/htdocs/bizlink-git/public/js/cmp_cat_proveedores.js</file>
             <file>file:/C:/xampp/htdocs/bizlink-git/resources/views/layout/app.blade.php</file>
+            <file>file:/C:/xampp/htdocs/bizlink-git/app/Http/Controllers/administracion/glx_companiasController.php</file>
+            <file>file:/C:/xampp/htdocs/bizlink-git/app/Http/Controllers/tabla_recurrente/tbl_recurrenteController.php</file>
             <file>file:/C:/xampp/htdocs/bizlink-git/app/Http/Controllers/compras/cmp_cat_proveedoresController.php</file>
             <file>file:/C:/xampp/htdocs/bizlink-git/routes/web.php</file>
-            <file>file:/C:/xampp/htdocs/bizlink-git/resources/views/compras/cmp_solicitud_pago/index.blade.php</file>
         </group>
     </open-files>
 </project-private>
