@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\compras;
 
 use App\Models\compras\cmp_cat_proveedores;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Validator;
 
 class cmp_cat_proveedoresController extends Controller {
 
@@ -16,7 +14,7 @@ class cmp_cat_proveedoresController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $items = cmp_cat_proveedores::paginate(6);
+        $items = cmp_cat_proveedores::paginate(15);
 
         $response = [
             'pagination' => [
@@ -35,58 +33,6 @@ class cmp_cat_proveedoresController extends Controller {
     public function listar() {
         return view('compras/cmp_cat_proveedores/index');
     }
-
-//    public function get_entidad() {
-//        $create = DB::table('dgis_CAT_ENTIDADES')->
-//                select('Cve_entidad as value', 'Estado as label')
-//                ->get();
-//        return response()->json($create);
-//    }
-//
-//    public function get_municipio($Cve_entidad) {
-//        $create = DB::table('dgis_CAT_MUNICIPIOS')
-//                ->where('Cve_entidad', $Cve_entidad)
-//                ->orderBy('Nom_municipio')
-//                ->select('Nom_municipio as label', 'Cve_municipio as value')
-//                ->get();
-//
-//        return response()->json($create);
-//    }
-//
-//    public function get_localidad($Cve_municipio, $Cve_entidad) {
-//        $create = DB::table('dgis_CAT_LOCALIDADES')
-//                ->where('Cve_municipio', $Cve_municipio)
-//                ->where('Cve_entidad', $Cve_entidad)
-//                ->orderBy('Nom_localidad')
-//                ->select('Nom_localidad as label', 'Cve_localidad as value')
-//                ->get();
-//
-//        return response()->json($create);
-//    }
-//
-//    public function get_banco() {
-//        $create = DB::table('ctb_cat_bancos')
-//                ->orderBy('nom_corto_banco')
-//                ->select('nom_corto_banco as label', 'id_banco as value')
-//                ->get();
-//
-//        return response()->json($create);
-//    }
-//
-//    public function get_codigo_postal($Cve_municipio, $entidad) {
-//        $values = DB::table('dgis_CODIGO_POSTAL')
-//                ->where([
-//                    ['Cve_municipio', $Cve_municipio],
-//                    ['Cve_estado', $entidad],])
-//                ->select('Codigo_postal', 'Asentamiento', 'Tipo_asentamiento')
-//                ->get();
-//
-//        $create = array();
-//        foreach ($values as $fila) {
-//            array_push($create, array('value' => $fila->Codigo_postal . '|' . $fila->Asentamiento . '|' . $fila->Tipo_asentamiento, 'label' => '[' . $fila->Codigo_postal . '] ' . $fila->Asentamiento . ', ' . $fila->Tipo_asentamiento));
-//        }
-//        return response()->json($create);
-//    }
 
     function get_proveedor_edit($id_proveedor) {
         $create = DB::table('cmp_cat_proveedores AS ccp')
@@ -111,6 +57,8 @@ class cmp_cat_proveedoresController extends Controller {
                 })
                 ->where('ccp.id_proveedor', '=', $id_proveedor)
                 ->first();
+
+
         return response()->json($create);
     }
 
@@ -132,7 +80,7 @@ class cmp_cat_proveedoresController extends Controller {
     public function store(Request $request) {
 
         $this->validate($request, [
-            'rfc' => 'sometimes|required|max:15',
+            'rfc' => 'sometimes|required|min:10|max:15',
             'razon_social' => 'required|max:75|min:4',
             'Codigo_pais' => 'required|max:11',
             'tipo_persona' => 'required',
@@ -143,28 +91,80 @@ class cmp_cat_proveedoresController extends Controller {
             'Asentamiento' => 'required|max:60',
             'Tipo_asentamiento' => 'required|max:25',
             'telefonos' => 'required|max:50',
-            'email' => 'required|max:100',
+            'email' => 'required|max:100|email',
             'origen_bienes' => 'required|max:3',
             'limite_credito' => 'required|max:15',
             'dias_credito' => 'required|max:11',
             'atencion_pagos' => 'required|max:75',
             'atencion_ventas' => 'required|max:75',
             'id_banco' => 'required|max:11',
-            'CLABE' => 'required|max:18',
+            'CLABE' => 'required|digits:18',
         ]);
 
-
+//          Saber si existe el centro_costo
         $id_centrocosto = DB::table('ctb_cat_centros_costo')
                 ->where('cve_compania', '019')
                 ->where('nombre_centrocosto', $request->input('razon_social'))
                 ->select('id_centrocosto')
                 ->first();
 
-        $create = cmp_cat_proveedores::create(array_merge($request->all(), [
-                    'cve_compania' => '019',
-                    'id_centrocosto' => $id_centrocosto->id_centrocosto,
-                    'estatus' => 'A',
-        ]));
+
+//          Validar si existe el centro_costo en la tabla ctb_cat_centros_costo
+        if ($id_centrocosto) { //si existe el centro costo en la tabla ctb_cat_centros_costo
+            $id_centrocosto = $id_centrocosto->id_centrocosto;
+
+            $tipoCentroCosto = DB::table('ctb_cctipos_asociaciones')
+                            ->where('cve_compania', '019')
+                            ->where('id_centrocosto', $id_centrocosto)
+                            ->select('cve_tipoCentroCosto', 'folio_asociacion')
+                            ->get()->toArray();
+
+            print_r($tipoCentroCosto);
+            print_r('foreach');
+            foreach ($tipoCentroCosto as $fila) {
+                if ($fila->cve_tipoCentroCosto == 'CMF' || $fila->cve_tipoCentroCosto == 'CMM') {
+                    $update_asociaciones = 1;
+                    $folio_asociacion = $fila->folio_asociacion;
+                }
+            }
+            print_r('if $update_asociaciones');
+            if ($update_asociaciones == 1) { // si la cve_tipoCentroCosto contiene una de estas dos formas actualizar
+                DB::table('ctb_cctipos_asociaciones')
+                        ->where('folio_asociacion', $folio_asociacion)
+                        ->update(['cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')]);
+            } else {// si la cve_tipoCentroCosto contiene ninguna de las formas insertar
+                print_r('else $update_asociaciones');
+                DB::table('ctb_cctipos_asociaciones')->insert(
+                        ['cve_compania' => '019',
+                            'id_centrocosto' => $id_centrocosto,
+                            'cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')]
+                );
+
+                print_r('create');
+//                insertamos en la tabla cmp_cat_proveedores
+            }
+            $create = cmp_cat_proveedores::create(array_merge($request->all(), [
+                        'rfc' => strtoupper($request->input('rfc')),
+                        'cve_compania' => '019',
+                        'id_centrocosto' => $id_centrocosto,
+                        'estatus' => 'A',
+            ]));
+        } else {//si no existe el centro costo en la tabla ctb_cat_centros_costo
+            $id_centrocosto_nuevo = DB::table('ctb_cat_centros_costo')->insertGetId(
+                    ['nombre_centrocosto' => $request->input('razon_social'), 'cve_compania' => '019']
+            );
+            DB::table('ctb_cctipos_asociaciones')->insert(
+                    ['cve_compania' => '019', 'id_centrocosto' => $id_centrocosto_nuevo, 'cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')]
+            );
+            //                insertamos en la tabla cmp_cat_proveedores
+            $create = cmp_cat_proveedores::create(array_merge($request->all(), [
+                        'rfc' => strtoupper($request->input('rfc')),
+                        'cve_compania' => '019',
+                        'id_centrocosto' => $id_centrocosto_nuevo,
+                        'estatus' => 'A',
+            ]));
+        }
+
         return response()->json($create);
     }
 
@@ -197,6 +197,7 @@ class cmp_cat_proveedoresController extends Controller {
      */
     public function update(Request $request, $id) {
         //
+
         $this->validate($request, [
             'rfc' => 'sometimes|required|max:15',
             'razon_social' => 'required|max:75|min:4',
@@ -225,10 +226,20 @@ class cmp_cat_proveedoresController extends Controller {
                 ->select('id_centrocosto')
                 ->first();
 
+//        DB::table('ctb_cctipos_asociaciones')->insert(
+//                ['id_centrocosto' => $id_centrocosto, 'cve_compania' => '019', 'cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')]
+//        );
+        DB::table('ctb_cctipos_asociaciones')
+                ->where('id_centrocosto', $id_centrocosto->id_centrocosto)
+                ->where('cve_compania', '019')
+                ->where('cve_tipoCentroCosto', 'CMM')
+                ->orWhere('cve_tipoCentroCosto', 'CMF')
+                ->update(['cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')]);
+
+
         $edit = cmp_cat_proveedores::find($id)->update(array_merge($request->all(), [
             'cve_compania' => '019',
             'id_centrocosto' => $id_centrocosto->id_centrocosto,
-            'estatus' => 'A',
         ]));
         return response()->json($edit);
     }
@@ -240,8 +251,19 @@ class cmp_cat_proveedoresController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
-        cmp_cat_proveedores::find($id)->delete();
+        $db_estatus = DB::table('cmp_cat_proveedores')
+                ->where('id_proveedor', $id)
+                ->select('estatus')
+                ->first();
+
+        if ($db_estatus->estatus == 'A') {
+            $estatus = 'X';
+        } else {
+            $estatus = 'A';
+        }
+        cmp_cat_proveedores::find($id)->update([
+            'estatus' => $estatus,
+        ]);
         return response()->json(['done']);
     }
 

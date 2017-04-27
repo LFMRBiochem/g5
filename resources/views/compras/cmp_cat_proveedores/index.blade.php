@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button"  data-toggle="modal" data-target="#create-item" class="btn btn-primary" @keydown.enter.prevent="">
+            <button type="button"  data-toggle="modal" data-target="#create-item" class="btn btn-primary" @click.prevent="cleanItem()" @keydown.enter.prevent="">
                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
             </button>
 
@@ -59,7 +59,7 @@
                         <th  class="text-center" colspan="2">Actions</th>
                     </tr>
                     <tr v-for="item in items">
-                        <td  class="text-center">@{{ item.razon_social }}</td>
+                        <td  class="text-center">@{{ item.razon_social.split("|").join(" ") }}</td>
                         <td  class="text-center">@{{ item.rfc }}</td>
                         <td  class="text-center">@{{ item.Cve_entidad }}</td>
                         <td  class="text-center">@{{ item.telefonos }}</td>
@@ -68,13 +68,16 @@
                         <td  class="text-center">@{{ item.atencion_ventas }}</td>
                         <td  class="text-center">@{{ item.estatus }}</td>
                         <td>
-                            <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)" @keydown.enter.prevent="">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
+                            <button class="edit-modal btn btn-warning btn-sm btn-block" @click.prevent="editItem(item)" @keydown.enter.prevent="">
+                                <span class="glyphicon glyphicon-edit"></span> Ediar
                             </button>
                         </td>
                         <td>
-                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)" >
-                                <span class="glyphicon glyphicon-trash"></span> Delete
+                            <button v-if="item.estatus == 'X'" class="edit-modal btn btn-default btn-sm btn-block" @click.prevent="deleteItem(item)" >
+                                <i class="fa fa-toggle-on" aria-hidden="true"></i> Activar
+                            </button>
+                            <button v-if="item.estatus == 'A'" class="edit-modal btn btn-danger btn-sm btn-block" @click.prevent="deleteItem(item)" >
+                                <i class="fa fa-toggle-off" aria-hidden="true"></i> Cancelar
                             </button>
                         </td>
                     </tr>
@@ -124,6 +127,10 @@
                         text-transform: uppercase
                     }
                 </style>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
+                </div>
 
                 <div class="form-group">
                     <label for="razon_social">Razón social:</label>
@@ -140,6 +147,7 @@
                     <input type="text" name="rfc" class="form-control" v-model="newItem.rfc"   autocomplete="off" />
                     <span v-if="formErrors['rfc']" class="error text-danger">
                         @{{ formErrors['rfc'] }}
+
                     </span>
                 </div>
 
@@ -151,15 +159,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="origen_bienes">Tipo de persona:</label>
+                    <label for="tipo_persona">Tipo de persona:</label>
                     <select name="tipo_persona" class="form-control" v-model="newItem.tipo_persona">
                         <option disabled value="">Seleccione...</option>
-                        <option value="f">Física</option>
-                        <option value="m">Moral</option>
+                        <option value="F">Física</option>
+                        <option value="M">Moral</option>
                     </select>
 
-                    <span v-if="formErrors['origen_bienes']" class="error text-danger">
-                        @{{ formErrors['origen_bienes'] }}
+                    <span v-if="formErrors['tipo_persona']" class="error text-danger">
+                        @{{ formErrors['tipo_persona'] }}
                     </span>
                 </div>
 
@@ -290,7 +298,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                 </div>
                 </form>
             </div>
@@ -314,6 +322,10 @@
                             text-transform: uppercase
                         }
                     </style>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
+                    </div>
 
                     <div class="form-group">
                         <label for="razon_social">Razón social:</label>
@@ -330,6 +342,18 @@
                         <input type="text" name="rfc" class="form-control" v-model="fillItem.rfc"   autocomplete="off" />
                         <span v-if="formErrors['rfc']" class="error text-danger">
                             @{{ formErrors['rfc'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="origen_bienes">Tipo de persona:</label>
+                        <select name="tipo_perstipo_personaona" class="form-control" v-model="fillItem.tipo_persona">
+                            <option disabled value="">Seleccione...</option>
+                            <option value="F">Física</option>
+                            <option value="M">Moral</option>
+                        </select>
+                        <span v-if="formErrors['tipo_persona']" class="error text-danger">
+                            @{{ formErrors['tipo_persona'] }}
                         </span>
                     </div>
 
@@ -399,11 +423,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="origen_bienes">Tipo de persona:</label>
-                                <select name="tipo_persona" class="form-control" v-model="fillItem.tipo_persona">
+                                <label for="origen_bienes">Origen de bienes:</label>
+                                <select name="origen_bienes" class="form-control" v-model="fillItem.origen_bienes">
                                     <option disabled value="">Seleccione...</option>
-                                    <option value="f">Física</option>
-                                    <option value="m">Moral</option>
+                                    <option value="nac">Nacionales</option>
+                                    <option value="int">Internacionales</option>
                                 </select>
 
                                 <span v-if="formErrors['origen_bienes']" class="error text-danger">
@@ -467,7 +491,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>
                 </form>
             </div>

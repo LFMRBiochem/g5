@@ -40,7 +40,9 @@ new Vue({
         offset: 4,
         formErrors: {},
         formErrorsUpdate: {},
-        newItem: {'id_proveedor': '',
+
+        newItem: {
+            'id_proveedor': '',
             'cve_compania': '',
             'id_centrocosto': '',
             'tipo_persona': '',
@@ -63,7 +65,8 @@ new Vue({
             'id_banco': '',
             'CLABE': '',
             'estatus': ''},
-        fillItem: {'id_proveedor': '',
+        fillItem: {
+            'id_proveedor': '',
             'cve_compania': '',
             'id_centrocosto': '',
             'rfc': '',
@@ -110,7 +113,6 @@ new Vue({
             }
             return pagesArray;
         },
-
     },
     ready: function () {
         this.getVueItems(this.pagination.current_page);
@@ -182,8 +184,8 @@ new Vue({
             if (val !== null) {
                 var data = val.value.split("|");
 
-                this.newItem.Asentamiento = data[1];
-                this.newItem.Tipo_asentamiento = data[2];
+                this.newItem.Tipo_asentamiento = data[1];
+                this.newItem.Asentamiento = data[2];
                 this.newItem.Codigo_postal = data[0];
             } else {
                 this.newItem.Asentamiento = '';
@@ -277,8 +279,8 @@ new Vue({
             if (val !== null) {
                 var data = val.value.split("|");
 
-                this.fillItem.Asentamiento = data[1];
-                this.fillItem.Tipo_asentamiento = data[2];
+                this.fillItem.Tipo_asentamiento = data[1];
+                this.fillItem.Asentamiento = data[2];
                 this.fillItem.Codigo_postal = data[0];
             } else {
                 this.fillItem.Asentamiento = '';
@@ -363,6 +365,17 @@ new Vue({
                 this.$set('pagination', response.data.pagination);
             });
         },
+        cleanItem: function () {
+            this.formErrors = {};
+            this.fillItem.Codigo_pais = '223';
+            this.newItem.Codigo_pais = '223'
+            this.selectedEntidad = null;
+            this.selectedMunicipio = null;
+            this.selectedLocalidad = null;
+            this.selectedCodigo_postal = null;
+            this.selectedBanco = null;
+            this.selectedRazon_social = null;
+        },
         createItem: function () {
             var input = this.newItem;
             this.$http.post('cmp_cat_proveedoresC', input).then((response) => {
@@ -373,7 +386,7 @@ new Vue({
                     'tipo_persona': '',
                     'rfc': '',
                     'razon_social': '',
-                    'Codigo_pais': '',
+                    'Codigo_pais': '223',
                     'Cve_entidad': '',
                     'Cve_municipio': '',
                     'Cve_localidad': '',
@@ -391,32 +404,34 @@ new Vue({
                     'CLABE': '',
                     'estatus': ''};
                 $("#create-item").modal('hide');
-                toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('Guardado con éxito !!!', 'Proveedor', {timeOut: 5000});
             }, (response) => {
                 this.formErrors = response.data;
+
             });
         },
         deleteItem: function (item) {
             this.$http.delete('cmp_cat_proveedoresC/' + item.id_proveedor).then((response) => {
                 this.changePage(this.pagination.current_page);
-                toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('Cancelado con éxito !!!', 'Proveedor', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-
+            this.formErrors = {};
             this.$http.get('cmp_cat_proveedores/edit/' + item.id_proveedor).then((response) => {
                 this.fillItem.id_proveedor = response.data.id_proveedor;
-
+                this.fillItem.Codigo_pais = '223';
                 this.selectedRazon_socialEdit = {value: response.data.razon_social, label: response.data.razon_social.replace("|", " ")};
                 this.fillItem.rfc = response.data.rfc;
                 this.selectedEntidadEdit = {value: response.data.Cve_entidad, label: response.data.Estado};
                 this.municipio_edit = {value: response.data.Cve_municipio, label: response.data.Nom_municipio};
                 this.localida_edit = {value: response.data.Cve_localidad, label: response.data.Nom_localidad};
-                this.codigo_postal_edit = {value: response.data.Codigo_postal + '|' + response.data.Asentamiento + '|' + response.data.Tipo_asentamiento, label: '[' + response.data.Codigo_postal + '] ' + response.data.Asentamiento + ', ' + response.data.Tipo_asentamiento};
+                this.codigo_postal_edit = {value: response.data.Codigo_postal + '|' + response.data.Tipo_asentamiento + '|' + response.data.Asentamiento, label: '[' + response.data.Codigo_postal + '] ' + response.data.Tipo_asentamiento + ', ' + response.data.Asentamiento};
                 this.fillItem.telefonos = item.telefonos;
                 this.fillItem.email = item.email;
-                this.fillItem.tipo_persona = item.tipo_persona,
-                        this.fillItem.limite_credito = item.limite_credito;
+                this.fillItem.tipo_persona = item.tipo_persona;
+                this.fillItem.limite_credito = item.limite_credito;
+                this.fillItem.estatus = item.estatus;
                 this.fillItem.origen_bienes = response.data.origen_bienes;
                 this.fillItem.dias_credito = item.dias_credito;
                 this.fillItem.atencion_pagos = item.atencion_pagos;
@@ -455,7 +470,7 @@ new Vue({
                     'CLABE': '',
                     'estatus': ''};
                 $("#edit-item").modal('hide');
-                toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('Actualizado con éxito !!!', 'Proveedor', {timeOut: 5000});
             }, (response) => {
                 this.formErrors = response.data;
             });

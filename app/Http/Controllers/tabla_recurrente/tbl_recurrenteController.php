@@ -65,7 +65,7 @@ class tbl_recurrenteController extends Controller {
 
         $create = array();
         foreach ($values as $fila) {
-            array_push($create, array('value' => $fila->Codigo_postal . '|' . $fila->Asentamiento . '|' . $fila->Tipo_asentamiento, 'label' => '[' . $fila->Codigo_postal . '] ' . $fila->Asentamiento . ', ' . $fila->Tipo_asentamiento));
+            array_push($create, array('value' => $fila->Codigo_postal . '|' . $fila->Tipo_asentamiento . '|' . $fila->Asentamiento, 'label' => '[' . $fila->Codigo_postal . '] ' . $fila->Tipo_asentamiento . ', ' . $fila->Asentamiento));
         }
         return response()->json($create);
     }
