@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\administracion;
 
-use App\Models\administracion\Glx_companias;
+use App\Models\administracion\glx_companias;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class glx_companiasController extends Controller {
      */
     public function index() {
 
-        $items = Glx_companias::paginate(6);
+        $items = glx_companias::paginate(6);
 
         $response = [
             'pagination' => [
@@ -67,7 +67,7 @@ class glx_companiasController extends Controller {
             	
         ]);
 
-        $create = Glx_companias::create($request->all());
+        $create = glx_companias::create($request->all());
 
         return response()->json($create);
     }
@@ -78,7 +78,7 @@ class glx_companiasController extends Controller {
      * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
-    public function show(Glx_companias $glx_companias) {
+    public function show(glx_companias $glx_companias) {
         //
     }
 
@@ -88,7 +88,7 @@ class glx_companiasController extends Controller {
      * @param  \App\Model\administracion\Glx_companias  $glx_companias
      * @return \Illuminate\Http\Response
      */
-    public function edit(Glx_companias $glx_companias) {
+    public function edit(glx_companias $glx_companias) {
         //
     }
 
@@ -107,7 +107,7 @@ class glx_companiasController extends Controller {
             'rfc' => 'required|max:15',
             
         ]);
-        $edit = Glx_companias::find($id)->update($request->all());
+        $edit = glx_companias::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -119,7 +119,7 @@ class glx_companiasController extends Controller {
      */
     public function destroy($id) {
         //
-        Glx_companias::find($id)->delete();
+        glx_companias::find($id)->delete();
         return response()->json(['done']);
     }
 

@@ -4,7 +4,7 @@ namespace App\Models\contabilidad;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ctb_tipos_cambio extends Model {
+class ctb_tipos_cambio extends Model {
 
     //
     protected $table = 'ctb_tipos_cambio';

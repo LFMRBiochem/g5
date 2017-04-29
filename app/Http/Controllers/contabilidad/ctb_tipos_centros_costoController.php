@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_tipos_centros_costo;
+use App\Models\contabilidad\ctb_tipos_centros_costo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class ctb_tipos_centros_costoController extends Controller {
      */
     public function index() {
         //
-        $items = Ctb_tipos_centros_costo::paginate(6);
+        $items = ctb_tipos_centros_costo::paginate(6);
 
         $response = [
             'pagination' => [
@@ -58,7 +58,7 @@ class ctb_tipos_centros_costoController extends Controller {
             'tipo_cc' => 'required|max:45',
         ]);
 
-        $create = Ctb_tipos_centros_costo::create($request->all());
+        $create = ctb_tipos_centros_costo::create($request->all());
 
         return response()->json($create);
     }
@@ -95,7 +95,7 @@ class ctb_tipos_centros_costoController extends Controller {
         $this->validate($request, [
             'tipo_cc' => 'required|max:45'
         ]);
-        $edit = Ctb_tipos_centros_costo::find($id)->update($request->all());
+        $edit = ctb_tipos_centros_costo::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -107,7 +107,7 @@ class ctb_tipos_centros_costoController extends Controller {
      */
     public function destroy($id) {
         //
-        Ctb_tipos_centros_costo::find($id)->delete();
+        ctb_tipos_centros_costo::find($id)->delete();
         return response()->json(['done']);
     }
 

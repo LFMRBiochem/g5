@@ -6,7 +6,7 @@ use App\Models\tesoreria\ctb_cat_bancos;
 
 class ctb_cat_bancosController extends Controller{
 	public function Bancos(){
-		return view('tesoreria.ctb_cat_bancos');
+		return view('tesoreria/ctb_cat_bancos');
 	}
 	public function index(Request $request){
 		$bancos = ctb_cat_bancos::paginate($request['xPag']);

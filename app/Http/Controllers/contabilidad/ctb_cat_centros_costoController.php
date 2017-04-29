@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_cat_centros_costo;
+use App\Models\contabilidad\ctb_cat_centros_costo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class ctb_cat_centros_costoController extends Controller {
      */
     public function index() {
         //
-        $items = Ctb_cat_centros_costo::paginate(6);
+        $items = ctb_cat_centros_costo::paginate(6);
 
         $response = [
             'pagination' => [
@@ -62,7 +62,7 @@ class ctb_cat_centros_costoController extends Controller {
             'catalogo_sat' => 'required|max:6',
         ]);
 
-        $create = Ctb_cat_centros_costo::create($request->all());
+        $create = ctb_cat_centros_costo::create($request->all());
 
         return response()->json($create);
     }
@@ -103,7 +103,7 @@ class ctb_cat_centros_costoController extends Controller {
             'cve_tipoCentroCosto' => 'required|max:3',
             'catalogo_sat' => 'required|max:6',
         ]);
-        $edit = Ctb_cat_centros_costo::find($id)->update($request->all());
+        $edit = ctb_cat_centros_costo::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -115,7 +115,7 @@ class ctb_cat_centros_costoController extends Controller {
      */
     public function destroy($id) {
         //
-        Ctb_cat_centros_costo::find($id)->delete();
+        ctb_cat_centros_costo::find($id)->delete();
         return response()->json(['done']);
     }
 

@@ -47,7 +47,6 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_compania</th>
                         <th>num_empleado</th>
                         <th>nombre_empleado</th>
                         <th>primer_apellido</th>
@@ -74,11 +73,10 @@
                         <th>id_centrocosto</th>
                         <th>cve_banco</th>
                         <th>cuenta_bancaria</th>
-                          <th>Actions</th>
+                        <th>Actions</th>
                     </tr>
                     <tr v-for="item in items">
 
-                        <th>@{{ item.cve_compania}}</th>
                         <th>@{{ item.num_empleado}}</th>
                         <th>@{{ item.nombre_empleado}}</th>
                         <th>@{{ item.primer_apellido}}</th>
@@ -156,13 +154,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
-                    <div class="form-group">
-                        <label for="cve_compania">cve_compania:</label>
-                        <input type="text" name="cve_compania" class="form-control" v-model="newItem.cve_compania" />
-                        <span v-if="formErrors['cve_compania']" class="error text-danger">
-                            @{{ formErrors['cve_compania'] }}
-                        </span>
-                    </div>
+        
                     <div class="form-group">
                         <label for="num_empleado">num_empleado:</label>
                         <input type="text" name="num_empleado" class="form-control" v-model="newItem.num_empleado" />
@@ -192,46 +184,54 @@
                             @{{ formErrors['segundo_apellido'] }}
                         </span>
                     </div>
-                    
-                    
-                    
-                    
-                    
+
+
                     <div class="form-group">
-                        <label for="codigo_pais">codigo_pais:</label>
-                        <input type="text" name="codigo_pais" class="form-control" v-model="newItem.codigo_pais" />
-                        <span v-if="formErrors['codigo_pais']" class="error text-danger">
-                            @{{ formErrors['codigo_pais'] }}
+                        <input type="hidden" name="Codigo_pais"  value="223" v-model="newItem.Codigo_pais"  autocomplete="off"/>
+                        <span v-if="formErrors['Codigo_pais']" class="error text-danger">
+                            @{{ formErrors['Codigo_pais'] }}
+                        </span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="Cve_entidad">Entidad:</label>
+                        <v-select :value.sync="selectedEntidad" :options="entidad"  placeholder="Seleccione..."   >
+                        </v-select>
+
+                        <span v-if="formErrors['Cve_entidad']" class="error text-danger">
+                            @{{ formErrors['Cve_entidad'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Cve_municipio">Municipio:</label>
+                        <v-select :value.sync="selectedMunicipio" :options="municipio"  placeholder="Seleccione..."   >
+                        </v-select>
+                        <span v-if="formErrors['Cve_municipio']" class="error text-danger">
+                            @{{ formErrors['Cve_municipio'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Cve_localidad">Localidad:</label>
+                        <v-select :value.sync="selectedLocalidad" :options="localidad"  placeholder="Seleccione..."   >
+                        </v-select>
+
+                        <span v-if="formErrors['Cve_localidad']" class="error text-danger">
+                            @{{ formErrors['Cve_localidad'] }}
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="cve_entidad">cve_entidad:</label>
-                        <input type="text" name="cve_entidad" class="form-control" v-model="newItem.cve_entidad" />
-                        <span v-if="formErrors['cve_entidad']" class="error text-danger">
-                            @{{ formErrors['cve_entidad'] }}
+                        <label for="Codigo_postal">Código postal:</label>
+                        <v-select :value.sync="selectedCodigo_postal" :options="codigo_postal"  placeholder="Seleccione..."   >
+                        </v-select>
+                        <span v-if="formErrors['Codigo_postal']" class="error text-danger">
+                            @{{ formErrors['Codigo_postal'] }}
                         </span>
                     </div>
-                    <div class="form-group">
-                        <label for="cve_municipio">cve_municipio:</label>
-                        <input type="text" name="cve_municipio" class="form-control" v-model="newItem.cve_municipio" />
-                        <span v-if="formErrors['cve_municipio']" class="error text-danger">
-                            @{{ formErrors['cve_municipio'] }}
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label for="cve_localidad">cve_localidad:</label>
-                        <input type="text" name="cve_localidad" class="form-control" v-model="newItem.cve_localidad" />
-                        <span v-if="formErrors['cve_localidad']" class="error text-danger">
-                            @{{ formErrors['cve_localidad'] }}
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label for="asentamiento">asentamiento:</label>
-                        <input type="text" name="asentamiento" class="form-control" v-model="newItem.asentamiento" />
-                        <span v-if="formErrors['asentamiento']" class="error text-danger">
-                            @{{ formErrors['asentamiento'] }}
-                        </span>
-                    </div>
+
                     <div class="form-group">
                         <label for="calle_domicilio">calle_domicilio:</label>
                         <input type="text" name="calle_domicilio" class="form-control" v-model="newItem.calle_domicilio" />
@@ -267,7 +267,7 @@
                             @{{ formErrors['telefono_celular'] }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="telefono_otro">telefono_otro:</label>
                         <input type="text" name="telefono_otro" class="form-control" v-model="newItem.telefono_otro" />
@@ -310,14 +310,15 @@
                             @{{ formErrors['id_centrocosto'] }}
                         </span>
                     </div>
-                    
-                     <div class="form-group">
-                        <label for="cve_banco">cve_banco:</label>
-                        <input type="text" name="cve_banco" class="form-control" v-model="newItem.cve_banco" />
-                        <span v-if="formErrors['cve_banco']" class="error text-danger">
-                            @{{ formErrors['cve_banco'] }}
-                        </span>
-                    </div>
+
+                    <div class="form-group">
+                    <label for="id_banco">Banco:</label>
+                    <v-select :value.sync="selectedBanco" :options="banco"  placeholder="Seleccione..."   >
+                    </v-select>
+                    <span v-if="formErrors['id_banco']" class="error text-danger">
+                        @{{ formErrors['id_banco'] }}
+                    </span>
+                </div>
                     <div class="form-group">
                         <label for="cuenta_bancaria">cuenta_bancaria:</label>
                         <input type="text" name="cuenta_bancaria" class="form-control" v-model="newItem.cuenta_bancaria" />
@@ -325,9 +326,9 @@
                             @{{ formErrors['cuenta_bancaria'] }}
                         </span>
                     </div>
-                    
-                    
-                    
+
+
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
@@ -349,13 +350,6 @@
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_empleado)">
 
-                     <div class="form-group">
-                        <label for="cve_compania">cve_compania:</label>
-                        <input type="text" name="cve_compania" class="form-control" v-model="fillItem.cve_compania" />
-                        <span v-if="formErrors['cve_compania']" class="error text-danger">
-                            @{{ formErrors['cve_compania'] }}
-                        </span>
-                    </div>
                     <div class="form-group">
                         <label for="num_empleado">num_empleado:</label>
                         <input type="text" name="num_empleado" class="form-control" v-model="fillItem.num_empleado" />
@@ -385,46 +379,55 @@
                             @{{ formErrors['segundo_apellido'] }}
                         </span>
                     </div>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     <div class="form-group">
-                        <label for="codigo_pais">codigo_pais:</label>
-                        <input type="text" name="codigo_pais" class="form-control" v-model="fillItem.codigo_pais" />
-                        <span v-if="formErrors['codigo_pais']" class="error text-danger">
-                            @{{ formErrors['codigo_pais'] }}
+                        <input type="hidden" name="Codigo_pais"  value="223" v-model="fillItem.Codigo_pais"  autocomplete="off"/>
+                        <span v-if="formErrors['Codigo_pais']" class="error text-danger">
+                            @{{ formErrors['Codigo_pais'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Cve_entidad">Entidad:</label>
+                        <v-select :value.sync="selectedEntidadEdit" :options="entidad"   >
+                        </v-select>
+
+                        <span v-if="formErrors['Cve_entidad']" class="error text-danger">
+                            @{{ formErrors['Cve_entidad'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Cve_municipio">Municipio:</label>
+                        <v-select :value.sync="selectedMunicipioEdit" :options="municipio"   >
+                        </v-select>
+                        <span v-if="formErrors['Cve_municipio']" class="error text-danger">
+                            @{{ formErrors['Cve_municipio'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Cve_localidad">Localidad:</label>
+                        <v-select :value.sync="selectedLocalidadEdit" :options="localidad" >
+                        </v-select>
+
+                        <span v-if="formErrors['Cve_localidad']" class="error text-danger">
+                            @{{ formErrors['Cve_localidad'] }}
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="cve_entidad">cve_entidad:</label>
-                        <input type="text" name="cve_entidad" class="form-control" v-model="fillItem.cve_entidad" />
-                        <span v-if="formErrors['cve_entidad']" class="error text-danger">
-                            @{{ formErrors['cve_entidad'] }}
+                        <label for="Codigo_postal">Código postal:</label>
+                        <v-select :value.sync="selectedCodigo_postalEdit" :options="codigo_postal"  >
+                        </v-select>
+                        <span v-if="formErrors['Codigo_postal']" class="error text-danger">
+                            @{{ formErrors['Codigo_postal'] }}
                         </span>
                     </div>
-                    <div class="form-group">
-                        <label for="cve_municipio">cve_municipio:</label>
-                        <input type="text" name="cve_municipio" class="form-control" v-model="fillItem.cve_municipio" />
-                        <span v-if="formErrors['cve_municipio']" class="error text-danger">
-                            @{{ formErrors['cve_municipio'] }}
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label for="cve_localidad">cve_localidad:</label>
-                        <input type="text" name="cve_localidad" class="form-control" v-model="fillItem.cve_localidad" />
-                        <span v-if="formErrors['cve_localidad']" class="error text-danger">
-                            @{{ formErrors['cve_localidad'] }}
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label for="asentamiento">asentamiento:</label>
-                        <input type="text" name="asentamiento" class="form-control" v-model="fillItem.asentamiento" />
-                        <span v-if="formErrors['asentamiento']" class="error text-danger">
-                            @{{ formErrors['asentamiento'] }}
-                        </span>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="calle_domicilio">calle_domicilio:</label>
                         <input type="text" name="calle_domicilio" class="form-control" v-model="fillItem.calle_domicilio" />
@@ -460,7 +463,7 @@
                             @{{ formErrors['telefono_celular'] }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="telefono_otro">telefono_otro:</label>
                         <input type="text" name="telefono_otro" class="form-control" v-model="fillItem.telefono_otro" />
@@ -503,14 +506,16 @@
                             @{{ formErrors['id_centrocosto'] }}
                         </span>
                     </div>
-                    
-                     <div class="form-group">
-                        <label for="cve_banco">cve_banco:</label>
-                        <input type="text" name="cve_banco" class="form-control" v-model="fillItem.cve_banco" />
-                        <span v-if="formErrors['cve_banco']" class="error text-danger">
-                            @{{ formErrors['cve_banco'] }}
+
+                    <div class="form-group">
+                        <label for="id_banco">Banco:</label>
+                        <v-select :value.sync="selectedBancoEdit" :options="banco"  >
+                        </v-select>
+                        <span v-if="formErrors['id_banco']" class="error text-danger">
+                            @{{ formErrors['id_banco'] }}
                         </span>
                     </div>
+                    
                     <div class="form-group">
                         <label for="cuenta_bancaria">cuenta_bancaria:</label>
                         <input type="text" name="cuenta_bancaria" class="form-control" v-model="fillItem.cuenta_bancaria" />

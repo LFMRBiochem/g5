@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_reservacfdi_impuestos;
+use App\Models\contabilidad\ctb_reservacfdi_impuestos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
     public function index() {
         //
 
-        $items = Ctb_reservacfdi_impuestos::paginate(6);
+        $items = ctb_reservacfdi_impuestos::paginate(6);
 
         $response = [
             'pagination' => [
@@ -62,7 +62,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
             'impuesto' => 'required|max:13',
         ]);
 
-        $create = Ctb_reservacfdi_impuestos::create($request->all());
+        $create = ctb_reservacfdi_impuestos::create($request->all());
 
         return response()->json($create);
     }
@@ -102,7 +102,7 @@ class ctb_reservacfdi_impuestosController extends Controller {
             'porcentaje' => 'required|max:5',
             'impuesto' => 'required|max:13|numeric',
         ]);
-        $edit = Ctb_reservacfdi_impuestos::find($id)->update($request->all());
+        $edit = ctb_reservacfdi_impuestos::find($id)->update($request->all());
         return response()->json($edit);
     }
 

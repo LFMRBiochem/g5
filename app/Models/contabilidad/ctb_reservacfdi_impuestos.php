@@ -4,7 +4,7 @@ namespace App\Models\contabilidad;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ctb_reservacfdi_impuestos extends Model {
+class ctb_reservacfdi_impuestos extends Model {
 
     //
     protected $table = 'ctb_reservacfdi_impuestos';

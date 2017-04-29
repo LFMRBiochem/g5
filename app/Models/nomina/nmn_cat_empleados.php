@@ -4,7 +4,7 @@ namespace App\Models\nomina;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nmn_cat_empleados extends Model {
+class nmn_cat_empleados extends Model {
 
     //
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_reserva_cfdi;
+use App\Models\contabilidad\ctb_reserva_cfdi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class Ctb_reserva_cfdiController extends Controller {
+class ctb_reserva_cfdiController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class Ctb_reserva_cfdiController extends Controller {
      */
     public function index() {
         //
-        $items = Ctb_reserva_cfdi::paginate(6);
+        $items = ctb_reserva_cfdi::paginate(6);
 
         $response = [
             'pagination' => [
@@ -70,7 +70,7 @@ class Ctb_reserva_cfdiController extends Controller {
             'asociado' => 'required|max:4'
         ]);
 
-        $create = Ctb_reserva_cfdi::create($request->all());
+        $create = ctb_reserva_cfdi::create($request->all());
 
         return response()->json($create);
     }
@@ -119,7 +119,7 @@ class Ctb_reserva_cfdiController extends Controller {
             'descripcion' => 'required|max:255',
             'asociado' => 'required|max:4'
         ]);
-        $edit = Ctb_reserva_cfdi::find($id)->update($request->all());
+        $edit = ctb_reserva_cfdi::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -131,7 +131,7 @@ class Ctb_reserva_cfdiController extends Controller {
      */
     public function destroy($id) {
         //
-        Ctb_reserva_cfdi::find($id)->delete();
+        ctb_reserva_cfdi::find($id)->delete();
         return response()->json(['done']);
     }
 

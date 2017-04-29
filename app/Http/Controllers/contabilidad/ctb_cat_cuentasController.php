@@ -7,7 +7,7 @@ use App\Models\contabilidad\ctb_cat_concepto_financiero;
 ini_set('max_execution_time', 300);
 class ctb_cat_cuentasController extends Controller {
 	public function ArbolDeCuentas(){
-		return view('contabilidad.ctb_cat_cuentas');
+		return view('contabilidad/ctb_cat_cuentas');
 	}
 	public function index(Request $request){
 		$cuentas = ctb_cat_cuentas::getCuentas($request['nivel']);

@@ -4,7 +4,7 @@ namespace App\Models\contabilidad;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ctb_documentos_partidas extends Model
+class ctb_documentos_partidas extends Model
 {
     //
     protected $table = 'ctb_documentos_partidas';

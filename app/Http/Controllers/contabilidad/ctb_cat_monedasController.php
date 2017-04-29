@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_cat_monedas;
+use App\Models\contabilidad\ctb_cat_monedas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,7 @@ class ctb_cat_monedasController extends Controller
     public function index()
     {
         //
-        $items = Ctb_cat_monedas::paginate(6);
+        $items = ctb_cat_monedas::paginate(6);
 
         $response = [
             'pagination' => [
@@ -34,7 +34,7 @@ class ctb_cat_monedasController extends Controller
 
     public function listar() {
 
-        return view('contabilidad/Ctb_cat_monedas/index');
+        return view('contabilidad/ctb_cat_monedas/index');
     }
 
     /**
@@ -63,7 +63,7 @@ class ctb_cat_monedasController extends Controller
             'numero_decimales' => 'required|numeric|max:9',
         ]);
 
-        $create = Ctb_cat_monedas::create($request->all());
+        $create = ctb_cat_monedas::create($request->all());
 
         return response()->json($create);
     }
@@ -107,7 +107,7 @@ class ctb_cat_monedasController extends Controller
             'posicion' => 'required|max:1',
             'numero_decimales' => 'required|numeric|max:9',
         ]);
-        $edit = Ctb_cat_monedas::find($id)->update($request->all());
+        $edit = ctb_cat_monedas::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -120,7 +120,7 @@ class ctb_cat_monedasController extends Controller
     public function destroy($id)
     {
         //
-        Ctb_cat_monedas::find($id)->delete();
+        ctb_cat_monedas::find($id)->delete();
         return response()->json(['done']);
     }
 }

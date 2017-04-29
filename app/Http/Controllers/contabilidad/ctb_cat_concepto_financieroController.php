@@ -34,7 +34,7 @@ class ctb_cat_concepto_financieroController extends Controller
 
     public function listar() {
 
-        return view('contabilidad/Ctb_cat_concepto_financiero/index');
+        return view('contabilidad/ctb_cat_concepto_financiero/index');
     }
 
     /**

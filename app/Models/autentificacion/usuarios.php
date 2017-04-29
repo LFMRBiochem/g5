@@ -4,7 +4,7 @@ namespace App\Models\autentificacion;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Usuarios extends Model {
+class usuarios extends Model {
 
     protected $table = 'SYSCAT_USUARIOS';
     public $fillable = ['Cve_usuario', 'Nombre','Password'];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\administracion;
 
-use App\Models\administracion\Syscat_usuariostransacciones;
+use App\Models\administracion\syscat_usuariostransacciones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +38,7 @@ class syscat_usuariostransaccionesController extends Controller {
 //        echo implode( ',',  $data['syscat_roles'][0]->Cve_transaccion);
 //        echo '</pre>';
 
-        return view('administracion.syscat_usuariostransacciones.index', ['data' => $data]);
+        return view('administracion/syscat_usuariostransacciones/index', array('data' => $data));
     }
 
     /**
@@ -84,7 +84,7 @@ class syscat_usuariostransaccionesController extends Controller {
         if (is_array($request->input('Cve_transaccion')) || is_object($request->input('Cve_transaccion'))) {
             foreach ($request->input('Cve_transaccion') as $fila) {
                 $data['Cve_transaccion'] = str_replace("_", ".", $fila);
-                Syscat_usuariostransacciones::create($data);
+                syscat_usuariostransacciones::create($data);
             }
         }
 

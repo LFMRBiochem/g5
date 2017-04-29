@@ -475,7 +475,7 @@
 
                     <div class="form-group">
                         <label for="id_banco">Banco:</label>
-                        <v-select :value.sync="selectedBancoEdit" :options="banco"  >
+                        <v-select :value.sync="selectedBancoEdit" :options="banco">
                         </v-select>
                         <span v-if="formErrors['id_banco']" class="error text-danger">
                             @{{ formErrors['id_banco'] }}

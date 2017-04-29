@@ -95,8 +95,6 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/tabla_recurrente/banco/', 'tabla_recurrente\tbl_recurrenteController@get_banco');
     Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
 
-    
-   
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');
     Route::resource('/glx_companiasC', 'administracion\glx_companiasController');

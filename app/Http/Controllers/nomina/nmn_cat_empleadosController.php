@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\nomina;
 
-use App\Models\nomina\Nmn_cat_empleados;
+use App\Models\nomina\nmn_cat_empleados;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class nmn_cat_empleadosController extends Controller {
      */
     public function index() {
         //
-        $items = Nmn_cat_empleados::paginate(6);
+        $items = nmn_cat_empleados::paginate(6);
 
         $response = [
             'pagination' => [
@@ -32,12 +32,6 @@ class nmn_cat_empleadosController extends Controller {
     }
 
     public function listar() {
-//        Crear variable de session
-//        $request->session()->put('key', 'value');
-//        Imprimir variable de session
-//        $value = $request->session()->get('key');
-//        Borrar variable de session
-//        $request->session()->flush() ;
         return view('nomina/nmn_cat_empleados/index');
     }
 
@@ -84,7 +78,7 @@ class nmn_cat_empleadosController extends Controller {
             'cuenta_bancaria' => 'required|max:18',
         ]);
 
-        $create = Nmn_cat_empleados::create($request->all());
+        $create = nmn_cat_empleados::create($request->all());
 
         return response()->json($create);
     }
@@ -143,7 +137,7 @@ class nmn_cat_empleadosController extends Controller {
             'cve_banco' => 'required|max:3',
             'cuenta_bancaria' => 'required|max:18',
         ]);
-        $edit = Nmn_cat_empleados::find($id)->update($request->all());
+        $edit = nmn_cat_empleados::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -155,7 +149,7 @@ class nmn_cat_empleadosController extends Controller {
      */
     public function destroy($id) {
         //
-        Nmn_cat_empleados::find($id)->delete();
+        nmn_cat_empleados::find($id)->delete();
         return response()->json(['done']);
     }
 

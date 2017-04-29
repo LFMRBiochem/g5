@@ -19,8 +19,8 @@ class tbl_recurrenteController extends Controller {
     }
 
     public function get_entidad() {
-        $create = DB::table('dgis_CAT_ENTIDADES')->
-                select('Cve_entidad as value', 'Estado as label')
+        $create = DB::table('dgis_CAT_ENTIDADES')
+                ->select('Cve_entidad as value', 'Estado as label')
                 ->get();
         return response()->json($create);
     }

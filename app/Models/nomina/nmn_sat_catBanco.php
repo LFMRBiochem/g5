@@ -4,7 +4,7 @@ namespace App\Models\nomina;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nmn_sat_catBanco extends Model {
+class nmn_sat_catBanco extends Model {
 
     //
     protected $table = 'nmn_sat_catBanco';

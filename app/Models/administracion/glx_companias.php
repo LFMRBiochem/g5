@@ -4,7 +4,7 @@ namespace App\Models\administracion;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Glx_companias extends Model {
+class glx_companias extends Model {
 
     //
     protected $table = 'glx_companias';

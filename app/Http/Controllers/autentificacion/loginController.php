@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\autentificacion;
 
-use App\Models\autentificacion\Login;
+use App\Models\autentificacion\login;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -15,7 +15,7 @@ class loginController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('autentificacion.login');
+        return view('autentificacion/login');
     }
 
     public function login(Request $request) {
@@ -30,7 +30,7 @@ class loginController extends Controller {
                             ->withErrors($validator)
                             ->withInput($request->except('Password'));
         } else {
-            $v = Login::login($request->all());
+            $v = login::login($request->all());
             if (!isset($v)) {
                 return redirect('autentificacion/login')
                                 ->withInput();

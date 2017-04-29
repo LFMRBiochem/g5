@@ -4,7 +4,7 @@ namespace App\Models\administracion;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Syscat_usuariostransacciones extends Model {
+class syscat_usuariostransacciones extends Model {
 
     //
     protected $table = 'SYSCAT_USUARIOSTRANSACCIONES';

@@ -4,7 +4,7 @@ namespace App\Models\contabilidad;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ctb_cat_monedas extends Model
+class ctb_cat_monedas extends Model
 {
     protected $table = 'ctb_cat_monedas';
 	protected $primaryKey = 'cve_moneda';

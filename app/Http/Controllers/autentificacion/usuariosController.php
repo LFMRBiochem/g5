@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\autentificacion;
 
-use App\Models\autentificacion\Usuarios;
+use App\Models\autentificacion\usuarios;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,10 +14,8 @@ class usuariosController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-
-
     public function index() {
-        $items = Usuarios::paginate(6);
+        $items = usuarios::paginate(6);
 
         $response = [
             'pagination' => [
@@ -66,7 +64,7 @@ class usuariosController extends Controller {
             'Password' => 'required|max:15|min:4',
         ]);
 
-        $create = Usuarios::create($request->all());
+        $create = usuarios::create($request->all());
 
         return response()->json($create);
     }
@@ -104,7 +102,7 @@ class usuariosController extends Controller {
             'Nombre' => 'required|max:100',
             'Password' => 'required|max:15|min:4',
         ]);
-        $edit = Usuarios::find($id)->update($request->all());
+        $edit = usuarios::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -116,7 +114,7 @@ class usuariosController extends Controller {
      */
     public function destroy($id) {
         //
-        Usuarios::find($id)->delete();
+        usuarios::find($id)->delete();
         return response()->json(['done']);
     }
 

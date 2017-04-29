@@ -1,7 +1,41 @@
 Vue.http.headers.common['X-CSRF-TOKEN'] = $("#token").attr("value");
+Vue.component('v-select', VueSelect.VueSelect);
+
 new Vue({
     el: '#manage-vue',
     data: {
+
+        municipio_edit: null,
+        localida_edit: null,
+        codigo_postal_edit: null,
+
+//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de crear cuando cambia de valor 
+//y con el metodo watch a mandar el valor a su correspondiente variable se usa como variable bandera
+//
+// Ejemplo : cada que seleccionamos una entidad se nota el cambio en selectedEntidad 
+// y con el watch cada que cambia se actualiza la variable newItem.Cve_entidad que 
+// es la que se requiere para guardar el formulario
+        selectedEntidad: null,
+        selectedMunicipio: null,
+        selectedLocalidad: null,
+        selectedCodigo_postal: null,
+        selectedBanco: null,
+
+//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de editar cuando cambia de valor 
+//y con el metodo watch a mandar el valor a su correspondiente variable se usa como variable bandera
+        selectedEntidadEdit: null,
+        selectedMunicipioEdit: null,
+        selectedLocalidadEdit: null,
+        selectedCodigo_postalEdit: null,
+        selectedBancoEdit: null,
+
+//Variables donde se guardan todas las entidades
+        entidad: [],
+        municipio: [],
+        localidad: [],
+        codigo_postal: [],
+        banco: [],
+
         items: [],
         pagination: {
             total: 0,
@@ -16,7 +50,7 @@ new Vue({
         newItem: {
             'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
             'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
-            'cve_localidad': '', 'asentamiento': '', 'calle_domicilio': '', 'num_exterior': '',
+            'cve_localidad': '', 'asentamiento': '', 'tipo_asentamiento':'', 'calle_domicilio': '', 'num_exterior': '',
             'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
             'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
             'cve_banco': '', 'cuenta_bancaria': ''
@@ -24,7 +58,7 @@ new Vue({
         fillItem: {
             'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
             'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
-            'cve_localidad': '', 'asentamiento': '', 'calle_domicilio': '', 'num_exterior': '',
+            'cve_localidad': '', 'asentamiento': '', 'tipo_asentamiento':'', 'calle_domicilio': '', 'num_exterior': '',
             'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
             'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
             'cve_banco': '', 'cuenta_bancaria': '', 'id_empleado': ''
@@ -55,14 +89,272 @@ new Vue({
         }
     },
     ready: function () {
+        // Manda llamar los datos para llenar la tabla
         this.getVueItems(this.pagination.current_page);
+        // Carga los registros de las entidades
+        this.getEntidad();
+        // Carga catalago de bancos
+        this.getBanco();
+        // Carga las razones sociales
     },
+
+    watch: {
+
+        selectedEntidad: function (val, oldVal) {
+            //Si el valor de la entidad es direfente a nulo
+            if (val !== null) {
+                // Mandamos a la variable Cve_entidad el valor que genera la seleccion de la entidad
+                this.newItem.cve_entidad = val.value;
+                // Limpiamos el vue-select del municipio cada que cambia la entidad
+                this.municipio = [];
+                // Limpiamos el valor de la variable que manda el dato a municipio
+                this.selectedMunicipio = null;
+                // Limpiamos el vue-select del localidad cada que cambia la localidad
+                this.localidad = [];
+                // Limpiamos el valor de la variable que manda el dato a localidad
+                this.selectedLocalidad = null;
+                // Limpiamos el vue-select del codigo postal cada que cambia codigo postal
+                this.codigo_postal = [];
+                // Limpiamos el valor de la variable que manda el dato a codigo postal
+                this.selectedCodigo_postal = null;
+
+                // Arrancamos el metodo getMunicipio para traernos solo los municipios referentes a la entidad
+                this.getMunicipio(val.value);
+
+                // Si el valor de la entidad es direfente nulo
+            } else {
+                // Limpiamos el valor de newItem.Cve_entidad porque no se selecciono ninguna entidad
+                this.newItem.cve_entidad = '';
+                // Limpiar vue-select del municipio
+                this.municipio = [];
+                // Limpiamos el valor de la variable que manda el dato a municipio
+                this.selectedMunicipio = null;
+                // Limpiar vue-select del localidad
+                this.localidad = [];
+                // Limpiamos el valor de la variable que manda el dato a localidad
+                this.selectedLocalidad = null;
+                // Limpiar vue-select del codigo postal
+                this.codigo_postal = [];
+                // Limpiamos el valor de la variable que manda el dato a codigo postal
+                this.selectedCodigo_postal = null;
+            }
+
+        },
+
+        //Cada que se modifica el municipio 
+        selectedMunicipio: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.cve_municipio = val.value;
+
+                // Limpiamos los valores del localidad y codigo postal cuando cambia el muniipio
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+
+                //Mandamos llamar el metodo de getLocalidad referente al municipio
+                this.getLocalidad(val.value, this.newItem.cve_entidad);
+                //Mandamos llamar el metodo de getCodigo_postal referente al municipio
+                this.getCodigo_postal(val.value, this.newItem.cve_entidad);
+            } else {
+                this.newItem.cve_municipio = '';
+
+                // Limpiamos los valores del localidad y codigo postal cuando cambia el muniipio
+                this.localidad = [];
+                this.selectedLocalidad = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postal = null;
+
+            }
+        },
+
+        // Cada que se modifica la localidad
+        selectedLocalidad: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.cve_localidad = val.value;
+            } else {
+                this.newItem.cve_localidad = '';
+
+            }
+
+        },
+        // cada que se modifica el codigo postal
+        selectedCodigo_postal: function (val, oldVal) {
+            if (val !== null) {
+                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2] 
+                var data = val.value.split("|");
+
+                // Acomodamos los valores en sus campos correspondientes
+                this.newItem.tipo_asentamiento = data[1];
+                this.newItem.asentamiento = data[2];
+                this.newItem.codigo_postal = data[0];
+            } else {
+                // Limpiamos los datos si no se tiene seleccionado ningun codigo postal
+                this.newItem.asentamiento = '';
+                this.newItem.tipo_asentamiento = '';
+                this.newItem.codigo_postal = '';
+
+            }
+
+        },
+        // Cada que se selecciona un banco con el vue-select
+        selectedBanco: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.id_banco = val.value;
+            } else {
+                this.newItem.id_banco = '';
+            }
+
+        },
+
+        ///-------------    Variables del formulario editar    -------------///
+
+        selectedEntidadEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.cve_entidad = val.value;
+                // Limpia los datos de los campos cada que se modifica la entidad del edit
+                this.municipio = [];
+                this.selectedMunicipioEdit = null;
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+                // Arrancamos el metodo getMunicipio para traernos solo los municipios referentes a la entidad
+                this.getMunicipio(val.value);
+
+            } else {
+                this.fillItem.cve_entidad = '';
+                // Limpia los datos de los campos cada que el valor de selectedEntidadEdit sea nulo, la entidad del edit
+                this.municipio = [];
+                this.selectedMunicipioEdit = null;
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+            }
+
+        },
+
+        // 
+        selectedMunicipioEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.cve_municipio = val.value;
+
+                // Limpiar los vue-select
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+                //Mandamos llamar el metodo de getLocalidad referente al municipio
+                this.getLocalidad(val.value, this.fillItem.cve_entidad);
+                //Mandamos llamar el metodo de getCodigo_postal referente al municipio
+                this.getCodigo_postal(val.value, this.fillItem.cve_entidad);
+
+            } else {
+                this.fillItem.cve_municipio = '';
+
+                // Limpiar los vue-select
+                this.localidad = [];
+                this.selectedLocalidadEdit = null;
+                this.codigo_postal = [];
+                this.selectedCodigo_postalEdit = null;
+
+            }
+        },
+
+        selectedLocalidadEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.cve_localidad = val.value;
+            } else {
+                this.fillItem.cve_localidad = '';
+
+            }
+        },
+        selectedCodigo_postalEdit: function (val, oldVal) {
+            if (val !== null) {
+                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2] 
+                var data = val.value.split("|");
+
+                // Acomodamos los valores en sus campos correspondientes
+                this.fillItem.tipo_asentamiento = data[1];
+                this.fillItem.asentamiento = data[2];
+                this.fillItem.codigo_postal = data[0];
+            } else {
+                this.fillItem.asentamiento = '';
+                this.fillItem.tipo_asentamiento = '';
+                this.fillItem.codigo_postal = '';
+
+            }
+
+        },
+
+        selectedBancoEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.id_banco = val.value;
+            } else {
+                this.fillItem.id_banco = '';
+            }
+
+        },
+
+    },
+
     methods: {
+
+        // Obtener el catalogo de bancos
+        getBanco: function () {
+            this.$http.get('tabla_recurrente/banco').then((response) => {
+                this.$set('banco', response.data);
+            });
+        },
+        // Obtener las entidades
+        getEntidad: function () {
+            this.$http.get('tabla_recurrente/entidad').then((response) => {
+                this.$set('entidad', response.data);
+            });
+        },
+        // Obtener los municipios referente a la entidad
+        getMunicipio: function (entidad) {
+            this.$http.get('tabla_recurrente/municipio/' + entidad).then((response) => {
+                this.$set('municipio', response.data);
+                this.selectedMunicipioEdit = this.municipio_edit;
+            });
+        },
+        // Obtener las localidades referente a la entidad y el municipio
+        getLocalidad: function (municipio, entidad) {
+            this.$http.get('tabla_recurrente/localidad/' + municipio + '/' + entidad).then((response) => {
+                this.$set('localidad', response.data);
+                this.selectedLocalidadEdit = this.localida_edit;
+            });
+        },
+        // Obtener los codigo de postal
+        getCodigo_postal: function (municipio, entidad) {
+            this.$http.get('tabla_recurrente/codigo_postal/' + municipio + '/' + entidad).then((response) => {
+                this.$set('codigo_postal', response.data);
+                this.selectedCodigo_postalEdit = this.codigo_postal_edit;
+            });
+        },
+
         getVueItems: function (page) {
             this.$http.get('nmn_cat_empleadosC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
+        },
+        // Limpiar los valores de los errores y otros datos
+        cleanItem: function () {
+            this.newItem = {};
+            this.formErrors = {};
+            this.fillItem.codigo_pais = '223';
+            this.newItem.codigo_pais = '223';
+            this.selectedEntidad = null;
+            this.selectedMunicipio = null;
+            this.selectedLocalidad = null;
+            this.selectedCodigo_postal = null;
+            this.selectedBanco = null;
+            this.selectedRazon_social = null;
         },
         createItem: function () {
             var input = this.newItem;
@@ -70,7 +362,7 @@ new Vue({
                 this.changePage(this.pagination.current_page);
                 this.newItem = {
                     'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
-                    'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
+                    'segundo_apellido': '', 'Codigo_pais': '223', 'cve_entidad': '', 'cve_municipio': '',
                     'cve_localidad': '', 'asentamiento': '', 'calle_domicilio': '', 'num_exterior': '',
                     'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
                     'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',

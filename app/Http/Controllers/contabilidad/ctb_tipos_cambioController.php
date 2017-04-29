@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_tipos_cambio;
+use App\Models\contabilidad\ctb_tipos_cambio;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class ctb_tipos_cambioController extends Controller {
      */
     public function index() {
         //
-        $items = Ctb_tipos_cambio::paginate(6);
+        $items = ctb_tipos_cambio::paginate(6);
 
         $response = [
             'pagination' => [
@@ -59,7 +59,7 @@ class ctb_tipos_cambioController extends Controller {
             'tipo_cambio' => 'required|numeric|max:18',
         ]);
 
-        $create = Ctb_tipos_cambio::create($request->all());
+        $create = ctb_tipos_cambio::create($request->all());
 
         return response()->json($create);
     }
@@ -98,7 +98,7 @@ class ctb_tipos_cambioController extends Controller {
             'fecha' => 'required',
             'tipo_cambio' => 'required|max:18',
         ]);
-        $edit = Ctb_tipos_cambio::find($id)->update($request->all());
+        $edit = ctb_tipos_cambio::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -110,7 +110,7 @@ class ctb_tipos_cambioController extends Controller {
      */
     public function destroy($id) {
         //
-        Ctb_tipos_cambio::find($id)->delete();
+        ctb_tipos_cambio::find($id)->delete();
         return response()->json(['done']);
     }
 

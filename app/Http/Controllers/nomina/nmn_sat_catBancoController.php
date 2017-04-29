@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\nomina;
 
-use App\Models\nomina\Nmn_sat_catBanco;
+use App\Models\nomina\nmn_sat_catBanco;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class nmn_sat_catBancoController extends Controller {
      */
     public function index() {
         //
-        $items = Nmn_sat_catBanco::paginate(6);
+        $items = nmn_sat_catBanco::paginate(6);
 
         $response = [
             'pagination' => [
@@ -64,7 +64,7 @@ class nmn_sat_catBancoController extends Controller {
             'razon_social' => 'required|max:120',
         ]);
 
-        $create = Nmn_sat_catBanco::create($request->all());
+        $create = nmn_sat_catBanco::create($request->all());
 
         return response()->json($create);
     }
@@ -102,7 +102,7 @@ class nmn_sat_catBancoController extends Controller {
             'nombre_banco' => 'required|max:40',
             'razon_social' => 'required|max:120',
         ]);
-        $edit = Nmn_sat_catBanco::find($id)->update($request->all());
+        $edit = nmn_sat_catBanco::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -114,7 +114,7 @@ class nmn_sat_catBancoController extends Controller {
      */
     public function destroy($id) {
         //
-        Nmn_sat_catBanco::find($id)->delete();
+        nmn_sat_catBanco::find($id)->delete();
         return response()->json(['done']);
     }
 

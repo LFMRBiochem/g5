@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\contabilidad;
 
-use App\Models\contabilidad\Ctb_documentos_partidas;
+use App\Models\contabilidad\ctb_documentos_partidas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class ctb_documentos_partidasController extends Controller {
      */
     public function index() {
         //
-        $items = Ctb_documentos_partidas::paginate(6);
+        $items = ctb_documentos_partidas::paginate(6);
 
         $response = [
             'pagination' => [
@@ -72,7 +72,7 @@ class ctb_documentos_partidasController extends Controller {
             'total_partida' => 'required|max:13',
         ]);
 
-        $create = Ctb_documentos_partidas::create($request->all());
+        $create = ctb_documentos_partidas::create($request->all());
 
         return response()->json($create);
     }
@@ -118,7 +118,7 @@ class ctb_documentos_partidasController extends Controller {
             'subtotal' => 'required|max:13',
             'total_partida' => 'required|max:13',
         ]);
-        $edit = Ctb_documentos_partidas::find($id)->update($request->all());
+        $edit = ctb_documentos_partidas::find($id)->update($request->all());
         return response()->json($edit);
     }
 
@@ -130,7 +130,7 @@ class ctb_documentos_partidasController extends Controller {
      */
     public function destroy($id) {
         //
-        Ctb_documentos_partidas::find($id)->delete();
+        ctb_documentos_partidas::find($id)->delete();
         return response()->json(['done']);
     }
 
