@@ -55,6 +55,15 @@ class tbl_recurrenteController extends Controller {
         return response()->json($create);
     }
 
+    public function get_sat_banco() {
+        $create = DB::table('ctb_cat_bancos')
+                ->orderBy('nom_corto_banco')
+                ->select('nom_corto_banco as label', 'cve_banco as value')
+                ->get();
+
+        return response()->json($create);
+    }
+
     public function get_codigo_postal($Cve_municipio, $entidad) {
         $values = DB::table('dgis_CODIGO_POSTAL')
                 ->where([
@@ -79,6 +88,19 @@ class tbl_recurrenteController extends Controller {
         foreach ($values as $fila) {
 
             array_push($create, array('value' => $fila->nombre_centrocosto, 'label' => str_replace("|", " ", $fila->nombre_centrocosto)));
+        }
+        return response()->json($create);
+    }
+
+    public function get_id_centrocosto() {
+        $values = DB::table('ctb_cat_centros_costo')
+                ->select('nombre_centrocosto', 'cve_compania')
+                ->get();
+
+        $create = array();
+        foreach ($values as $fila) {
+
+            array_push($create, array('value' => $fila->cve_compania . '|' . $fila->nombre_centrocosto, 'label' => str_replace("|", " ", $fila->nombre_centrocosto)));
         }
         return response()->json($create);
     }

@@ -9,11 +9,11 @@ new Vue({
         localida_edit: null,
         codigo_postal_edit: null,
 
-//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de crear cuando cambia de valor 
+//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de crear cuando cambia de valor
 //y con el metodo watch a mandar el valor a su correspondiente variable se usa como variable bandera
 //
-// Ejemplo : cada que seleccionamos una entidad se nota el cambio en selectedEntidad 
-// y con el watch cada que cambia se actualiza la variable newItem.Cve_entidad que 
+// Ejemplo : cada que seleccionamos una entidad se nota el cambio en selectedEntidad
+// y con el watch cada que cambia se actualiza la variable newItem.Cve_entidad que
 // es la que se requiere para guardar el formulario
         selectedEntidad: null,
         selectedMunicipio: null,
@@ -21,13 +21,16 @@ new Vue({
         selectedCodigo_postal: null,
         selectedBanco: null,
 
-//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de editar cuando cambia de valor 
+        selectedId_centrocosto: null,
+
+//Variables que nos ayudan en la verificacion del ---vue-select--- del formulario de editar cuando cambia de valor
 //y con el metodo watch a mandar el valor a su correspondiente variable se usa como variable bandera
         selectedEntidadEdit: null,
         selectedMunicipioEdit: null,
         selectedLocalidadEdit: null,
         selectedCodigo_postalEdit: null,
         selectedBancoEdit: null,
+        selectedId_centrocostoEdit: null,
 
 //Variables donde se guardan todas las entidades
         entidad: [],
@@ -35,6 +38,8 @@ new Vue({
         localidad: [],
         codigo_postal: [],
         banco: [],
+
+        id_centrocosto: [],
 
         items: [],
         pagination: {
@@ -48,20 +53,58 @@ new Vue({
         formErrors: {},
         formErrorsUpdate: {},
         newItem: {
-            'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
-            'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
-            'cve_localidad': '', 'asentamiento': '', 'tipo_asentamiento':'', 'calle_domicilio': '', 'num_exterior': '',
-            'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
-            'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
-            'cve_banco': '', 'cuenta_bancaria': ''
+            'num_empleado': '',
+            'nombre_empleado': '',
+            'primer_apellido': '',
+            'segundo_apellido': '',
+            'codigo_pais': '',
+            'cve_entidad': '',
+            'cve_municipio': '',
+            'cve_localidad': '',
+            'codigo_postal': '',
+            'asentamiento': '',
+            'tipo_asentamiento': '',
+            'calle_domicilio': '',
+            'num_exterior': '',
+            'num_interior': '',
+            'telefono_casa': '',
+            'telefono_celular': '',
+            'telefono_otro': '',
+            'correo_electronico': '',
+            'rfc': '',
+            'curp': '',
+            'numero_seguro_social': '',
+            'id_centrocosto': '',
+            'cve_banco': '',
+            'cuenta_bancaria': '',
+            'estatus': ''
         },
         fillItem: {
-            'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
-            'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
-            'cve_localidad': '', 'asentamiento': '', 'tipo_asentamiento':'', 'calle_domicilio': '', 'num_exterior': '',
-            'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
-            'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
-            'cve_banco': '', 'cuenta_bancaria': '', 'id_empleado': ''
+            'num_empleado': '',
+            'nombre_empleado': '',
+            'primer_apellido': '',
+            'segundo_apellido': '',
+            'codigo_pais': '',
+            'cve_entidad': '',
+            'cve_municipio': '',
+            'cve_localidad': '',
+            'codigo_postal': '',
+            'asentamiento': '',
+            'tipo_asentamiento': '',
+            'calle_domicilio': '',
+            'num_exterior': '',
+            'num_interior': '',
+            'telefono_casa': '',
+            'telefono_celular': '',
+            'telefono_otro': '',
+            'correo_electronico': '',
+            'rfc': '',
+            'curp': '',
+            'numero_seguro_social': '',
+            'id_centrocosto': '',
+            'cve_banco': '',
+            'cuenta_bancaria': '',
+            'estatus': ''
         }
     },
     computed: {
@@ -96,6 +139,7 @@ new Vue({
         // Carga catalago de bancos
         this.getBanco();
         // Carga las razones sociales
+        this.getId_centrocosto();
     },
 
     watch: {
@@ -141,7 +185,7 @@ new Vue({
 
         },
 
-        //Cada que se modifica el municipio 
+        //Cada que se modifica el municipio
         selectedMunicipio: function (val, oldVal) {
             if (val !== null) {
                 this.newItem.cve_municipio = val.value;
@@ -181,7 +225,7 @@ new Vue({
         // cada que se modifica el codigo postal
         selectedCodigo_postal: function (val, oldVal) {
             if (val !== null) {
-                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2] 
+                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2]
                 var data = val.value.split("|");
 
                 // Acomodamos los valores en sus campos correspondientes
@@ -197,12 +241,21 @@ new Vue({
             }
 
         },
+        // Cada que se selecciona una razon social con el vue-select
+        selectedId_centrocosto: function (val, oldVal) {
+            if (val !== null) {
+                this.newItem.id_centrocosto = val.value;
+            } else {
+                this.newItem.id_centrocosto = '';
+            }
+
+        },
         // Cada que se selecciona un banco con el vue-select
         selectedBanco: function (val, oldVal) {
             if (val !== null) {
-                this.newItem.id_banco = val.value;
+                this.newItem.cve_banco = val.value;
             } else {
-                this.newItem.id_banco = '';
+                this.newItem.cve_banco = '';
             }
 
         },
@@ -233,10 +286,9 @@ new Vue({
                 this.codigo_postal = [];
                 this.selectedCodigo_postalEdit = null;
             }
-
         },
 
-        // 
+        //
         selectedMunicipioEdit: function (val, oldVal) {
             if (val !== null) {
                 this.fillItem.cve_municipio = val.value;
@@ -260,7 +312,6 @@ new Vue({
                 this.selectedLocalidadEdit = null;
                 this.codigo_postal = [];
                 this.selectedCodigo_postalEdit = null;
-
             }
         },
 
@@ -269,14 +320,12 @@ new Vue({
                 this.fillItem.cve_localidad = val.value;
             } else {
                 this.fillItem.cve_localidad = '';
-
             }
         },
         selectedCodigo_postalEdit: function (val, oldVal) {
             if (val !== null) {
-                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2] 
+                // Separamos el codigo postal[0] | el tipo de asentamiento[1] | el nombre del asentamiento[2]
                 var data = val.value.split("|");
-
                 // Acomodamos los valores en sus campos correspondientes
                 this.fillItem.tipo_asentamiento = data[1];
                 this.fillItem.asentamiento = data[2];
@@ -285,27 +334,52 @@ new Vue({
                 this.fillItem.asentamiento = '';
                 this.fillItem.tipo_asentamiento = '';
                 this.fillItem.codigo_postal = '';
+            }
+        },
 
+        selectedId_centrocostoEdit: function (val, oldVal) {
+            if (val !== null) {
+                this.fillItem.id_centrocosto = val.value;
+            } else {
+                this.fillItem.id_centrocosto = '';
             }
 
         },
-
         selectedBancoEdit: function (val, oldVal) {
             if (val !== null) {
-                this.fillItem.id_banco = val.value;
+                this.fillItem.cve_banco = val.value;
             } else {
-                this.fillItem.id_banco = '';
+                this.fillItem.cve_banco = '';
             }
-
         },
-
     },
 
     methods: {
+        id_centrocosto_search: function (data) {
+            if (data !== null || data !== '') {
+                this.newItem.id_centrocosto = '' + data;
+            } else {
+                this.newItem.id_centrocosto = '';
+            }
+        },
+
+        id_centrocosto_searchEdit: function (data) {
+            if (data !== null || data !== '') {
+                this.fillItem.id_centrocosto = '' + data;
+            } else {
+                this.fillItem.id_centrocosto = '';
+            }
+        },
+        // Funcion para obtener la razon social
+        getId_centrocosto: function () {
+            this.$http.get('tabla_recurrente/id_centrocosto').then((response) => {
+                this.$set('id_centrocosto', response.data);
+            });
+        },
 
         // Obtener el catalogo de bancos
         getBanco: function () {
-            this.$http.get('tabla_recurrente/banco').then((response) => {
+            this.$http.get('tabla_recurrente/sat_banco').then((response) => {
                 this.$set('banco', response.data);
             });
         },
@@ -354,19 +428,39 @@ new Vue({
             this.selectedLocalidad = null;
             this.selectedCodigo_postal = null;
             this.selectedBanco = null;
-            this.selectedRazon_social = null;
+            this.selectedId_centrocosto = null;
         },
         createItem: function () {
             var input = this.newItem;
             this.$http.post('nmn_cat_empleadosC', input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.newItem = {
-                    'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
-                    'segundo_apellido': '', 'Codigo_pais': '223', 'cve_entidad': '', 'cve_municipio': '',
-                    'cve_localidad': '', 'asentamiento': '', 'calle_domicilio': '', 'num_exterior': '',
-                    'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
-                    'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
-                    'cve_banco': '', 'cuenta_bancaria': '', 'id_empleado': ''
+                    'num_empleado': '',
+                    'nombre_empleado': '',
+                    'primer_apellido': '',
+                    'segundo_apellido': '',
+                    'codigo_pais': '223',
+                    'cve_entidad': '',
+                    'cve_municipio': '',
+                    'cve_localidad': '',
+                    'codigo_postal': '',
+                    'asentamiento': '',
+                    'tipo_asentamiento': '',
+                    'calle_domicilio': '',
+                    'num_exterior': '',
+                    'num_interior': '',
+                    'telefono_casa': '',
+                    'telefono_celular': '',
+                    'telefono_otro': '',
+                    'correo_electronico': '',
+                    'rfc': '',
+                    'curp': '',
+                    'numero_seguro_social': '',
+                    'id_centrocosto': '',
+                    'fecha_registro': '',
+                    'cve_banco': '',
+                    'cuenta_bancaria': '',
+                    'estatus': ''
                 };
                 $("#create-item").modal('hide');
                 toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
@@ -377,42 +471,68 @@ new Vue({
         deleteItem: function (item) {
             this.$http.delete('nmn_cat_empleadosC/' + item.id_empleado).then((response) => {
                 this.changePage(this.pagination.current_page);
-                toastr.success('Post Deleted Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('Cancelado con éxito !!!', 'Empleado', {timeOut: 5000});
             });
         },
         editItem: function (item) {
-            this.fillItem.cve_compania = item.cve_compania;
-            this.fillItem.num_empleado = item.num_empleado;
+            // Limpia los mensajes de errores
+            this.formErrors = {};
+            this.$http.get('nmn_cat_empleados/edit/' + item.id_empleado).then((response) => {
 
-            this.fillItem.nombre_empleado = item.nombre_empleado;
-            this.fillItem.primer_apellido = item.primer_apellido;
 
-            this.fillItem.segundo_apellido = item.segundo_apellido;
-            this.fillItem.codigo_pais = item.codigo_pais;
-            this.fillItem.cve_entidad = item.cve_entidad;
+                // Manda los datos a sus respectivas variables despues de la consulta a la, base de datos
+                this.fillItem.id_empleado = response.data.id_empleado;
 
-            this.fillItem.cve_municipio = item.cve_municipio;
-            this.fillItem.cve_localidad = item.cve_localidad;
-            this.fillItem.asentamiento = item.asentamiento;
+                // Se deja por defecto el codigo del pais de mexico que corresponde al 223
+                this.fillItem.codigo_pais = '223';
 
-            this.fillItem.calle_domicilio = item.calle_domicilio;
-            this.fillItem.num_exterior = item.num_exterior;
-            this.fillItem.num_interior = item.num_interior;
+                // Se inicializan las variables con la estructura de vue-select
+                this.selectedId_centrocostoEdit = {value: response.data.id_centrocosto, label: response.data.nombre_centrocosto};
+                this.selectedBancoEdit = {value: response.data.cve_banco, label: response.data.nom_corto_banco};
+                this.selectedEntidadEdit = {value: response.data.Cve_entidad, label: response.data.Estado};
 
-            this.fillItem.telefono_casa = item.telefono_casa;
-            this.fillItem.telefono_celular = item.telefono_celular;
-            this.fillItem.telefono_otro = item.telefono_otro;
+                this.municipio_edit = {value: response.data.Cve_municipio, label: response.data.Nom_municipio};
+                this.localida_edit = {value: response.data.Cve_localidad, label: response.data.Nom_localidad};
+                this.codigo_postal_edit = {value: response.data.Codigo_postal + '|' + response.data.Tipo_asentamiento + '|' + response.data.Asentamiento, label: '[' + response.data.Codigo_postal + '] ' + response.data.Tipo_asentamiento + ', ' + response.data.Asentamiento};
 
-            this.fillItem.correo_electronico = item.correo_electronico;
-            this.fillItem.rfc = item.rfc;
-            this.fillItem.curp = item.curp;
 
-            this.fillItem.numero_seguro_social = item.numero_seguro_social;
-            this.fillItem.id_centrocosto = item.id_centrocosto;
-            this.fillItem.cve_banco = item.cve_banco;
-            this.fillItem.cuenta_bancaria = item.cuenta_bancaria;
+                this.fillItem.cve_compania = item.cve_compania;
+                this.fillItem.num_empleado = item.num_empleado;
 
-            this.fillItem.id_empleado = item.id_empleado;
+                this.fillItem.nombre_empleado = item.nombre_empleado;
+                this.fillItem.primer_apellido = item.primer_apellido;
+
+                this.fillItem.segundo_apellido = item.segundo_apellido;
+                this.fillItem.codigo_pais = item.codigo_pais;
+                this.fillItem.cve_entidad = item.cve_entidad;
+
+                this.fillItem.cve_municipio = item.cve_municipio;
+                this.fillItem.cve_localidad = item.cve_localidad;
+                this.fillItem.asentamiento = item.asentamiento;
+
+                this.fillItem.calle_domicilio = item.calle_domicilio;
+                this.fillItem.num_exterior = item.num_exterior;
+                this.fillItem.num_interior = item.num_interior;
+
+                this.fillItem.telefono_casa = item.telefono_casa;
+                this.fillItem.telefono_celular = item.telefono_celular;
+                this.fillItem.telefono_otro = item.telefono_otro;
+
+                this.fillItem.correo_electronico = item.correo_electronico;
+                this.fillItem.rfc = item.rfc;
+                this.fillItem.curp = item.curp;
+
+                this.fillItem.numero_seguro_social = item.numero_seguro_social;
+                this.fillItem.id_centrocosto = item.id_centrocosto;
+                this.fillItem.cve_banco = item.cve_banco;
+                this.fillItem.cuenta_bancaria = item.cuenta_bancaria;
+
+
+                this.fillItem.estatus = item.estatus;
+
+                this.fillItem.id_empleado = item.id_empleado;
+
+            });
             $("#edit-item").modal('show');
         },
         updateItem: function (id_empleado) {
@@ -420,15 +540,34 @@ new Vue({
             this.$http.put('nmn_cat_empleadosC/' + id_empleado, input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.newItem = {
-                    'cve_compania': '', 'num_empleado': '', 'nombre_empleado': '', 'primer_apellido': '',
-                    'segundo_apellido': '', 'codigo_pais': '', 'cve_entidad': '', 'cve_municipio': '',
-                    'cve_localidad': '', 'asentamiento': '', 'calle_domicilio': '', 'num_exterior': '',
-                    'num_interior': '', 'telefono_casa': '', 'telefono_celular': '', 'telefono_otro': '',
-                    'correo_electronico': '', 'rfc': '', 'curp': '', 'numero_seguro_social': '', 'id_centrocosto': '',
-                    'cve_banco': '', 'cuenta_bancaria': ''
+                    'nombre_empleado': '',
+                    'primer_apellido': '',
+                    'segundo_apellido': '',
+                    'codigo_pais': '223',
+                    'cve_entidad': '',
+                    'cve_municipio': '',
+                    'cve_localidad': '',
+                    'codigo_postal': '',
+                    'asentamiento': '',
+                    'tipo_asentamiento': '',
+                    'calle_domicilio': '',
+                    'num_exterior': '',
+                    'num_interior': '',
+                    'telefono_casa': '',
+                    'telefono_celular': '',
+                    'telefono_otro': '',
+                    'correo_electronico': '',
+                    'rfc': '',
+                    'curp': '',
+                    'numero_seguro_social': '',
+                    'id_centrocosto': '',
+                    'cve_banco': '',
+                    'cuenta_bancaria': '',
+                    'estatus': ''
                 };
                 $("#edit-item").modal('hide');
-                toastr.success('Item Updated Successfully.', 'Success Alert', {timeOut: 5000});
+                
+                toastr.success('Actualizado con éxito !!!', 'Empleado', {timeOut: 5000});
             }, (response) => {
                 this.formErrors = response.data;
             });

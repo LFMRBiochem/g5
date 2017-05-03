@@ -81,7 +81,6 @@ class cmp_cat_proveedoresController extends Controller {
             'CLABE' => 'required|digits:18',
         ]);
 
-
         //Saber si existe el centro_costo
         $id_centrocosto = ctb_cat_centros_costo::get_id_centrocosto(array(
                     'cve_compania' => '019',
@@ -121,13 +120,13 @@ class cmp_cat_proveedoresController extends Controller {
                 ctb_cctipos_asociaciones::insert_cve_tipoCentroCosto(array('cve_compania' => '019', 'id_centrocosto' => $id_centrocosto, 'cve_tipoCentroCosto' => 'CM' . $request->input('tipo_persona')));
             }
             //Insertamos en la tabla cmp_cat_proveedores
-            $create = cmp_cat_proveedores::create(array_merge($request->all(), [
+            $create = cmp_cat_proveedores::create(array_merge($request->all(), array(
                         //Hacemos mayusculas los datos del RFC
                         'rfc' => strtoupper($request->input('rfc')),
                         'cve_compania' => '019',
                         'id_centrocosto' => $id_centrocosto,
                         'estatus' => 'A',
-            ]));
+            )));
             //Si no existe el centro costo en la tabla ctb_cat_centros_costo
         } else {
             //Insertamos en ctb_cat_centros_costo el nombre del centro costo
@@ -143,7 +142,7 @@ class cmp_cat_proveedoresController extends Controller {
             );
 
             //Insertamos en la tabla cmp_cat_proveedores el formulario
-            $create = cmp_cat_proveedores::create(array_merge($request->all(), [
+            $create = cmp_cat_proveedores::create(array_merge($request->all(), array(
                         //Hacemos mayusculas los datos del razon social
                         'razon_social' => strtoupper($request->input('razon_social')),
                         //Hacemos mayusculas los datos del RFC
@@ -151,7 +150,7 @@ class cmp_cat_proveedoresController extends Controller {
                         'cve_compania' => '019',
                         'id_centrocosto' => $id_centrocosto_nuevo,
                         'estatus' => 'A',
-            ]));
+            )));
         }
 
         return response()->json($create);

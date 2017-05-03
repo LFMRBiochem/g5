@@ -3,11 +3,11 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar nmn_cat_empleados</h1>
+        <h1>Listar empleados</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" data-toggle="modal" data-target="#create-item" class="btn btn-primary">
+            <button type="button" data-toggle="modal" data-target="#create-item" class="btn btn-primary" @click.prevent="cleanItem()" @keydown.enter.prevent="">
                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
             </button>
         </div>
@@ -47,70 +47,77 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>num_empleado</th>
-                        <th>nombre_empleado</th>
-                        <th>primer_apellido</th>
-                        <th>segundo_apellido</th>
+                        <!--<th>num_empleado</th>-->
+                        <th class="text-center">Nombre empleado</th>
+                        <th class="text-center">Primer apellido</th>
+                        <th class="text-center">Segundo apellido</th>
 
-                        <th>codigo_pais</th>
-                        <th>cve_entidad</th>
-                        <th>cve_municipio</th>
-                        <th>cve_localidad</th>
-                        <th>asentamiento</th>
+                        <th class="text-center">Código pais</th>
+                        <th class="text-center">Entidad</th>
+                        <th class="text-center">Municipio</th>
+                        <th class="text-center">Localidad</th>
+                        <th class="text-center">Asentamiento</th>
 
-                        <th>calle_domicilio</th>
-                        <th>num_exterior</th>
-                        <th>num_interior</th>
-                        <th>telefono_casa</th>
-                        <th>telefono_celular</th>
+                        <th class="text-center">Calle domicilio</th>
+                        <th class="text-center">Número Exterior</th>
+                        <th class="text-center">Número Interior</th>
+                        <th class="text-center">Teléfono casa</th>
+                        <th class="text-center">Teléfono celular</th>
 
-                        <th>telefono_otro</th>
-                        <th>correo_electronico</th>
-                        <th>rfc</th>
-                        <th>curp</th>
-                        <th>numero_seguro_social</th>
+                        <th class="text-center">Teléfono otro</th>
+                        <th class="text-center">Correo electrónico</th>
+                        <th class="text-center">RFC</th>
+                        <th class="text-center">CURP</th>
+                        <th class="text-center">Número seguro social</th>
 
-                        <th>id_centrocosto</th>
-                        <th>cve_banco</th>
-                        <th>cuenta_bancaria</th>
-                        <th>Actions</th>
+                        <th class="text-center">Centro costo</th>
+                        <th class="text-center">Banco</th>
+                        <th class="text-center">Cuenta bancaria</th>
+                        <th  class="text-center" colspan="2">Acción</th>
                     </tr>
                     <tr v-for="item in items">
 
-                        <th>@{{ item.num_empleado}}</th>
-                        <th>@{{ item.nombre_empleado}}</th>
-                        <th>@{{ item.primer_apellido}}</th>
-                        <th>@{{ item.segundo_apellido}}</th>
+                        <!--<th>@{{ item.num_empleado}}</th>-->
+                        <th class="text-center">@{{ item.nombre_empleado}}</th>
+                        <th class="text-center">@{{ item.primer_apellido}}</th>
+                        <th class="text-center">@{{ item.segundo_apellido}}</th>
 
-                        <th>@{{ item.codigo_pais}}</th>
-                        <th>@{{ item.cve_entidad}}</th>
-                        <th>@{{ item.cve_municipio}}</th>
-                        <th>@{{ item.cve_localidad}}</th>
-                        <th>@{{ item.asentamiento}}</th>
+                        <th class="text-center">@{{ item.codigo_pais}}</th>
+                        <th class="text-center">@{{ item.cve_entidad}}</th>
+                        <th class="text-center">@{{ item.cve_municipio}}</th>
+                        <th class="text-center">@{{ item.cve_localidad}}</th>
+                        <th class="text-center">@{{ item.asentamiento}}</th>
 
-                        <th>@{{ item.calle_domicilio}}</th>
-                        <th>@{{ item.num_exterior}}</th>
-                        <th>@{{ item.num_interior}}</th>
-                        <th>@{{ item.telefono_casa}}</th>
-                        <th>@{{ item.telefono_celular}}</th>
+                        <th class="text-center">@{{ item.calle_domicilio}}</th>
+                        <th class="text-center">@{{ item.num_exterior}}</th>
+                        <th class="text-center">@{{ item.num_interior}}</th>
+                        <th class="text-center">@{{ item.telefono_casa}}</th>
+                        <th class="text-center">@{{ item.telefono_celular}}</th>
 
-                        <th>@{{ item.telefono_otro}}</th>
-                        <th>@{{ item.correo_electronico}}</th>
-                        <th>@{{ item.rfc}}</th>
-                        <th>@{{ item.curp}}</th>
-                        <th>@{{ item.numero_seguro_social}}</th>
+                        <th class="text-center">@{{ item.telefono_otro}}</th>
+                        <th class="text-center">@{{ item.correo_electronico}}</th>
+                        <th class="text-center">@{{ item.rfc}}</th>
+                        <th class="text-center">@{{ item.curp}}</th>
+                        <th class="text-center">@{{ item.numero_seguro_social}}</th>
 
-                        <th>@{{ item.id_centrocosto}}</th>
-                        <th>@{{ item.cve_banco}}</th>
-                        <th>@{{ item.cuenta_bancaria}}</th>
+                        <th class="text-center">@{{ item.id_centrocosto}}</th>
+                        <th class="text-center">@{{ item.cve_banco}}</th>
+                        <th class="text-center">@{{ item.cuenta_bancaria}}</th>
 
                         <td>
-                            <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
+
+                            <button class="edit-modal btn btn-warning btn-sm btn-block" @click.prevent="editItem(item)">
+                                <span class="glyphicon glyphicon-edit"></span> Editar
                             </button>
-                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
-                                <span class="glyphicon glyphicon-trash"></span> Delete
+                        </td>
+                        <td>
+                            <button v-if="item.estatus == 'X'" class="edit-modal btn btn-default btn-sm btn-block" @click.prevent="deleteItem(item)" >
+                                <i class="fa fa-toggle-on" aria-hidden="true"></i> Activar
                             </button>
+                            <button v-if="item.estatus == 'A'" class="edit-modal btn btn-danger btn-sm btn-block" @click.prevent="deleteItem(item)" >
+                                <i class="fa fa-toggle-off" aria-hidden="true"></i> Cancelar
+                            </button>
+                        </td>
                         </td>
                     </tr>
                 </table>
@@ -150,18 +157,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Create New Post</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear empleado</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
-        
-                    <div class="form-group">
-                        <label for="num_empleado">num_empleado:</label>
-                        <input type="text" name="num_empleado" class="form-control" v-model="newItem.num_empleado" />
-                        <span v-if="formErrors['num_empleado']" class="error text-danger">
-                            @{{ formErrors['num_empleado'] }}
-                        </span>
-                    </div>
+
+                    <!--                    <div class="form-group">
+                                            <label for="num_empleado">num_empleado:</label>
+                                            <input type="text" name="num_empleado" class="form-control" v-model="newItem.num_empleado" />
+                                            <span v-if="formErrors['num_empleado']" class="error text-danger">
+                                                @{{ formErrors['num_empleado'] }}
+                                            </span>
+                                        </div>-->
 
                     <div class="form-group">
                         <label for="nombre_empleado">nombre_empleado:</label>
@@ -187,9 +194,9 @@
 
 
                     <div class="form-group">
-                        <input type="hidden" name="Codigo_pais"  value="223" v-model="newItem.Codigo_pais"  autocomplete="off"/>
-                        <span v-if="formErrors['Codigo_pais']" class="error text-danger">
-                            @{{ formErrors['Codigo_pais'] }}
+                        <input type="hidden" name="codigo_pais"  value="223" v-model="newItem.codigo_pais"  autocomplete="off"/>
+                        <span v-if="formErrors['codigo_pais']" class="error text-danger">
+                            @{{ formErrors['codigo_pais'] }}
                         </span>
                     </div>
 
@@ -305,20 +312,21 @@
                     </div>
                     <div class="form-group">
                         <label for="id_centrocosto">id_centrocosto:</label>
-                        <input type="text" name="id_centrocosto" class="form-control" v-model="newItem.id_centrocosto" />
+                        <v-select :on-search="id_centrocosto_search" :value.sync="selectedId_centrocosto" :options="id_centrocosto"  placeholder="Seleccione..."   >
+                        </v-select>
                         <span v-if="formErrors['id_centrocosto']" class="error text-danger">
                             @{{ formErrors['id_centrocosto'] }}
                         </span>
                     </div>
 
                     <div class="form-group">
-                    <label for="id_banco">Banco:</label>
-                    <v-select :value.sync="selectedBanco" :options="banco"  placeholder="Seleccione..."   >
-                    </v-select>
-                    <span v-if="formErrors['id_banco']" class="error text-danger">
-                        @{{ formErrors['id_banco'] }}
-                    </span>
-                </div>
+                        <label for="id_banco">Banco:</label>
+                        <v-select :value.sync="selectedBanco" :options="banco"  placeholder="Seleccione..."   >
+                        </v-select>
+                        <span v-if="formErrors['id_banco']" class="error text-danger">
+                            @{{ formErrors['id_banco'] }}
+                        </span>
+                    </div>
                     <div class="form-group">
                         <label for="cuenta_bancaria">cuenta_bancaria:</label>
                         <input type="text" name="cuenta_bancaria" class="form-control" v-model="newItem.cuenta_bancaria" />
@@ -326,9 +334,6 @@
                             @{{ formErrors['cuenta_bancaria'] }}
                         </span>
                     </div>
-
-
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
@@ -337,6 +342,7 @@
         </div>
     </div>
 </div>
+
 <!-- Edit Item Modal -->
 <div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -345,18 +351,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Editar usuario</h4>
+                <h4 class="modal-title" id="myModalLabel">Editar empleado</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_empleado)">
 
-                    <div class="form-group">
-                        <label for="num_empleado">num_empleado:</label>
-                        <input type="text" name="num_empleado" class="form-control" v-model="fillItem.num_empleado" />
-                        <span v-if="formErrors['num_empleado']" class="error text-danger">
-                            @{{ formErrors['num_empleado'] }}
-                        </span>
-                    </div>
+                    <!--                    <div class="form-group">
+                                            <label for="num_empleado">num_empleado:</label>
+                                            <input type="text" name="num_empleado" class="form-control" v-model="fillItem.num_empleado" />
+                                            <span v-if="formErrors['num_empleado']" class="error text-danger">
+                                                @{{ formErrors['num_empleado'] }}
+                                            </span>
+                                        </div>-->
 
                     <div class="form-group">
                         <label for="nombre_empleado">nombre_empleado:</label>
@@ -380,14 +386,10 @@
                         </span>
                     </div>
 
-
-
-
-
                     <div class="form-group">
-                        <input type="hidden" name="Codigo_pais"  value="223" v-model="fillItem.Codigo_pais"  autocomplete="off"/>
-                        <span v-if="formErrors['Codigo_pais']" class="error text-danger">
-                            @{{ formErrors['Codigo_pais'] }}
+                        <input type="hidden" name="codigo_pais"  value="223" v-model="fillItem.codigo_pais"  autocomplete="off"/>
+                        <span v-if="formErrors['codigo_pais']" class="error text-danger">
+                            @{{ formErrors['codigo_pais'] }}
                         </span>
                     </div>
 
@@ -427,7 +429,7 @@
                             @{{ formErrors['Codigo_postal'] }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="calle_domicilio">calle_domicilio:</label>
                         <input type="text" name="calle_domicilio" class="form-control" v-model="fillItem.calle_domicilio" />
@@ -501,7 +503,9 @@
                     </div>
                     <div class="form-group">
                         <label for="id_centrocosto">id_centrocosto:</label>
-                        <input type="text" name="id_centrocosto" class="form-control" v-model="fillItem.id_centrocosto" />
+                        <!--<input type="text" name="id_centrocosto" class="form-control" v-model="fillItem.id_centrocosto" />-->
+                        <v-select :on-search="id_centrocosto_searchEdit" :value.sync="selectedId_centrocostoEdit" :options="id_centrocosto"  >
+                        </v-select>
                         <span v-if="formErrors['id_centrocosto']" class="error text-danger">
                             @{{ formErrors['id_centrocosto'] }}
                         </span>
@@ -515,7 +519,7 @@
                             @{{ formErrors['id_banco'] }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="cuenta_bancaria">cuenta_bancaria:</label>
                         <input type="text" name="cuenta_bancaria" class="form-control" v-model="fillItem.cuenta_bancaria" />

@@ -64,6 +64,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catBancoController');
 
     Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
+//    Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@nmn_cat_empleados');
+    Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@get_empleados_edit');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
@@ -93,7 +95,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/tabla_recurrente/localidad/{municipio}/{entidad}', 'tabla_recurrente\tbl_recurrenteController@get_localidad');
     Route::get('/tabla_recurrente/codigo_postal/{municipio}/{entidad}', 'tabla_recurrente\tbl_recurrenteController@get_codigo_postal');
     Route::get('/tabla_recurrente/banco/', 'tabla_recurrente\tbl_recurrenteController@get_banco');
+    Route::get('/tabla_recurrente/sat_banco/', 'tabla_recurrente\tbl_recurrenteController@get_sat_banco');
     Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
+    Route::get('/tabla_recurrente/id_centrocosto/', 'tabla_recurrente\tbl_recurrenteController@get_id_centrocosto');
 
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');

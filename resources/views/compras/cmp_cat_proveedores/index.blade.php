@@ -1,7 +1,6 @@
 @extends('layout.app')
 @section('content')
 <div class="form-group row add">
-
     <div class="page-header">
         <h1>Listar proveedores</h1>
     </div>
@@ -10,7 +9,6 @@
             <button type="button"  data-toggle="modal" data-target="#create-item" class="btn btn-primary" @click.prevent="cleanItem()" @keydown.enter.prevent="">
                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
             </button>
-
         </div>
     </div>
 </div>
