@@ -61,6 +61,8 @@ class nmn_cat_empleados extends Model {
                         ->leftJoin('dgis_CODIGO_POSTAL AS cp', function($join) {
                             $join->on('cp.Cve_estado', '=', 'ccp.cve_entidad');
                             $join->on('cp.Cve_municipio', '=', 'ccp.cve_municipio');
+                            $join->on('cp.Asentamiento', '=', 'ccp.Asentamiento');
+                            $join->on('cp.Tipo_asentamiento', '=', 'ccp.Tipo_asentamiento');
                         })
                         ->leftJoin('ctb_cat_bancos AS ban', function($join) {
                             $join->on('ban.cve_banco', '=', 'ccp.cve_banco');

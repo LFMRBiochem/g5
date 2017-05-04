@@ -99,6 +99,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
     Route::get('/tabla_recurrente/id_centrocosto/', 'tabla_recurrente\tbl_recurrenteController@get_id_centrocosto');
 
+    Route::get('/nmn_cat_empleados/cp/{estado}/{municipio}/{asentamiento}/{tipo_asentamiento}', 'nomina\nmn_cat_empleadosController@get_cps');
+
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');
     Route::resource('/glx_companiasC', 'administracion\glx_companiasController');

@@ -39,13 +39,16 @@
     .table-borderless > thead > tr > th {
         border: none;
     }
+    .employee{
+        font-weight: normal;
+    }
 </style>
 
 <div class="row">
     <div class="panel panel-default-transparente">
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-borderless">
+                <table class="table table-borderless employee">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
                         <!--<th>num_empleado</th>-->
                         <th class="text-center">Nombre empleado</th>
@@ -172,21 +175,24 @@
 
                     <div class="form-group">
                         <label for="nombre_empleado">nombre_empleado:</label>
-                        <input type="text" name="nombre_empleado" class="form-control" v-model="newItem.nombre_empleado" />
+                        <!--<input type="text" name="nombre_empleado" class="form-control" v-model="newItem.nombre_empleado" />-->
+                        <v-select :on-search="id_centrocosto_search" :value.sync="selectedId_centrocosto" :options="id_centrocosto"  placeholder="Nombre del empleado..." id="nombre_empleado" 
+                        v-model="newItem.nombre_empleado">
+                        </v-select>
                         <span v-if="formErrors['nombre_empleado']" class="error text-danger">
                             @{{ formErrors['nombre_empleado'] }}
                         </span>
                     </div>
                     <div class="form-group">
                         <label for="primer_apellido">primer_apellido:</label>
-                        <input type="text" name="primer_apellido" class="form-control" v-model="newItem.primer_apellido" />
+                        <input type="text" name="primer_apellido" id="primer_apellido" class="form-control" v-model="newItem.primer_apellido" />
                         <span v-if="formErrors['primer_apellido']" class="error text-danger">
                             @{{ formErrors['primer_apellido'] }}
                         </span>
                     </div>
                     <div class="form-group">
                         <label for="segundo_apellido">segundo_apellido:</label>
-                        <input type="text" name="segundo_apellido" class="form-control" v-model="newItem.segundo_apellido" />
+                        <input type="text" name="segundo_apellido" id="segundo_apellido" class="form-control" v-model="newItem.segundo_apellido" />
                         <span v-if="formErrors['segundo_apellido']" class="error text-danger">
                             @{{ formErrors['segundo_apellido'] }}
                         </span>
@@ -310,14 +316,14 @@
                             @{{ formErrors['numero_seguro_social'] }}
                         </span>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="id_centrocosto">id_centrocosto:</label>
                         <v-select :on-search="id_centrocosto_search" :value.sync="selectedId_centrocosto" :options="id_centrocosto"  placeholder="Seleccione..."   >
                         </v-select>
                         <span v-if="formErrors['id_centrocosto']" class="error text-danger">
                             @{{ formErrors['id_centrocosto'] }}
                         </span>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <label for="id_banco">Banco:</label>
