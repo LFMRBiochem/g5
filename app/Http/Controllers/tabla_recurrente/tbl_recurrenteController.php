@@ -104,6 +104,15 @@ class tbl_recurrenteController extends Controller {
         }
         return response()->json($create);
     }
+    
+    public function get_unidad_medida() {
+        $create = DB::table('glx_unidades_medida')
+                ->orderBy('nom_unidad_medida')
+                ->select('nom_unidad_medida as label', 'cve_unidad_medida as value')
+                ->get();
+
+        return response()->json($create);
+    }
 
     /**
      * Show the form for creating a new resource.

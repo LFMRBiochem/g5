@@ -39,6 +39,7 @@ class cmp_cat_proveedoresController extends Controller {
 
     function get_proveedor_edit($id_proveedor) {
         $create = cmp_cat_proveedores::get_proveedor_edit($id_proveedor);
+        
         return response()->json($create);
     }
 

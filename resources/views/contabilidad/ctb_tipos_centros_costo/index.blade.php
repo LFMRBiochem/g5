@@ -3,7 +3,7 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar cbt_tipos_cambio</h1>
+        <h1>Listar tipos de centros costo</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">

@@ -3,11 +3,11 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar ctb_cat_monedas</h1>
+        <h1>Listar monedas</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" data-toggle="modal" data-target="#create-item" class="btn btn-primary">
+            <button type="button" data-toggle="modal" data-target="#create-item" class="btn btn-primary" @keydown.enter.prevent="">
                 <i class="fa fa-plus" aria-hidden="true"></i> Crear
             </button>
         </div>
@@ -47,26 +47,26 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_moneda</th>
-                        <th>nombre_moneda</th>
-                        <th>simbolo</th>
-                        <th>posicion</th>
-                        <th>numero_decimales</th>
-                        <th>Actions</th>
+                        <th  class="text-center">cve_moneda</th>
+                        <th  class="text-center">nombre_moneda</th>
+                        <th  class="text-center">simbolo</th>
+                        <th  class="text-center">posicion</th>
+                        <th  class="text-center">numero_decimales</th>
+                        <th  class="text-center">Actions</th>
                     </tr>
                     <tr v-for="item in items">
-                        <td>@{{ item.cve_moneda }}</td>
-                        <td>@{{ item.nombre_moneda }}</td>
-                        <td>@{{ item.simbolo }}</td>
-                        <td>@{{ item.posicion }}</td>
-                        <td>@{{ item.numero_decimales }}</td>
-                        <td>
-                            <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
+                        <td  class="text-center">@{{ item.cve_moneda }}</td>
+                        <td  class="text-center">@{{ item.nombre_moneda }}</td>
+                        <td  class="text-center">@{{ item.simbolo }}</td>
+                        <td  class="text-center">@{{ item.posicion }}</td>
+                        <td  class="text-center">@{{ item.numero_decimales }}</td>
+                        <td  class="text-center">
+                            <button class="edit-modal btn btn-warning btn-sm btn-block" @click.prevent="editItem(item)"  @keydown.enter.prevent="">
+                                <span class="glyphicon glyphicon-edit"></span> Editar
                             </button>
-                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
-                                <span class="glyphicon glyphicon-trash"></span> Delete
-                            </button>
+                            <!--                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
+                                                            <span class="glyphicon glyphicon-trash"></span> Delete
+                                                        </button>-->
                         </td>
                     </tr>
                 </table>
@@ -98,14 +98,14 @@
 
 
 <!-- Create Item Modal -->
-<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Create New Post</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear moneda</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
@@ -149,8 +149,9 @@
                         </span>
                     </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>
                 </form>
             </div>
@@ -158,14 +159,14 @@
     </div>
 </div>
 <!-- Edit Item Modal -->
-<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Editar usuario</h4>
+                <h4 class="modal-title" id="myModalLabel">Editar moneda</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.cve_moneda)">
@@ -209,8 +210,9 @@
                         </span>
                     </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>
                 </form>
             </div>

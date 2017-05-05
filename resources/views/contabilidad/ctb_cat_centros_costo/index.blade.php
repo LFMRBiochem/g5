@@ -3,7 +3,7 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar cbt_tipos_cambio</h1>
+        <h1>Listar centros de costo</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
@@ -58,7 +58,7 @@
                     <tr v-for="item in items">
                         <td>@{{ item.cve_compania }}</td>
                         <td>@{{ item.id_centrocosto }}</td>
-                        <td>@{{ item.nombre_centrocosto }}</td>
+                        <td>@{{ item.nombre_centrocosto.split("|").join(" ") }}</td>
                         <td>@{{ item.id_centrocosto_padre }}</td>
                         <td>@{{ item.cve_tipoCentroCosto }}</td>
                         <td>@{{ item.catalogo_sat }}</td>
