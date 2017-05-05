@@ -5,17 +5,13 @@ namespace App\Http\Controllers\nomina;
 use App\Models\nomina\nmn_cat_conceptos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class nmn_cat_conceptosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
         $items = nmn_cat_conceptos::paginate(6);
 
         $response = [
@@ -32,69 +28,93 @@ class nmn_cat_conceptosController extends Controller
         return response()->json($response);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function get_conceptos_edit($id_concepto) {
+        $create = nmn_cat_conceptos::get_conceptos_edit($id_concepto);
+        return response()->json($create);
+    }
+
+    public function listar() {
+        return view('nomina/nmn_cat_conceptos/index');
+    }
+
+    public function getConceptos(){
+        $values = DB::table('ctb_cat_concepto_financiero')
+                ->where([
+                    ['nmn', '1'],
+                    ['estatus','A'],])
+                ->select('cve_concepto_financiero', 'nombre_concepto')
+                ->get();
+
+        $create = array();
+        foreach ($values as $fila) {
+            array_push($create, array('value' => $fila->cve_concepto_financiero, 'label' => $fila->nombre_concepto));
+        }
+        return response()->json($create);
+    }
+
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'cve_compania' => 'required',
+            'id_concepto' => 'required',
+            'descripcion' => 'required',
+            'percepcion_deduccion' => 'required',
+            'considerar_recibo' => 'required',
+            'considerar_reportes' => 'required',
+            'estatus' => 'required',
+        ]);  
+
+        return response()->json($create);      
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\nomina\nmn_cat_conceptos  $nmn_cat_conceptos
-     * @return \Illuminate\Http\Response
-     */
     public function show(nmn_cat_conceptos $nmn_cat_conceptos)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\nomina\nmn_cat_conceptos  $nmn_cat_conceptos
-     * @return \Illuminate\Http\Response
-     */
     public function edit(nmn_cat_conceptos $nmn_cat_conceptos)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\nomina\nmn_cat_conceptos  $nmn_cat_conceptos
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, nmn_cat_conceptos $nmn_cat_conceptos)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'cve_compania' => 'required',
+            'id_concepto' => 'required',
+            'descripcion' => 'required',
+            'percepcion_deduccion' => 'required',
+            'considerar_recibo' => 'required',
+            'considerar_reportes' => 'required',
+            'estatus' => 'required',
+        ]);
+        $edit = nmn_cat_conceptos::find($id)->update($request->all());
+        return response()->json($edit);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\nomina\nmn_cat_conceptos  $nmn_cat_conceptos
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(nmn_cat_conceptos $nmn_cat_conceptos)
+    public function destroy($id)
     {
-        //
+        //Verificamos que estatus tiene actuamente el proveedor
+        $db_estatus = nmn_cat_conceptos::get_estatus(array('id_folio_concepto' => $id));
+
+        //Cambiamos de activo(A)  a cancelado(X)
+        if ($db_estatus->estatus == 'A') {
+            $estatus = 'X';
+            //Cambiamos de cancelado(X) a activo(A)
+        } else {
+            $estatus = 'A';
+        }
+
+        //Buscamos el id del proveedor y actualizamos los datos
+        nmn_cat_conceptos::find($id)->update(array(
+            'estatus' => $estatus
+        ));
+
+        return response()->json(['done']);
     }
 }

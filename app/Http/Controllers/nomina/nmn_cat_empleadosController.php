@@ -127,7 +127,6 @@ class nmn_cat_empleadosController extends Controller {
         $center_costo=$request->input('nombre_empleado').' '.$request->input('primer_apellido').' '.$request->input('segundo_apellido');
         if($is_num_centro_costo==false){
             //Saber si existe el centro_costo
-            //print_r($center_costo);
             $id_centrocosto = ctb_cat_centros_costo::get_id_centrocosto(array(
                 'cve_compania' => '019',
                 'nombre_centrocosto' => strtoupper($center_costo))
@@ -231,33 +230,14 @@ class nmn_cat_empleadosController extends Controller {
         return response()->json($create);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
-     * @return \Illuminate\Http\Response
-     */
     public function show(nmn_cat_empleados $nmn_cat_empleados) {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
-     * @return \Illuminate\Http\Response
-     */
     public function edit(nmn_cat_empleados $nmn_cat_empleados) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\nomina\nmn_cat_empleados  $nmn_cat_empleados
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
         $this->validate($request, [
             'nombre_empleado' => 'required|max:20',

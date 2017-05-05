@@ -64,9 +64,15 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catBancoController');
 
     Route::get('/nmn_cat_empleados', 'nomina\nmn_cat_empleadosController@listar');
-//    Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@nmn_cat_empleados');
+//  Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@nmn_cat_empleados');
     Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@get_empleados_edit');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
+
+    # Rutas para el catálogo de conceptos de nómina ------------------------------
+    Route::get('/nmn_cat_conceptos','nomina\nmn_cat_conceptosController@listar');
+    Route::get('/nmn_cat_conceptos/conceptos','nomina\nmn_cat_conceptosController@getConceptos');
+    Route::get('/nmn_cat_conceptos/edit/{id_concepto}','nomina\nmn_cat_conceptosController@get_conceptos_edit');
+    Route::resource('/nmn_cat_conceptosC', 'nomina\nmn_cat_conceptosController');
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
     Route::resource('/ctb_tipos_cambioC', 'contabilidad\ctb_tipos_cambioController');

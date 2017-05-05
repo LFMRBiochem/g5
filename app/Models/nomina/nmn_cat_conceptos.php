@@ -22,4 +22,20 @@ class nmn_cat_conceptos extends Model
     public $incrementing = true;
     public $timestamps = false;
     public $primaryKey = 'id_folio_concepto';
+
+
+    //Funcion para seleccionar
+    public static function get_conceptos_edit($id_concepto) {
+        return DB::table('nmn_cat_conceptos')
+                        ->where('id_folio_concepto', '=', $id_concepto)
+                        ->first();
+    }
+
+    public static function get_estatus($data) {
+        return DB::table('nmn_cat_conceptos')
+                        ->where($data)
+                        ->select('estatus')
+                        ->first();
+    }
+
 }
