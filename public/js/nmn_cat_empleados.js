@@ -499,7 +499,7 @@ new Vue({
                     'estatus': ''
                 };
                 $("#create-item").modal('hide');
-                toastr.success('Post Created Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('Empleado creado correctamente', 'Satisfactorio!', {timeOut: 5000});
             }, (response) => {
                 this.formErrors = response.data;
             });
