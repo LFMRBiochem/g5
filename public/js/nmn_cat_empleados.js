@@ -244,7 +244,35 @@ new Vue({
         // Cada que se selecciona una razon social con el vue-select
         selectedId_centrocosto: function (val, oldVal) {
             if (val !== null) {
-                this.newItem.id_centrocosto = val.value;
+                var cent_cost=val.value;
+                var split_cc=cent_cost.split("@");
+                var id_cc=split_cc[0];
+                var n_emp=split_cc[1];
+                var split_ne=n_emp.split("|");
+                var second_apellido='';
+                var name_empleado='';
+                var first_apellido=split_ne[0];
+                if(first_apellido!=''){
+                    second_apellido=split_ne[1];
+                    name_empleado=split_ne[2];
+                }else{
+                    first_apellido=split_ne[2];
+                    second_apellido=split_ne[3];
+                    name_empleado=split_ne[1];
+                }
+                this.newItem.nombre_empleado=name_empleado;
+                this.newItem.primer_apellido=first_apellido;
+                this.newItem.segundo_apellido=second_apellido;
+                this.newItem.id_centrocosto = id_cc;
+
+                val.label=name_empleado;
+
+                $("#nombre_empleado").val(name_empleado);
+                $("#primer_apellido").val(first_apellido);
+                $("#segundo_apellido").val(second_apellido);
+
+                this.getId_centrocosto();
+
             } else {
                 this.newItem.id_centrocosto = '';
             }
@@ -303,6 +331,7 @@ new Vue({
                 this.getLocalidad(val.value, this.fillItem.cve_entidad);
                 //Mandamos llamar el metodo de getCodigo_postal referente al municipio
                 this.getCodigo_postal(val.value, this.fillItem.cve_entidad);
+                //this.getCodigo_postalEdit(this.fillItem.cve_entidad, val.value, this.fillItem.asentamiento, this.fillItem.tipo_asentamiento);
 
             } else {
                 this.fillItem.cve_municipio = '';
@@ -358,6 +387,7 @@ new Vue({
         id_centrocosto_search: function (data) {
             if (data !== null || data !== '') {
                 this.newItem.id_centrocosto = '' + data;
+                this.newItem.nombre_empleado = '' + data;
             } else {
                 this.newItem.id_centrocosto = '';
             }
@@ -410,7 +440,13 @@ new Vue({
                 this.selectedCodigo_postalEdit = this.codigo_postal_edit;
             });
         },
-
+         // Obtener los codigo de postal al Editar
+        getCodigo_postalEdit: function (entidad,municipio,asentamiento,tipo_asentamiento) {
+            this.$http.get('nmn_cat_empleados/cp/' + entidad + '/' + municipio + '/' + asentamiento + '/' + tipo_asentamiento).then((response) => {
+                this.$set('codigo_postal', response.data);
+                this.selectedCodigo_postalEdit = this.codigo_postal_edit;
+            });
+        },
         getVueItems: function (page) {
             this.$http.get('nmn_cat_empleadosC?page=' + page).then((response) => {
                 this.$set('items', response.data.data.data);
@@ -493,8 +529,8 @@ new Vue({
 
                 this.municipio_edit = {value: response.data.Cve_municipio, label: response.data.Nom_municipio};
                 this.localida_edit = {value: response.data.Cve_localidad, label: response.data.Nom_localidad};
-                this.codigo_postal_edit = {value: response.data.Codigo_postal + '|' + response.data.Tipo_asentamiento + '|' + response.data.Asentamiento, label: '[' + response.data.Codigo_postal + '] ' + response.data.Tipo_asentamiento + ', ' + response.data.Asentamiento};
-
+                this.codigo_postal_edit = {value: item.codigo_postal + '|' + item.tipo_asentamiento + '|' + item.asentamiento, label: '[' + response.data.codigo_postal + '] ' + response.data.tipo_asentamiento + ', ' + response.data.asentamiento};
+                //this.codigo_postal_edit = {value: item.codigo_postal + '|' + item.tipo_asentamiento + '|' + item.asentamiento, label: '[' + item.codigo_postal + '] ' + item.tipo_asentamiento + ', ' + item.asentamiento};
 
                 this.fillItem.cve_compania = item.cve_compania;
                 this.fillItem.num_empleado = item.num_empleado;
@@ -509,6 +545,9 @@ new Vue({
                 this.fillItem.cve_municipio = item.cve_municipio;
                 this.fillItem.cve_localidad = item.cve_localidad;
                 this.fillItem.asentamiento = item.asentamiento;
+                this.fillItem.tipo_asentamiento = item.tipo_asentamiento;
+
+
 
                 this.fillItem.calle_domicilio = item.calle_domicilio;
                 this.fillItem.num_exterior = item.num_exterior;
@@ -532,8 +571,11 @@ new Vue({
 
                 this.fillItem.id_empleado = item.id_empleado;
 
+                //this.codigo_postal_edit = {value: item.codigo_postal + '|' + item.tipo_asentamiento + '|' + item.asentamiento, label: '[' + item.codigo_postal + '] ' + item.tipo_asentamiento + ', ' + item.asentamiento};
+                $("#edit-item").modal('show');
+
             });
-            $("#edit-item").modal('show');
+            //$("#edit-item").modal('show');
         },
         updateItem: function (id_empleado) {
             var input = this.fillItem;

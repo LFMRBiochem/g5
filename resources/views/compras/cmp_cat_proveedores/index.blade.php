@@ -304,7 +304,10 @@
     </div>
 </div>
 <!-- Edit Item Modal -->
-<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
+
+
+<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

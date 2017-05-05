@@ -90,6 +90,10 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
 
 // ----------   Nomina
+    Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
+    Route::get('/nmn_cat_conceptos/conceptos', 'nomina\nmn_cat_conceptosController@getConceptos');
+    Route::get('/nmn_cat_conceptos/edit/{id_concepto}', 'nomina\nmn_cat_conceptosController@get_conceptos_edit');
+    Route::resource('/nmn_cat_conceptosC', 'nomina\nmn_cat_conceptosController');
 
     Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catBancoController@listar');
     Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catBancoController');
@@ -115,6 +119,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/tabla_recurrente/sat_banco/', 'tabla_recurrente\tbl_recurrenteController@get_sat_banco');
     Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
     Route::get('/tabla_recurrente/id_centrocosto/', 'tabla_recurrente\tbl_recurrenteController@get_id_centrocosto');
+
+    Route::get('/nmn_cat_empleados/cp/{estado}/{municipio}/{asentamiento}/{tipo_asentamiento}', 'nomina\nmn_cat_empleadosController@get_cps');
 
     //falta acomodar
     Route::get('/glx_companias', 'administracion\glx_companiasController@listar');

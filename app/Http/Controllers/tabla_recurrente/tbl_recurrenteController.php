@@ -94,13 +94,23 @@ class tbl_recurrenteController extends Controller {
 
     public function get_id_centrocosto() {
         $values = DB::table('ctb_cat_centros_costo')
-                ->select('nombre_centrocosto', 'cve_compania')
+                ->select('nombre_centrocosto', 'id_centrocosto as cve_compania')
                 ->get();
 
         $create = array();
         foreach ($values as $fila) {
+            /*$center_costo=$fila->nombre_centrocosto;
+            $buscad=strpos($center_costo,'|');
+            $ecsplode=explode('|', $center_costo);
+            $first_name=$ecsplode[0];
+            if($first_name!='' || empty($first_name) || $first_name==null){
+                $last_name=$ecsplode[1];
+                $name=$ecsplode[2];
+                array_push($create, array('value' => $fila->cve_compania.'@'.$fila->nombre_centrocosto, 'label' => $name.' '.$first_name.' '.$last_name));
+            }else{*/
+                array_push($create, array('value' => $fila->cve_compania.'@'.$fila->nombre_centrocosto, 'label' => str_replace("|", " ",$fila->nombre_centrocosto)));  
+           // }
 
-            array_push($create, array('value' => $fila->cve_compania . '|' . $fila->nombre_centrocosto, 'label' => str_replace("|", " ", $fila->nombre_centrocosto)));
         }
         return response()->json($create);
     }
@@ -113,6 +123,21 @@ class tbl_recurrenteController extends Controller {
 
         return response()->json($create);
     }
+
+    /*public function get_id_centrocosto_empleados(){
+        $values = DB::table('ctb_cat_centros_costo')
+                ->join('ctb_cctipos_asociaciones','ctb_cat_centros_costo.id_centrocosto','=','ctb_cctipos_asociaciones.id_centrocosto')
+                ->select('ctb_cat_centros_costo.nombre_centrocosto as valt', 'ctb_cat_centros_costo.nombre_centrocosto as lab')
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto','=','CMF')
+                ->get();
+
+        $create = array();
+        foreach ($values as $fila) {
+
+            array_push($create, array('value' => $fila->valt, 'label' => str_replace("|", " ", $fila->lab)));
+        }
+        return response()->json($create);
+    }*/
 
     /**
      * Show the form for creating a new resource.
