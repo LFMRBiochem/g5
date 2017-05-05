@@ -572,9 +572,10 @@ new Vue({
                 this.fillItem.id_empleado = item.id_empleado;
 
                 //this.codigo_postal_edit = {value: item.codigo_postal + '|' + item.tipo_asentamiento + '|' + item.asentamiento, label: '[' + item.codigo_postal + '] ' + item.tipo_asentamiento + ', ' + item.asentamiento};
+                $("#edit-item").modal('show');
 
             });
-            $("#edit-item").modal('show');
+            //$("#edit-item").modal('show');
         },
         updateItem: function (id_empleado) {
             var input = this.fillItem;

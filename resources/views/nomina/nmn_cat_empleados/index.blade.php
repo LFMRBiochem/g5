@@ -153,7 +153,7 @@
 
 
 <!-- Create Item Modal -->
-<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -164,15 +164,15 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
-
-                    <!--                    <div class="form-group">
-                                            <label for="num_empleado">num_empleado:</label>
-                                            <input type="text" name="num_empleado" class="form-control" v-model="newItem.num_empleado" />
-                                            <span v-if="formErrors['num_empleado']" class="error text-danger">
-                                                @{{ formErrors['num_empleado'] }}
-                                            </span>
-                                        </div>-->
-
+                    <style>
+                        .v-select input[type=search]{
+                            text-transform: uppercase
+                        }
+                    </style>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
+                    </div>                  
                     <div class="form-group">
                         <label for="nombre_empleado">nombre_empleado:</label>
                         <!--<input type="text" name="nombre_empleado" class="form-control" v-model="newItem.nombre_empleado" />-->
@@ -340,8 +340,12 @@
                             @{{ formErrors['cuenta_bancaria'] }}
                         </span>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
+                    </div>-->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>
                 </form>
             </div>
@@ -350,7 +354,7 @@
 </div>
 
 <!-- Edit Item Modal -->
-<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -361,15 +365,15 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_empleado)">
-
-                    <!--                    <div class="form-group">
-                                            <label for="num_empleado">num_empleado:</label>
-                                            <input type="text" name="num_empleado" class="form-control" v-model="fillItem.num_empleado" />
-                                            <span v-if="formErrors['num_empleado']" class="error text-danger">
-                                                @{{ formErrors['num_empleado'] }}
-                                            </span>
-                                        </div>-->
-
+                    <style>
+                        .v-select input[type=search]{
+                            text-transform: uppercase
+                        }
+                    </style>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
+                    </div>
                     <div class="form-group">
                         <label for="nombre_empleado">nombre_empleado:</label>
                         <input type="text" name="nombre_empleado" class="form-control" v-model="fillItem.nombre_empleado" />
@@ -534,8 +538,12 @@
                         </span>
                     </div>
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <button type="submit" class="btn btn-success">Submit</button>
+                    </div>-->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>
                 </form>
             </div>
