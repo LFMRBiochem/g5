@@ -176,6 +176,8 @@
 
                                         <li><a href="{{URL::to('/').'/nmn_sat_catbanco'}}">Bancos</a></li>
                                         <li><a href="{{URL::to('/').'/nmn_cat_empleados'}}">Empleados</a></li>
+                                        <li><a href="{{URL::to('/').'/nmn_cat_conceptos'}}">Conceptos de nómina</a></li>
+                                        
                                         <!--                                        <li><a href="#">Proveedores</a></li>
                                                                                 <li><a href="#">Vehículos</a></li>-->
                                     </ul>

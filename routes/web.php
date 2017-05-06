@@ -106,8 +106,6 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/cmp_cat_proveedores/edit/{id_proveedores}', 'compras\cmp_cat_proveedoresController@get_proveedor_edit');
     Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
 
-
-
 // ----------   Nomina
     Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
     Route::get('/nmn_cat_conceptos/conceptos', 'nomina\nmn_cat_conceptosController@getConceptos');
