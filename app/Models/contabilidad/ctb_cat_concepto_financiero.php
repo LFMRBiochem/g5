@@ -25,4 +25,16 @@ class ctb_cat_concepto_financiero extends Model{
 			->get();
 		return $cuentas;
 	}
+
+	public static function getConceptoFinanciero(){
+		$conceptoF=DB::table('ctb_cat_concepto_financiero')
+		->select(DB::raw('MAX(cve_concepto_financiero) as maximo'))
+		->where([
+					['cve_compania', '019'],
+					['cve_concepto_financiero', '>=', '601'],
+					['cve_concepto_financiero', '<', '602']
+				])
+		->first();
+		return $conceptoF;
+	}
 }

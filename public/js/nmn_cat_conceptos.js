@@ -92,9 +92,12 @@ new Vue({
     	id_conceptofinanciero_search: function (data) {
             if (data !== null || data !== '') {
                 this.newItem.id_concepto_financiero = '' + data;
-                //this.newItem.nombre_empleado = '' + data;
+                this.newItem.descripcion = '' + data;
+                this.newItem.id_concepto = '' + data.substr(0,1);
             } else {
                 this.newItem.id_centrocosto = '';
+                this.newItem.descripcion = '';
+                this.newItem.id_concepto = '';
             }
         },
     	changePage: function (page) {

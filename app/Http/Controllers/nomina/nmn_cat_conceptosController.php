@@ -62,12 +62,21 @@ class nmn_cat_conceptosController extends Controller
         $this->validate($request, [
             'cve_compania' => 'required',
             'id_concepto' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required|min:4|max:20',
             'percepcion_deduccion' => 'required',
             'considerar_recibo' => 'required',
             'considerar_reportes' => 'required',
             'estatus' => 'required',
         ]);  
+        $id_concepto = $request->input('id_concepto');
+        $es_numero = is_numeric($id_concepto);
+        $id_concepto_financiero=null;
+        if($es_numero==false){
+            //Saber si existe el centro_costo
+            $id_concepto_financiero = ctb_cat_concepto_financiero::getConceptoFinanciero();
+        }else{
+
+        }
 
         return response()->json($create);      
     }
