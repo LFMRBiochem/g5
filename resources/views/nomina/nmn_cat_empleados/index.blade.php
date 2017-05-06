@@ -81,31 +81,31 @@
                     <tr v-for="item in items">
 
                         <!--<th>@{{ item.num_empleado}}</th>-->
-                        <th class="text-center">@{{ item.nombre_empleado}}</th>
-                        <th class="text-center">@{{ item.primer_apellido}}</th>
-                        <th class="text-center">@{{ item.segundo_apellido}}</th>
+                        <td class="text-center">@{{ item.nombre_empleado}}</td>
+                        <td class="text-center">@{{ item.primer_apellido}}</td>
+                        <td class="text-center">@{{ item.segundo_apellido}}</td>
 
-                        <th class="text-center">@{{ item.codigo_pais}}</th>
-                        <th class="text-center">@{{ item.cve_entidad}}</th>
-                        <th class="text-center">@{{ item.cve_municipio}}</th>
-                        <th class="text-center">@{{ item.cve_localidad}}</th>
-                        <th class="text-center">@{{ item.asentamiento}}</th>
+                        <td class="text-center">@{{ item.codigo_pais}}</td>
+                        <td class="text-center">@{{ item.cve_entidad}}</td>
+                        <td class="text-center">@{{ item.cve_municipio}}</td>
+                        <td class="text-center">@{{ item.cve_localidad}}</td>
+                        <td class="text-center">@{{ item.asentamiento}}</td>
 
-                        <th class="text-center">@{{ item.calle_domicilio}}</th>
-                        <th class="text-center">@{{ item.num_exterior}}</th>
-                        <th class="text-center">@{{ item.num_interior}}</th>
-                        <th class="text-center">@{{ item.telefono_casa}}</th>
-                        <th class="text-center">@{{ item.telefono_celular}}</th>
+                        <td class="text-center">@{{ item.calle_domicilio}}</td>
+                        <td class="text-center">@{{ item.num_exterior}}</td>
+                        <td class="text-center">@{{ item.num_interior}}</td>
+                        <td class="text-center">@{{ item.telefono_casa}}</td>
+                        <td class="text-center">@{{ item.telefono_celular}}</td>
 
-                        <th class="text-center">@{{ item.telefono_otro}}</th>
-                        <th class="text-center">@{{ item.correo_electronico}}</th>
-                        <th class="text-center">@{{ item.rfc}}</th>
-                        <th class="text-center">@{{ item.curp}}</th>
-                        <th class="text-center">@{{ item.numero_seguro_social}}</th>
+                        <td class="text-center">@{{ item.telefono_otro}}</td>
+                        <td class="text-center">@{{ item.correo_electronico}}</td>
+                        <td class="text-center">@{{ item.rfc}}</td>
+                        <td class="text-center">@{{ item.curp}}</td>
+                        <td class="text-center">@{{ item.numero_seguro_social}}</td>
 
-                        <th class="text-center">@{{ item.id_centrocosto}}</th>
-                        <th class="text-center">@{{ item.cve_banco}}</th>
-                        <th class="text-center">@{{ item.cuenta_bancaria}}</th>
+                        <td class="text-center">@{{ item.id_centrocosto}}</td>
+                        <td class="text-center">@{{ item.cve_banco}}</td>
+                        <td class="text-center">@{{ item.cuenta_bancaria}}</td>
 
                         <td>
 

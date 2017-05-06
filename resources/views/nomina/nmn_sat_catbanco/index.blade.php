@@ -47,7 +47,6 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_banco</th>
                         <th>nombre_banco</th>
                         <th>razon_social</th>
 
@@ -55,17 +54,16 @@
                     </tr>
                     <tr v-for="item in items">
 
-                        <th>@{{ item.cve_banco}}</th>
-                        <th>@{{ item.nombre_banco}}</th>
-                        <th>@{{ item.razon_social}}</th>
+                        <td>@{{ item.nombre_banco}}</td>
+                        <td>@{{ item.razon_social}}</td>
 
                         <td>
                             <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                <span class="glyphicon glyphicon-edit"></span> Editar
                             </button>
-                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
-                                <span class="glyphicon glyphicon-trash"></span> Delete
-                            </button>
+<!--                            <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
+                                <span class="glyphicon glyphicon-trash"></span> Cancelar
+                            </button>-->
                         </td>
                     </tr>
                 </table>

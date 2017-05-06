@@ -114,6 +114,45 @@ class tbl_recurrenteController extends Controller {
         }
         return response()->json($create);
     }
+    
+    public function get_unidad_medida() {
+        $create = DB::table('glx_unidades_medida')
+                ->orderBy('nom_unidad_medida')
+                ->select('nom_unidad_medida as label', 'cve_unidad_medida as value')
+                ->get();
+
+        return response()->json($create);
+    }
+
+    /*public function get_id_centrocosto_empleados(){
+        $values = DB::table('ctb_cat_centros_costo')
+                ->join('ctb_cctipos_asociaciones','ctb_cat_centros_costo.id_centrocosto','=','ctb_cctipos_asociaciones.id_centrocosto')
+                ->select('ctb_cat_centros_costo.nombre_centrocosto as valt', 'ctb_cat_centros_costo.nombre_centrocosto as lab')
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto','=','CMF')
+                ->get();
+
+        $create = array();
+        foreach ($values as $fila) {
+
+            array_push($create, array('value' => $fila->valt, 'label' => str_replace("|", " ", $fila->lab)));
+        }
+        return response()->json($create);
+    }*/
+
+    /*public function get_id_centrocosto_empleados(){
+        $values = DB::table('ctb_cat_centros_costo')
+                ->join('ctb_cctipos_asociaciones','ctb_cat_centros_costo.id_centrocosto','=','ctb_cctipos_asociaciones.id_centrocosto')
+                ->select('ctb_cat_centros_costo.nombre_centrocosto as valt', 'ctb_cat_centros_costo.nombre_centrocosto as lab')
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto','=','CMF')
+                ->get();
+
+        $create = array();
+        foreach ($values as $fila) {
+
+            array_push($create, array('value' => $fila->valt, 'label' => str_replace("|", " ", $fila->lab)));
+        }
+        return response()->json($create);
+    }*/
 
     /*public function get_id_centrocosto_empleados(){
         $values = DB::table('ctb_cat_centros_costo')

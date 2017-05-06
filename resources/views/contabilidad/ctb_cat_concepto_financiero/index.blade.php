@@ -3,7 +3,7 @@
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Listar cbt_tipos_cambio</h1>
+        <h1>Listar concepto financiero</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
@@ -47,25 +47,22 @@
             <div class="table-responsive">
                 <table class="table table-borderless">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
-                        <th>cve_compania</th>
                         <th>cve_concepto_financiero</th>
                         <th>catalogo_sat</th>
                         <th>nombre_concepto</th>
                         <th>Actions</th>
-                        <th>Actions</th>
 
                     </tr>
                     <tr v-for="item in items">
-                        <td>@{{ item.cve_compania }}</td>
                         <td>@{{ item.cve_concepto_financiero }}</td>
                         <td>@{{ item.catalogo_sat }}</td>
                         <td>@{{ item.nombre_concepto }}</td>
                         <td>
                             <button class="edit-modal btn btn-warning btn-sm" @click.prevent="editItem(item)">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                <span class="glyphicon glyphicon-edit"></span> Editar
                             </button>
                             <button class="edit-modal btn btn-danger btn-sm" @click.prevent="deleteItem(item)">
-                                <span class="glyphicon glyphicon-trash"></span> Delete
+                                <span class="glyphicon glyphicon-trash"></span> Cancelar
                             </button>
                         </td>
                     </tr>
