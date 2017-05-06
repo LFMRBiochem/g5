@@ -22,11 +22,6 @@ class nmn_cat_conceptos extends Model
     public $incrementing = true;
     public $timestamps = false;
     public $primaryKey = 'id_folio_concepto';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/master
 
 
     //Funcion para seleccionar
@@ -43,8 +38,4 @@ class nmn_cat_conceptos extends Model
                         ->first();
     }
 
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
 }

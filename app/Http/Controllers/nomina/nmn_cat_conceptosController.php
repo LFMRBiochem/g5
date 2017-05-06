@@ -72,8 +72,9 @@ class nmn_cat_conceptosController extends Controller
         $es_numero = is_numeric($id_concepto);
         $id_concepto_financiero=null;
         if($es_numero==false){
-            //Saber si existe el centro_costo
+            //Obtener el maximo numero del concepto financiero
             $id_concepto_financiero = ctb_cat_concepto_financiero::getConceptoFinanciero();
+            
         }else{
 
         }
