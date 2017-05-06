@@ -37,4 +37,9 @@ class ctb_cat_concepto_financiero extends Model{
 		->first();
 		return $conceptoF;
 	}
+
+	public static function insert_concepto_financiero($data){
+		return DB::table('ctb_cat_concepto_financiero')
+                        ->insertGetId($data);
+	}
 }

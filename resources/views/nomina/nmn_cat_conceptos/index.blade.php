@@ -63,8 +63,9 @@
                     <tr v-for="item in items">
 
                         <!--<th>@{{ item.num_empleado}}</th>-->
-                        <th class="text-center">@{{ item.nombre_empleado}}</th>
-                        <th class="text-center">@{{ item.primer_apellido}}</th>
+                        <th class="text-center">@{{ item.descripcion}}</th>
+                        <th class="text-center">@{{ item.estatus}}</th>
+                        <th class="text-center" style="display: none;">@{{ item.id_folio_concepto}}</th>
 
                         <td>
 
@@ -218,13 +219,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Editar empleado</h4>
+                <h4 class="modal-title" id="myModalLabel">Editar concepto de n&oacute;mina</h4>
             </div>
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_empleado)">
+                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_folio_concepto)">
                     <style>
                         .v-select input[type=search]{
-                            text-transform: uppercase
+                            //text-transform: uppercase
                         }
                     </style>
                     <div class="text-right">
@@ -236,17 +237,17 @@
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripci&oacute;n:</label>
-                        <!--<input type="text" name="primer_apellido" id="primer_apellido" class="form-control" v-model="fillItem.primer_apellido" />-->
-                        <v-select :on-search="id_centrocosto_search" :value.sync="selectedId_centrocosto" :options="id_centrocosto"  placeholder="Nombre del concepto..." id="nombre_empleado" 
+                        <input type="text" name="descripcion" id="descripcion" class="form-control" v-model="fillItem.descripcion" disabled/>
+                        <!--<v-select :on-search="id_centrocosto_search" :value.sync="selectedId_centrocosto" :options="id_centrocosto"  placeholder="Nombre del concepto..." id="nombre_empleado" 
                         v-model="fillItem.descripcion">
-                        </v-select>
+                        </v-select>-->
                         <span v-if="formErrors['descripcion']" class="error text-danger">
                             @{{ formErrors['descripcion'] }}
                         </span>
                     </div>
                     <div class="form-group">
                         <label for="percepcion_deduccion">Percepci&oacute;n &oacute; Deducci&oacute;n:</label>
-                        <!--<input type="text" name="segundo_apellido" id="segundo_apellido" class="form-control" v-model="fillItem.segundo_apellido" />-->
+                        <!--<input type="text" name="percepcion_deduccion" id="percepcion_deduccion" class="form-control" v-model="fillItem.percepcion_deduccion" readonly />-->
                         <select class="form-control" v-model="fillItem.percepcion_deduccion">
                             <option value="" selected="selected">SELECCIONE...</option>
                             <option value="P">Percepci&oacute;n</option>
@@ -299,10 +300,6 @@
                             @{{ formErrors['estatus'] }}
                         </span>
                     </div>                    
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
-                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>

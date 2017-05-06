@@ -62,8 +62,10 @@ class nmn_cat_conceptosController extends Controller
         $this->validate($request, [
             'cve_compania' => 'required',
             'id_concepto' => 'required',
-            'descripcion' => 'required|min:4|max:20',
+            'descripcion' => 'required|min:4|max:90',
             'percepcion_deduccion' => 'required',
+            'operacion' => 'min:0',
+            'id_conceptofinanciero' => 'required',
             'considerar_recibo' => 'required',
             'considerar_reportes' => 'required',
             'estatus' => 'required',
@@ -71,12 +73,48 @@ class nmn_cat_conceptosController extends Controller
         $id_concepto = $request->input('id_concepto');
         $es_numero = is_numeric($id_concepto);
         $id_concepto_financiero=null;
+        $id_concept=0;
         if($es_numero==false){
             //Obtener el maximo numero del concepto financiero
             $id_concepto_financiero = ctb_cat_concepto_financiero::getConceptoFinanciero();
+            $ecsplode=explode(".",$id_concepto_financiero);
+            $id_concept=intval($ecsplode[1]);
+            $id_concept+=1;
+            $id_concepto_financiero="601.".$id_concept;
+
+            $id_concepto_financiero_nuevo = ctb_cat_concepto_financiero::insert_concepto_financiero(array(
+                'cve_compania' => $request->input('id_concepto'),
+                'cve_concepto_financiero' => $id_concepto_financiero,
+                'catalogo_sat' => $id_concepto_financiero,
+                'nombre_concepto' => $request->input('descripcion'),
+                'naturaleza' => 'D',
+                'nmn' => '1',
+                'status' => $request->input('estatus'))
+            );
+            $create = nmn_cat_conceptos::create(array_merge($request->all(), [
+                        'cve_compania' => $request->input('cve_compania'),
+                        'id_concepto' => $id_concept,
+                        'descripcion' => $request->input('descripcion'),
+                        'percepcion_deduccion' => $request->input('percepcion_deduccion'),
+                        'operacion' => $request->input('operacion'),
+                        'id_conceptofinanciero' => $id_concepto_financiero,
+                        'considerar_recibo' => $request->input('considerar_recibo'),
+                        'considerar_reportes' => $request->input('considerar_reportes'),
+                        'estatus' => $request->input('estatus'),
+            ]));
             
         }else{
-
+            $create = nmn_cat_conceptos::create(array_merge($request->all(), [
+                        'cve_compania' => $request->input('cve_compania'),
+                        'id_concepto' => $request->input('id_concepto'),
+                        'descripcion' => $request->input('descripcion'),
+                        'percepcion_deduccion' => $request->input('percepcion_deduccion'),
+                        'operacion' => $request->input('operacion'),
+                        'id_conceptofinanciero' => $request->input('id_conceptofinanciero'),
+                        'considerar_recibo' => $request->input('considerar_recibo'),
+                        'considerar_reportes' => $request->input('considerar_reportes'),
+                        'estatus' => $request->input('estatus'),
+            ]));
         }
 
         return response()->json($create);      
@@ -97,8 +135,10 @@ class nmn_cat_conceptosController extends Controller
         $this->validate($request, [
             'cve_compania' => 'required',
             'id_concepto' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required|min:4|max:90',
             'percepcion_deduccion' => 'required',
+            'operacion' => 'min:0',
+            'id_conceptofinanciero' => 'required',
             'considerar_recibo' => 'required',
             'considerar_reportes' => 'required',
             'estatus' => 'required',
