@@ -177,7 +177,8 @@
                                         <li><a href="{{URL::to('/').'/nmn_sat_catbanco'}}">Bancos</a></li>
                                         <li><a href="{{URL::to('/').'/nmn_cat_empleados'}}">Empleados</a></li>
                                         <li><a href="{{URL::to('/').'/nmn_cat_conceptos'}}">Conceptos de nómina</a></li>
-                                        
+                                        <li><a href="{{URL::to('/').'/nmn_cat_departamentos'}}">Catalogo de departamentos y áreas</a></li>
+
                                         <!--                                        <li><a href="#">Proveedores</a></li>
                                                                                 <li><a href="#">Vehículos</a></li>-->
                                     </ul>
@@ -311,10 +312,10 @@
         <script type="text/javascript" src="{{ asset('toastr/toastr.min.js') }}"></script>
 
         <!--<script src="{{ asset('js/vue-select.js') }}" ></script>-->
-        <script type="text/javascript"  src="{{ asset('vue-select/vue-select@1.3.3.js')}}"></script>
-
-        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
+        <!--<script type="text/javascript"  src="{{ asset('vue-select/vue-select@1.3.3.js')}}"></script>-->
+        <!--<script src="https://unpkg.com/vue"></script>-->
+                <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>-->
+        <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>-->
 
 
         @yield('javascript')

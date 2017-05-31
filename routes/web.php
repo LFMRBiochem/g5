@@ -65,9 +65,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
 
     # Rutas para el catálogo de conceptos de nómina ------------------------------
-    Route::get('/nmn_cat_conceptos','nomina\nmn_cat_conceptosController@listar');
-    Route::get('/nmn_cat_conceptos/conceptos','nomina\nmn_cat_conceptosController@getConceptos');
-    Route::get('/nmn_cat_conceptos/edit/{id_concepto}','nomina\nmn_cat_conceptosController@get_conceptos_edit');
+    Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
+    Route::get('/nmn_cat_conceptos/conceptos', 'nomina\nmn_cat_conceptosController@getConceptos');
+    Route::get('/nmn_cat_conceptos/edit/{id_concepto}', 'nomina\nmn_cat_conceptosController@get_conceptos_edit');
     Route::resource('/nmn_cat_conceptosC', 'nomina\nmn_cat_conceptosController');
 
 
@@ -93,13 +93,21 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
 // ----------   Inventario
     Route::get('/inv_cat_productos/gtin', 'inventario\inv_cat_productosController@get_gtin');
+    //cat_productos obtener la lista continua despues de hacer la seleccion de segmento familia clase o bloque
     Route::get('/inv_cat_productos/segmento', 'inventario\inv_cat_productosController@get_segmento');
     Route::get('/inv_cat_productos/familia/{segmento}', 'inventario\inv_cat_productosController@get_familia');
     Route::get('/inv_cat_productos/clase/{segmento}/{familia}', 'inventario\inv_cat_productosController@get_clase');
     Route::get('/inv_cat_productos/bloque/{segmento}/{familia}/{bloque}', 'inventario\inv_cat_productosController@get_bloque');
+    //cat_productos obtener la lista continua despues de hacer la seleccion de segmento familia clase o bloque
+    Route::get('/inv_cat_productos/segmento/{cve_segmento}', 'inventario\inv_cat_productosController@get_nombre_segmento');
+    Route::get('/inv_cat_productos/familia/{segmento}/{cve_familia}', 'inventario\inv_cat_productosController@get_nombre_familia');
+    Route::get('/inv_cat_productos/clase/{segmento}/{familia}/{cve_clase}', 'inventario\inv_cat_productosController@get_nombre_clase');
+    Route::get('/inv_cat_productos/bloque/{segmento}/{familia}/{bloque}/{cve_bloque}', 'inventario\inv_cat_productosController@get_nombre_bloque');
+    Route::get('/inv_cat_productos/unidad_medida/{cve_unidad_medida}', 'inventario\inv_cat_productosController@get_unidad_medida');
+
     Route::get('/inv_cat_productos', 'inventario\inv_cat_productosController@listar');
-
-
+    Route::get('/inv_cat_productos/edit/{cve_cat_producto}', 'inventario\inv_cat_productosController@get_productos_edit');
+    Route::resource('/inv_cat_productosC', 'inventario\inv_cat_productosController');
 // ----------   Compras
 
     Route::get('/cmp_cat_proveedores', 'compras\cmp_cat_proveedoresController@listar');
@@ -119,6 +127,10 @@ Route::group(['middleware' => 'autentificacion'], function () {
 //    Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@nmn_cat_empleados');
     Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@get_empleados_edit');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
+
+    Route::get('/nmn_cat_departamentos/departamentos', 'nomina\nmn_cat_departamentosController@get_departamentos');
+    Route::get('/nmn_cat_departamentos', 'nomina\nmn_cat_departamentosController@listar');
+    Route::resource('/nmn_cat_departamentosC', 'nomina\nmn_cat_departamentosController');
 
 
 // ---------   Compras
