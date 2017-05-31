@@ -143,8 +143,7 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@get_empleados_edit');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
 
-<<<<<<< HEAD
-=======
+
     Route::get('/nmn_cat_departamentos/departamentos', 'nomina\nmn_cat_departamentosController@get_departamentos');
     Route::get('/nmn_cat_departamentos', 'nomina\nmn_cat_departamentosController@listar');
     Route::resource('/nmn_cat_departamentosC', 'nomina\nmn_cat_departamentosController');
@@ -155,7 +154,7 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/cmp_solicitud_pagoController/conceptos', 'compras\cmp_solicitud_pagoController@get_conceptos');
 
 
->>>>>>> origin/master
+
 // ----------   Tabla recurrente   -----------------
     Route::get('/tabla_recurrente/unidad_medida/', 'tabla_recurrente\tbl_recurrenteController@get_unidad_medida');
     Route::get('/tabla_recurrente/entidad/', 'tabla_recurrente\tbl_recurrenteController@get_entidad');

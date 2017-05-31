@@ -551,9 +551,9 @@
 @stop
 
 @section('javascript')
-<script src="https://unpkg.com/vue"></script>
+<!--<script src="https://unpkg.com/vue"></script>-->
 <script src="https://unpkg.com/vue-select@latest"></script>
-<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
+<!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>-->
 <script type="text/javascript" src="{{ asset('js/inv_cat_productos.js') }}"></script>
 
 

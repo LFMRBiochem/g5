@@ -92,7 +92,7 @@ class cmp_solicitud_pagoController extends Controller {
         if ($validator->validate()) {
             return response()->json($validator->fails());
         }else{
-
+            //$create = ctb_solicitudpago_partidas::create
         }
     }
 
