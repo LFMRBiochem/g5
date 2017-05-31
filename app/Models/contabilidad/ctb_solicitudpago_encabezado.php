@@ -4,11 +4,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ctb_solicitudpago_encabezado extends Model{
 	protected $table = 'ctb_solicitudpago_encabezado';
-	protected $primaryKey = 'id_solicitudpago';
-	public $incrementing = true;
+	#protected $primaryKey = 'id_solicitudpago';
+	#public $incrementing = false;
 	public $timestamps = false;
 	public $fillable = [
 		'cve_compania',
+		'id_solicitudpago',
 		'fecha_registro',
 		'cve_moneda',
 		'tipo_orden',

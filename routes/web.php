@@ -52,9 +52,13 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
+// ---------- Misceláneo
 
     Route::get('/autentificacion/usuarios', 'autentificacion\usuariosController@listar');
     Route::resource('autentificacion/usuariosC', 'autentificacion\usuariosController');
+
+
+// ----------  Nómina    
 
     Route::get('/nmn_sat_catbanco', 'nomina\nmn_sat_catBancoController@listar');
     Route::resource('/nmn_sat_catbancoC', 'nomina\nmn_sat_catBancoController');
@@ -69,6 +73,12 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/nmn_cat_conceptos/conceptos','nomina\nmn_cat_conceptosController@getConceptos');
     Route::get('/nmn_cat_conceptos/edit/{id_concepto}','nomina\nmn_cat_conceptosController@get_conceptos_edit');
     Route::resource('/nmn_cat_conceptosC', 'nomina\nmn_cat_conceptosController');
+
+    # Rutas para los tipos de contrato en Nómina
+
+    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@listar');
+    #Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoContrato');
+    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoJornada');
 
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
@@ -106,6 +116,11 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/cmp_cat_proveedores/edit/{id_proveedores}', 'compras\cmp_cat_proveedoresController@get_proveedor_edit');
     Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
 
+    Route::get('/cmp_solicitud_pago/beneficiario/', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
+    Route::get('/cmp_solicitud_pago/conceptos/', 'compras\cmp_solicitud_pagoController@get_conceptos');
+    Route::post('/cmp_solicitud_pagoC2','compras\cmp_solicitud_pagoController@storePartidas');
+    Route::resource('/cmp_solicitud_pagoC','compras\cmp_solicitud_pagoController');
+
 // ----------   Nomina
     Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
     Route::get('/nmn_cat_conceptos/conceptos', 'nomina\nmn_cat_conceptosController@getConceptos');
@@ -119,12 +134,6 @@ Route::group(['middleware' => 'autentificacion'], function () {
 //    Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@nmn_cat_empleados');
     Route::get('/nmn_cat_empleados/edit/{id_empleado}', 'nomina\nmn_cat_empleadosController@get_empleados_edit');
     Route::resource('/nmn_cat_empleadosC', 'nomina\nmn_cat_empleadosController');
-
-
-// ---------   Compras
-    Route::get('/cmp_solicitud_pagoController/beneficiario', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
-    Route::get('/cmp_solicitud_pagoController/conceptos', 'compras\cmp_solicitud_pagoController@get_conceptos');
-
 
 // ----------   Tabla recurrente   -----------------
     Route::get('/tabla_recurrente/unidad_medida/', 'tabla_recurrente\tbl_recurrenteController@get_unidad_medida');

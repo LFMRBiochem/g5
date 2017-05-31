@@ -108,7 +108,7 @@ class tbl_recurrenteController extends Controller {
                 $name=$ecsplode[2];
                 array_push($create, array('value' => $fila->cve_compania.'@'.$fila->nombre_centrocosto, 'label' => $name.' '.$first_name.' '.$last_name));
             }else{*/
-                array_push($create, array('value' => $fila->cve_compania.'@'.$fila->nombre_centrocosto, 'label' => str_replace("|", " ",$fila->nombre_centrocosto)));  
+                array_push($create, array('value' => $fila->cve_compania, 'label' => str_replace("|", " ",$fila->nombre_centrocosto)));  
            // }
 
         }
