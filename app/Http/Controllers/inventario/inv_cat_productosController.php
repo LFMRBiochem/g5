@@ -318,7 +318,7 @@ class inv_cat_productosController extends Controller {
                     $data['estatus'] = ($request->input('estatus.' . $i) == 1) ? 'A' : 'X';
 
                     if ($request->input('folio_GTIN.' . $i) > '1') {
-                        
+
                         DB::table('inv_productos_GTIN')
                                 ->where('folio_GTIN', $request->input('folio_GTIN.' . $i))
                                 ->update($data);

@@ -131,6 +131,7 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/nmn_cat_departamentos/departamentos', 'nomina\nmn_cat_departamentosController@get_departamentos');
     Route::get('/nmn_cat_departamentos', 'nomina\nmn_cat_departamentosController@listar');
     Route::resource('/nmn_cat_departamentosC', 'nomina\nmn_cat_departamentosController');
+    Route::post('/nmn_cat_departamentos/editar_departamento/{id_centrocosto}', 'nomina\nmn_cat_departamentosController@update');
 
 
 // ---------   Compras

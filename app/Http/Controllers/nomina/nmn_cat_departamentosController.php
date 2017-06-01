@@ -6,6 +6,7 @@ use App\Models\nomina\nmn_cat_departamentos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class nmn_cat_departamentosController extends Controller {
 
@@ -40,10 +41,11 @@ class nmn_cat_departamentosController extends Controller {
         $response = DB::table('ctb_cctipos_asociaciones')
                 ->join('ctb_cat_centros_costo', 'ctb_cat_centros_costo.id_centrocosto', '=', 'ctb_cctipos_asociaciones.id_centrocosto')
                 ->where('cve_tipoCentroCosto', 'DEP')
+                ->where('estatus', 'A')
                 ->select('ctb_cat_centros_costo.id_centrocosto', 'ctb_cat_centros_costo.id_centrocosto AS id', 'ctb_cat_centros_costo.id_centrocosto_padre', DB::raw('replace(ctb_cat_centros_costo.nombre_centrocosto,"|","") as text'))
                 ->get()
                 ->toArray();
-        
+
         return response()->json($response);
     }
 
@@ -63,7 +65,18 @@ class nmn_cat_departamentosController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        
+        unset($request['_token']);
+
+        $this->validate($request, [
+            'nombre_centrocosto' => 'required|max:75',
+            'id_centrocosto_padre' => 'required|numeric',
+        ]);
+
+//        $validator = Validator::make($request->all(), array(
+//                    'nombre_centrocosto' => 'required|max:75',
+//                    'id_centrocosto_padre' => 'required|numeric',
+//        ));
+
         $id_centrocosto = DB::table('ctb_cat_centros_costo')->insertGetId(
                 array(
                     'cve_compania' => '019',
@@ -80,7 +93,7 @@ class nmn_cat_departamentosController extends Controller {
                     'id_centrocosto' => $id_centrocosto,
                 )
         );
-        return response()->json($id_centrocosto);
+        return response()->json();
     }
 
     /**
@@ -110,8 +123,22 @@ class nmn_cat_departamentosController extends Controller {
      * @param  \App\Models\nomina\nmn_cat_departamentos  $nmn_cat_departamentos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, nmn_cat_departamentos $nmn_cat_departamentos) {
-        //
+    public function update(Request $request, $id) {
+        unset($request['_token']);
+
+        $this->validate($request, [
+            'nombre_centrocosto' => 'required|max:75',
+            'id_centrocosto' => 'required|numeric',
+        ]);
+
+        DB::table('ctb_cat_centros_costo')
+                ->where('id_centrocosto', $id)
+                ->update(array(
+                    'nombre_centrocosto' => $request->input('nombre_centrocosto'),
+                    'id_centrocosto_padre' => $request->input('id_centrocosto'),
+                        ));
+
+        return response()->json();
     }
 
     /**
