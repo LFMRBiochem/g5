@@ -50,7 +50,7 @@
                         <th>cve_concepto_financiero</th>
                         <th>catalogo_sat</th>
                         <th>nombre_concepto</th>
-                        <th>Actions</th>
+                        <th>&nbsp;</th>
 
                     </tr>
                     <tr v-for="item in items">
@@ -102,7 +102,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Create New Post</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear concepto financiero</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
@@ -233,5 +233,7 @@
 @stop
 
 @section('javascript')
+<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/ctb_cat_concepto_financiero.js') }}"></script>
 @stop

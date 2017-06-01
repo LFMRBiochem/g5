@@ -54,9 +54,9 @@ class ctb_tipos_cambioController extends Controller {
     public function store(Request $request) {
         //
         $this->validate($request, [
-            'cve_moneda' => 'required|numeric|max:3',
+            'cve_moneda' => 'required|max:3',
             'fecha' => 'required|date',
-            'tipo_cambio' => 'required|numeric|max:18',
+            'tipo_cambio' => 'required|max:18',
         ]);
 
         $create = ctb_tipos_cambio::create($request->all());

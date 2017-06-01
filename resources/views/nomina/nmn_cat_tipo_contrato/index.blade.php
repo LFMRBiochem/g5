@@ -1,9 +1,11 @@
 @extends('layout.app')
+<script type="text/javascript">
+</script>
 @section('content')
 <div class="form-group row add">
 
     <div class="page-header">
-        <h1>Conceptos de n&oacute;mina</h1>
+        <h1>Tipos de contrato</h1>
     </div>
     <div class="col-md-12">
         <div class="text-right">
@@ -47,6 +49,13 @@
     }
     select{
         font-size: 12pt;
+        font-weight: bolder;
+        text-align: center;
+    }
+    .modal-content{
+        width: 1100px;
+        right:35%;
+
     }
 </style>
 
@@ -57,15 +66,15 @@
                 <table class="table table-borderless employee">
                     <tr style="background: rgba(245,245,245,0.5);border: 0px">
                         <!--<th>num_empleado</th>-->
-                        <th class="text-center">Concepto</th><!-- Descripción del concepto -->
+                        <th class="text-center">Modelo</th><!-- Descripción del concepto -->
                         <th class="text-center">Estatus</th>
                     </tr>
                     <tr v-for="item in items">
 
                         <!--<th>@{{ item.num_empleado}}</th>-->
-                        <th class="text-center">@{{ item.descripcion}}</th>
-                        <th class="text-center">@{{ item.estatus}}</th>
-                        <th class="text-center" style="display: none;">@{{ item.id_folio_concepto}}</th>
+                        <th class="text-center">@{{ item.descripcion_modelo}}</th>
+                        <th class="text-center" class="RTF">@{{ item.estatus}}</th>
+                        <th class="text-center" class="RTF" style="/*display: none;*/">HELLO @{{ item.id_folio_concepto}}</th>
 
                         <td>
 
@@ -77,9 +86,9 @@
                             <button v-if="item.estatus == 'X'" class="edit-modal btn btn-default btn-sm btn-block" @click.prevent="deleteItem(item)" >
                                 <i class="fa fa-toggle-on" aria-hidden="true"></i> Activar
                             </button>
-                            <button v-if="item.estatus == 'A'" class="edit-modal btn btn-danger btn-sm btn-block" @click.prevent="deleteItem(item)" >
+                            <!--<button v-if="item.estatus == 'A'" class="edit-modal btn btn-danger btn-sm btn-block" @click.prevent="deleteItem(item)" >
                                 <i class="fa fa-toggle-off" aria-hidden="true"></i> Cancelar
-                            </button>
+                            </button>-->
                         </td>
                         </td>
                     </tr>
@@ -120,7 +129,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Crear concepto de n&oacute;mina</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear modelo de contrato</h4>
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem">
@@ -130,64 +139,70 @@
                         }
                     </style>
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
                     </div>                  
                     <div class="form-group">
                         <input type="text" name="cve_compania" class="form-control" value="019" v-model="newItem.cve_compania" style="display: none;"/>
                     </div>
                     <div class="form-group">
-                        <label for="descripcion">Descripci&oacute;n:</label>
-                        <!--<input type="text" name="primer_apellido" id="primer_apellido" class="form-control" v-model="newItem.primer_apellido" />-->
-                        <v-select :on-search="id_conceptofinanciero_search" :value.sync="selectedConcepto" :options="conceptos"  placeholder="Nombre del concepto..." id="nombre_empleado" 
-                        v-model="newItem.descripcion">
-                        </v-select>
-                        <span v-if="formErrors['descripcion']" class="error text-danger">
-                            @{{ formErrors['descripcion'] }}
+                        <label for="cve_tipoContrato">Tipo de Contrato</label>
+                        <select class="form-control" v-model="newItem.cve_tipoContrato">
+                            <option value="" selected="selected">SELECCIONE...</option>
+                        </select>
+                        <span v-if="formErrors['cve_tipoContrato']" class="error text-danger">
+                            @{{ formErrors['cve_tipoContrato'] }}
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="percepcion_deduccion">Percepci&oacute;n &oacute; Deducci&oacute;n:</label>
-                        <!--<input type="text" name="segundo_apellido" id="segundo_apellido" class="form-control" v-model="newItem.segundo_apellido" />-->
-                        <select class="form-control" v-model="newItem.percepcion_deduccion">
-                            <option value="" selected="selected">SELECCIONE...</option>
-                            <option value="P">Percepci&oacute;n</option>
-                            <option value="D">Deducci&oacute;n</option>
-                        </select>
-                        <span v-if="formErrors['percepcion_deduccion']" class="error text-danger">
-                            @{{ formErrors['percepcion_deduccion'] }}
+                        <label for="descripcion_modelo">Descripci&oacute;n del modelo de contrato</label>
+                        <input type="text" name="descripcion_modelo" id="descripcion_modelo" class="form-control" v-model="newItem.descripcion_modelo" maxlength="70" />
+                        <span v-if="formErrors['descripcion_modelo']" class="error text-danger">
+                            @{{ formErrors['descripcion_modelo'] }}
                         </span>
                     </div>
 
                     <div class="form-group">
-                        <label for="operacion">Operaci&oacute;n:</label>
-                        <input type="text" name="operacion" class="form-control" v-model="newItem.operacion"  autocomplete="off"/>
-                        <span v-if="formErrors['operacion']" class="error text-danger">
-                            @{{ formErrors['operacion'] }}
+                        <label for="cve_regimen">R&eacute;gimen</label>
+                        <select class="form-control" v-model="newItem.cve_regimen">
+                            <option value="" selected="selected">SELECCIONE...</option>
+                        </select>
+                        <span v-if="formErrors['cve_regimen']" class="error text-danger">
+                            @{{ formErrors['cve_regimen'] }}
                         </span>
                     </div>
 
                     <div class="form-group">
-                        <label for="considerar_recibo">Incluir en recibo de n&oacute;mina?:</label>
-                        <select class="form-control" v-model="newItem.considerar_recibo">
+                        <label for="cve_origenRecurso">Origen de los recursos:</label>
+                        <select class="form-control" v-model="newItem.cve_origenRecurso" style="text-align:center; font-weight: bolder;">
                             <option value="" selected="selected">SELECCIONE...</option>
-                            <option value="1">S&Iacute;</option>
-                            <option value="0">NO</option>
+                            <option value="IF">Ingresos Federales</option>
+                            <option value="IM">Ingresos Mixtos</option>
+                            <option value="IP" selected="selected">Ingresos Propios</option>
                         </select>
-                        <span v-if="formErrors['considerar_recibo']" class="error text-danger">
-                            @{{ formErrors['considerar_recibo'] }}
+                        <span v-if="formErrors['cve_origenRecurso']" class="error text-danger">
+                            @{{ formErrors['cve_origenRecurso'] }}
                         </span>
                     </div>
 
                     <div class="form-group">
-                        <label for="considerar_reportes">Incluir en reportes de n&oacute;mina?:</label>
-                        <select class="form-control" v-model="newItem.considerar_reportes">
+                        <label for="cve_tipoJornada">Tipo de jornada:</label>
+                        <select class="form-control" v-model="newItem.cve_tipoJornada">
                             <option value="" selected="selected">SELECCIONE...</option>
-                            <option value="1">S&Iacute;</option>
-                            <option value="0">NO</option>
+                            
                         </select>
-                        <span v-if="formErrors['considerar_reportes']" class="error text-danger">
-                            @{{ formErrors['considerar_reportes'] }}
+                        <span v-if="formErrors['cve_tipoJornada']" class="error text-danger">
+                            @{{ formErrors['cve_tipoJornada'] }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_tipo_nomina">Tipo de n&oacute;mina:</label>
+                        <select class="form-control" v-model="newItem.id_tipo_nomina">
+                            <option value="" selected="selected">SELECCIONE...</option>
+                        </select>
+                        <span v-if="formErrors['id_tipo_nomina']" class="error text-danger">
+                            @{{ formErrors['id_tipo_nomina'] }}
                         </span>
                     </div>
 
@@ -200,7 +215,7 @@
                         <span v-if="formErrors['estatus']" class="error text-danger">
                             @{{ formErrors['estatus'] }}
                         </span>
-                    </div>                    
+                    </div>                   
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
@@ -312,5 +327,5 @@
 @stop
 
 @section('javascript')
-<script type="text/javascript" src="{{ asset('js/nmn_cat_conceptos.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/nmn_cat_tipo_contrato.js') }}"></script>
 @stop

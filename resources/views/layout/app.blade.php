@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Simple Laravel Vue.Js CRUD</title>
+        <title id="tit">Simple Laravel Vue.Js CRUD</title>
         <meta id="token" name="token" value="{{ csrf_token() }}">
         <!-- Bootstrap -->
         <link href="{{ asset('bootstrap/dist/css/bootstrap-edit.css') }}" rel="stylesheet">
@@ -77,9 +77,14 @@
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="{{URL::to('/').'/cmp_cat_proveedores'}}">Proveedores</a></li>
-
-
+                                        <li><a href="{{URL::to('/').'/solicitud_pagos'}}">Solicitud de pago</a></li>
+                                        
                                         <!--<li><a href="#">Vehículos</a></li>-->
+                                    </ul>
+                                </li>
+                                <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Operaciones<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{URL::to('/').'/solicitud_pagos'}}">Solicitud de pago</a></li>
                                     </ul>
                                 </li>
 <!--                                <li><a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Procesos<span class="caret"></span></a>
@@ -313,6 +318,14 @@
 
         <!--<script src="{{ asset('js/vue-select.js') }}" ></script>-->
         <!--<script type="text/javascript"  src="{{ asset('vue-select/vue-select@1.3.3.js')}}"></script>-->
+        
+
+        <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>-->
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+        <script src="https://unpkg.com/vue-select@latest"></script>
+        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
         <!--<script src="https://unpkg.com/vue"></script>-->
                 <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>-->
         <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>-->
