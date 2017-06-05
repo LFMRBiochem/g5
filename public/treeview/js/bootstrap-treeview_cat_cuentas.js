@@ -595,7 +595,7 @@
             } else {
                 // otherwise just text
                 treeItem
-                        .append('[' + node.cve_centrocosto + '] - ' + node.text);
+                        .append('['+ node.cuenta_contable+'] - '+ node.text);
             }
 
             // Add tags as badges

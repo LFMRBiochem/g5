@@ -42,16 +42,13 @@
         <div class="panel-heading" style="background: rgba(245,245,245,0.5);border: 0px"><a><strong><i class="fa fa-columns" aria-hidden="true"></i> Departamentos y áreas</strong></a></div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     <div id="treeview-selectable" class=""></div>
                 </div>
-                <div class="col-sm-6">
-
+                <div class="col-sm-4">
                     <blockquote style="background: rgba(245,245,245,0.5); border-color: rgb(69,182,173)">
-                        <p><i class="fa fa-exclamation-circle text-primary" aria-hidden="true"></i> Seleccione un área o departamento para modificarlo y/o agregar una nueva sección. </p>
+                        <p><i class="fa fa-exclamation-circle text-primary" aria-hidden="true"></i> Seleccione un área o departamentos para modificarlo y/o agregar una nueva sección. </p>
                     </blockquote>
-
-
                 </div>
             </div>
         </div>
@@ -59,12 +56,12 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="myModal"  role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Agregar / Modificar elemento</h4>
             </div>
             <div class="modal-body">
                 <!-- Nav tabs -->
@@ -78,35 +75,46 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
                             <div class="form-group">
-                                <label id="label_departamento"></label>
-                                <input type="text" class="form-control" id="departamento" placeholder="Departamento">
-                                <p id="error_departamento" class="text-danger"></p>
+                                <label>Clave del elemento <small>(nuevo)</small></label>
+                                <input type="text" class="form-control" id="cve_centrocosto" placeholder="Clave elemento">
+                                <p id="error_cve_centrocosto" class="text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <label id="label_elemento"></label>
+                                <input type="text" class="form-control" id="elemento" placeholder="Elemento">
+                                <p id="error_elemento" class="text-danger"></p>
                             </div>
                             <br>
                             <div class="form-group">
                                 <div class="text-right">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" id="guardar_departamento" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                    <button type="submit" id="guardar_elemento" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
+
                                 </div>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="profile">
                             <div role="tabpanel" class="tab-pane active" id="home">
                                 <div class="form-group">
-                                    <label id="label_departamento_editar"></label>
-                                    <input type="text" class="form-control" id="departamento_edit">
-                                    <p id="error_departamento_edit" class="text-danger"></p>
+                                    <label>Clave del elemento</label>
+                                    <input type="text" class="form-control" id="cve_centrocosto_edit">
+                                    <p id="error_cve_centrocosto_edit" class="text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <label>Cambiar departamento de rama principal</label>
-                                    <select id="select_departamento"  class="js-example-data-array" style="width: 100%">
+                                    <label id="label_elemento_editar"></label>
+                                    <input type="text" class="form-control" id="elemento_edit">
+                                    <p id="error_elemento_edit" class="text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cambiar elemento padre</label>
+                                    <select id="select_elemento"  class="js-example-data-array" style="width: 100%">
                                     </select>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                        <button type="submit" id="editar_departamento" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                    <div class="text-right">         
+                                        <button type="submit" id="editar_elemento" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +142,7 @@ var json = [];
 var id = null;
 $(document).ready(function () {
 
-    get_departamentos();
+    get_elementos();
 
     function iniciar(data) {
         document.getElementById('collapseExample').style.display = 'none';
@@ -146,17 +154,18 @@ $(document).ready(function () {
                 levels: 99,
                 onNodeSelected: function (event, node) {
                     limpiar_datos();
-                    $('#label_departamento').html('Agregar rama a ' + node.text.split("|").join(" "));
-                    $('#label_departamento_editar').html('Editar rama ' + node.text.split("|").join(" "));
-                    $('#departamento_edit').val(node.text);
-                    $('#select_departamento').val(node.id_centrocosto_padre).change();
-                    $('#departamento').val('');
+                    $('#label_elemento').html('Agregar sub-elemento a ' + node.text.split("|").join(" "));
+                    $('#label_elemento_editar').html('Modificar elemento ' + node.text.split("|").join(" "));
+                    $('#elemento_edit').val(node.text);
+                    $('#cve_centrocosto_edit').val(node.cve_centrocosto);
+                    $('#select_elemento').val(node.id_centrocosto_padre).change();
+                    $('#elemento').val('');
                     id = node.id;
                     collapse();
                     $('#myModal').modal('show');
                 },
                 onNodeUnselected: function (event, node) {
-                    $('#label_departamento').val('');
+                    $('#label_elemento').val('');
                     id = null;
                     collapse();
                 }
@@ -174,14 +183,19 @@ $(document).ready(function () {
         }
     }
 
-    function get_departamentos() {
+    function get_elementos() {
+
+        toastr.success('Cargando información.', 'Espere...');
+
         $.get("nmn_cat_departamentos/departamentos", function (data) {
+            
             $(".js-example-data-array").select2({
                 data: data
             })
             json = convert(data);
             iniciar(json);
         });
+        toastr.clear()
     }
 
     function convert(array) {
@@ -204,42 +218,52 @@ $(document).ready(function () {
     }
 
     function limpiar_datos() {
-        $("#error_departamento").html('');
-        $("#error_departamento_edit").html('');
+        $("#error_elemento").html('');
+        $("#error_elemento_edit").html('');
+        $("#error_cve_centrocosto").html('');
+        $("#error_cve_centrocosto_edit").html('');
     }
 
-    $("#guardar_departamento").click(function () {
+    $("#guardar_elemento").click(function () {
         limpiar_datos();
-        var departamento = $("#departamento").val().toUpperCase();
+        var elemento = $("#elemento").val().toUpperCase();
+        var cve_centrocosto = $("#cve_centrocosto").val().toUpperCase();
         $.post("nmn_cat_departamentosC", {
-            nombre_centrocosto: departamento,
+            cve_centrocosto: cve_centrocosto,
+            nombre_centrocosto: elemento,
             id_centrocosto_padre: id,
             _token: '{{ csrf_token() }}'}
         )
                 .done(function () {
-                    get_departamentos();
+                    get_elementos();
+                    $('#myModal').modal('hide');
                 })
                 .fail(function (data) {
                     var errors = JSON.parse(data.responseText);
-                    $("#error_departamento").html(errors.nombre_centrocosto);
+                    $("#error_cve_centrocosto").html(errors.cve_centrocosto);
+                    $("#error_elemento").html(errors.nombre_centrocosto);
                 });
     });
 
-    $("#editar_departamento").click(function () {
+    $("#editar_elemento").click(function () {
         limpiar_datos();
-        var departamento = $("#departamento_edit").val().toUpperCase();
-        var select_departamento = $('#select_departamento').val();
+        var elemento = $("#elemento_edit").val().toUpperCase();
+        var cve_centrocosto = $("#cve_centrocosto_edit").val().toUpperCase();
+        var select_elemento = $('#select_elemento').val();
         $.post("nmn_cat_departamentos/editar_departamento/" + id, {
-            nombre_centrocosto: departamento,
-            id_centrocosto: select_departamento,
+            cve_centrocosto: cve_centrocosto,
+            nombre_centrocosto: elemento,
+            id_centrocosto: select_elemento,
             _token: '{{ csrf_token() }}'}
         )
                 .done(function () {
-                    get_departamentos();
+                    get_elementos();
+                    $('#myModal').modal('hide');
                 })
                 .fail(function (data) {
                     var errors = JSON.parse(data.responseText);
-                    $("#error_departamento_edit").html(errors.nombre_centrocosto);
+                    $("#error_cve_centrocosto_edit").html(errors.cve_centrocosto);
+                    $("#error_elemento_edit").html(errors.nombre_centrocosto);
                 });
     });
 

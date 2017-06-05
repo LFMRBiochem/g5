@@ -52,6 +52,11 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
+    Route::get('/ctb_cat_cuentas', 'contabilidad\ctb_cat_cuentasController@listar');
+    Route::get('/ctb_cat_cuentas/get_cuentas', 'contabilidad\ctb_cat_cuentasController@get_cuentas');
+    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}', 'contabilidad\ctb_cat_cuentasController@update');
+    Route::resource('ctb_cat_cuentasC', 'contabilidad\ctb_cat_cuentasController');
+
 // ---------- Misceláneo
 
     Route::get('/autentificacion/usuarios', 'autentificacion\usuariosController@listar');
@@ -76,9 +81,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
     # Rutas para los tipos de contrato en Nómina
 
-    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@listar');
+    Route::get('/nmn_cat_tipo_contrato', 'nomina\nmn_cat_tipo_contratoController@listar');
     #Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoContrato');
-    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoJornada');
+    Route::get('/nmn_cat_tipo_contrato', 'nomina\nmn_cat_tipo_contratoController@getTipoJornada');
 
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
@@ -126,8 +131,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
     Route::get('/cmp_solicitud_pago/beneficiario/', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
     Route::get('/cmp_solicitud_pago/conceptos/', 'compras\cmp_solicitud_pagoController@get_conceptos');
-    Route::post('/cmp_solicitud_pagoC2','compras\cmp_solicitud_pagoController@storePartidas');
-    Route::resource('/cmp_solicitud_pagoC','compras\cmp_solicitud_pagoController');
+    Route::post('/cmp_solicitud_pagoC2', 'compras\cmp_solicitud_pagoController@storePartidas');
+    Route::resource('/cmp_solicitud_pagoC', 'compras\cmp_solicitud_pagoController');
 
 // ----------   Nomina
     Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
