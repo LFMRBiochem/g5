@@ -29,6 +29,36 @@ class ctb_cat_cuentasController extends Controller {
         return response()->json($response);
     }
 
+    public function get_centros_costo($cve_tipoCentroCosto) {
+        $response = DB::table('ctb_cctipos_asociaciones')
+                ->join('ctb_cat_centros_costo', 'ctb_cat_centros_costo.id_centrocosto', '=', 'ctb_cctipos_asociaciones.id_centrocosto')
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto', $cve_tipoCentroCosto)
+                ->where('ctb_cat_centros_costo.estatus', 'A')
+                ->select('ctb_cat_centros_costo.id_centrocosto', 'ctb_cat_centros_costo.id_centrocosto AS id', 'ctb_cat_centros_costo.id_centrocosto_padre', 'ctb_cat_centros_costo.cve_centrocosto AS cuenta_contable', DB::raw(' replace(ctb_cat_centros_costo.nombre_centrocosto,"|"," ") as text'))
+                ->orderBy('ctb_cat_centros_costo.id_centrocosto_padre', 'asc')
+                ->get()
+                ->toArray();
+
+        return response()->json($response);
+    }
+
+    public function get_concepto_financiero() {
+        $response = DB::table('ctb_cat_concepto_financiero')
+                ->where('estatus', 'A')
+                ->get()
+                ->toArray();
+
+        return response()->json($response);
+    }
+    
+    public function get_tipos_centros_costo() {
+        $response = DB::table('ctb_tipos_centros_costo')
+                ->get()
+                ->toArray();
+
+        return response()->json($response);
+    }
+
     public function index() {
         //
     }
@@ -139,7 +169,6 @@ class ctb_cat_cuentasController extends Controller {
             );
             return response()->json();
         }
-        
     }
 
     /**

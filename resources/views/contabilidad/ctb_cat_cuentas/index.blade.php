@@ -51,6 +51,9 @@
                     <blockquote style="background: rgba(245,245,245,0.5); border-color: rgb(69,182,173)">
                         <p><i class="fa fa-exclamation-circle text-primary" aria-hidden="true"></i> Seleccione una cuenta para modificarlo y/o agregar una nueva sección. </p>
                     </blockquote>
+                    <button type="button" class="btn btn-default btn-block" id="asociaciones_cuentas">
+                        Asociaciones
+                    </button>
                 </div>
             </div>
         </div>
@@ -144,6 +147,36 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="modal_asociaciones"  role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Asociaciones</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tipo centros de costo</label>
+                    <select id="tipos_centros_costo" class="js-example-basic-hide-search form-control " style="width: 100%">
+                        <option></option>
+                    </select>
+                </div>
+                <div id="treeview-selectable_elementos"></div>
+                <hr>
+                <div class="form-group">
+                    <label>Tipo centros de costo</label>
+                    <select id="conceptos_financieros" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                        <option></option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @stop
 
 @section('javascript')
@@ -158,96 +191,121 @@
 var json = [];
 var id = null;
 
+var json_elementos = [];
+var id_elementos = null;
+
 $(document).ready(function () {
 
 //inicializamos los select2
-    $("#naturaleza").select2( );
+    $("#naturaleza").select2();
     $("#naturaleza_edit").select2();
+    $("#tipo_centro_costo").select2({placeholder: 'Tipo centro de costo', minimumResultsForSearch: Infinity});
 
 //iniciamos el metodo para obtener las cuentas de ctb_cat_cuentas
     get_cuentas();
+    get_conceptos_financieros();
+    get_tipos_centros_costo();
 
-// data es el json donde estan cargados todos los datos para la creacion del arbol 
     function iniciar(data) {
-        var initSelectableTree = [];
-        initSelectableTree = function () {
-            return $('#treeview-selectable').treeview({
-                data: data,
-                expanded: true,
-                levels: 99,
-                onNodeSelected: function (event, node) {
-                    limpiar_datos();
-//                    Agregar
-                    $('#label_descripcion').html('Agregar sub-descripcion a ' + node.text.split("|").join(" "));
-                    $('#descripcion').val('');
-                    $('#naturaleza').val(node.naturaleza).change();
-
-//                    Modificar
-                    $('#cuenta_contable_edit').val(node.cuenta_contable);
-                    $('#descripcion_edit').val(node.text);
-                    $('#label_descripcion_editar').html('Modificar descripcion ' + node.text.split("|").join(" "));
-                    $('#descripcion_edit').val(node.text.split("|").join(" "));
-                    $('#select_descripcion').val(node.id_cuenta_padre).change();
-                    $('#naturaleza_edit').val(node.naturaleza).change();
-
-                    id = node.id;
-//                    cultamos el modal
-                    $('#myModal').modal('show');
-                },
-                onNodeUnselected: function (event, node) {
-                    $('#label_descripcion').val('');
-                    id = null;
-                }
-            });
-        };
-//        iniciamos la creacion del arbol
-        initSelectableTree();
+        $('#treeview-selectable_elementos').treeview({
+            data: data,
+            expanded: true,
+            levels: 2,
+            showCheckbox: true,
+            onNodeChecked: function (event, node) {
+//                check los hijos
+                check_node_elemento(node);
+            },
+            onNodeUnchecked: function (event, node) {
+//                uncheck los hijos
+                uncheck_node_elemento(node);
+            }
+        });
     }
 
-    function get_cuentas() {
+    $("#tipos_centros_costo").change(function () {
+        if ($("#tipos_centros_costo").val() != null) {
+            get_elementos($("#tipos_centros_costo").val());
+        }
+    });
 
-        toastr.success('Cargando información.', 'Espere...');
-//vamos a la ruta donde se encuentra la query de ctb_cat_cuentas por el metodo get
-        $.get("ctb_cat_cuentas/get_cuentas", function (data) {
-
-            $(".js-example-data-array").select2({
-                data: data
+    function get_tipos_centros_costo() {
+        $.get("ctb_cat_cuentas/tipos_centros_costo", function (data) {
+            $(data).each(function (i, fila) {
+                $("#tipos_centros_costo").append('<option value="' + fila.cve_tipoCentroCosto + '">' + fila.tipo_cc + '</option>');
             });
-//            con este metodo se crea la estructura gerarquica del arbol
-            json = convert(data);
-//            iniciamos la estructura del arbol desde este metodo pasandole el json
-            iniciar(json);
+            $("#tipos_centros_costo").select2({placeholder: 'Conceptos financieros'});
+        });
+    }
+
+    function get_conceptos_financieros(cve_tipoCentroCosto) {
+        $.get("ctb_cat_cuentas/conceptos_financieros", function (data) {
+            $(data).each(function (i, fila) {
+                $("#conceptos_financieros").append('<option value="' + fila.id_conceptofinanciero + '">' + fila.nombre_concepto + '</option>');
+            });
+            $("#conceptos_financieros").select2({placeholder: 'Conceptos financieros', minimumResultsForSearch: Infinity});
+        });
+    }
+
+    function get_elementos(cve_tipoCentroCosto) {
+        toastr.success('Cargando información.', 'Espere...');
+        $.get("ctb_cat_cuentas/centros_costo/" + cve_tipoCentroCosto, function (data) {
+            json_elementos = convert_elemento(data);
+            json_elementos = limpiar_nodes(json_elementos);
+            iniciar(json_elementos);
         });
         toastr.clear();
     }
-//funcion para acomodar el arbol
-    function convert(array) {
-        var map = {};
-        for (var i = 0; i < array.length; i++) {
-            var obj = array[i];
-            obj.nodes = [];
 
-            map[obj.id] = obj;
-            var parent = obj.id_cuenta_padre || '-';
-            if (!map[parent]) {
-                map[parent] = {
-                    nodes: []
-                };
+// data es el json donde estan cargados todos los datos para la creacion del arbol 
+    function iniciar_arbol_cuentas() {
+        $('#treeview-selectable').treeview({
+            data: json,
+            expanded: true,
+            levels: 2,
+            showCheckbox: true,
+            onNodeSelected: function (event, node) {
+
+                limpiar_datos_cuentas();
+//                    Agregar
+                $('#label_descripcion').html('Agregar sub-descripcion a ' + node.text.split("|").join(" "));
+                $('#descripcion').val('');
+                $('#naturaleza').val(node.naturaleza).change();
+
+//                    Modificar
+                $('#cuenta_contable_edit').val(node.cuenta_contable);
+                $('#descripcion_edit').val(node.text);
+                $('#label_descripcion_editar').html('Modificar descripcion ' + node.text.split("|").join(" "));
+                $('#descripcion_edit').val(node.text.split("|").join(" "));
+                $('#select_descripcion').val(node.id_cuenta_padre).change();
+                $('#naturaleza_edit').val(node.naturaleza).change();
+
+                id = node.id;
+//                    ocultamos el modal
+                $('#myModal').modal('show');
+            },
+            onNodeUnselected: function (event, node) {
+                $('#label_descripcion').val('');
+                id = null;
+            },
+            onNodeChecked: function (event, node) {
+//                check los hijos
+                check_node(node);
+            },
+            onNodeUnchecked: function (event, node) {
+//                uncheck los hijos
+                uncheck_node(node);
             }
-            map[parent].nodes.push(obj);
-        }
-        return map['-'].nodes;
+        });
     }
-//limpiamos los campos de errores
-    function limpiar_datos() {
-        $("#error_descripcion").html('');
-        $("#error_descripcion_edit").html('');
-        $("#error_cuenta_contable").html('');
-        $("#error_cuenta_contable_edit").html('');
-    }
+
+    $("#asociaciones_cuentas").click(function () {
+        $("#modal_asociaciones").modal('show');
+//        console.log($('#treeview-selectable').treeview('getChecked'));
+    });
 
     $("#guardar_descripcion").click(function () {
-        limpiar_datos();
+        limpiar_datos_cuentas();
 
         var descripcion = $("#descripcion").val();
         var cuenta_contable = $("#cuenta_contable").val();
@@ -266,24 +324,23 @@ $(document).ready(function () {
                     $('#myModal').modal('hide');
                 })
                 .fail(function (data) {
-//                    mostramos los errores de validacion
+//                  mostramos los errores de validacion
                     var errors = JSON.parse(data.responseText);
                     $("#error_cuenta_contable").html(errors.cuenta_contable);
                     $("#error_descripcion").html(errors.descripcion);
                     $("#error_naturaleza").html(errors.naturaleza);
-
                 });
     });
 
     $("#editar_descripcion").click(function () {
-        limpiar_datos();
+        limpiar_datos_cuentas();
 
         var descripcion = $("#descripcion_edit").val();
         var cuenta_contable = $("#cuenta_contable_edit").val();
         var select_descripcion = $('#select_descripcion').val();
         var naturaleza = $('#naturaleza_edit').val();
 
-//editamos las cuentas por metodo post
+//      editamos las cuentas por metodo post
         $.post("ctb_cat_cuentas/get_cuentas/" + id, {
             cuenta_contable: cuenta_contable,
             descripcion: descripcion,
@@ -301,6 +358,118 @@ $(document).ready(function () {
                     $("#error_descripcion_edit").html(errors.descripcion);
                 });
     });
+
+    function check_node_elemento(data) {
+        $(data).each(function (i, element) {
+            $('#treeview-selectable_elementos').treeview('checkNode', [element.nodeId, {silent: true}]);
+            if (element.nodes && element.nodes.length > 0) {
+                check_node_elemento(element.nodes);
+            }
+        });
+    }
+
+    function uncheck_node_elemento(data) {
+        $(data).each(function (i, element) {
+            $('#treeview-selectable_elementos').treeview('uncheckNode', [element.nodeId, {silent: true}]);
+            if (element.nodes && element.nodes.length > 0) {
+                uncheck_node_elemento(element.nodes);
+            }
+        });
+    }
+
+    function check_node(data) {
+        $(data).each(function (i, element) {
+            $('#treeview-selectable').treeview('checkNode', [element.nodeId, {silent: true}]);
+            if (element.nodes && element.nodes.length > 0) {
+                check_node(element.nodes);
+            }
+        });
+    }
+
+    function uncheck_node(data) {
+        $(data).each(function (i, element) {
+            $('#treeview-selectable').treeview('uncheckNode', [element.nodeId, {silent: true}]);
+            if (element.nodes && element.nodes.length > 0) {
+                uncheck_node(element.nodes);
+            }
+        });
+    }
+
+    function get_cuentas() {
+        toastr.success('Cargando información.', 'Espere...');
+//vamos a la ruta donde se encuentra la query de ctb_cat_cuentas por el metodo get
+        $.get("ctb_cat_cuentas/get_cuentas", function (data) {
+
+            $(".js-example-data-array").select2({
+                data: data
+            });
+//            con este metodo se crea la estructura gerarquica del arbol
+            json = convert(data);
+            json = limpiar_nodes(json);
+//            iniciamos la estructura del arbol desde este metodo pasandole el json
+            iniciar_arbol_cuentas();
+        });
+        toastr.clear();
+    }
+
+    function limpiar_nodes(data) {
+        $(data).each(function (i, element) {
+            if (element.nodes.length === 0) {
+                delete(element.nodes);
+            }
+            if (element.nodes && element.nodes.length > 0) {
+                limpiar_nodes(element.nodes);
+            }
+        });
+        return data;
+    }
+
+    function convert_elemento(array) {
+
+        var map = {};
+        for (var i = 0; i < array.length; i++) {
+            var obj = array[i];
+            obj.nodes = [];
+
+            map[obj.id_centrocosto] = obj;
+            var parent = obj.id_centrocosto_padre || '-';
+            if (!map[parent]) {
+                map[parent] = {
+                    nodes: []
+                };
+            }
+            map[parent].nodes.push(obj);
+        }
+        return map['-'].nodes;
+    }
+
+//funcion para acomodar el arbol
+    function convert(array) {
+        var map = {};
+        for (var i = 0; i < array.length; i++) {
+            var obj = array[i];
+            obj.nodes = [];
+
+            map[obj.id] = obj;
+            var parent = obj.id_cuenta_padre || '-';
+            if (!map[parent]) {
+                map[parent] = {
+                    nodes: []
+                };
+            }
+            map[parent].nodes.push(obj);
+        }
+        return map['-'].nodes;
+    }
+
+//limpiamos los campos de errores
+    function limpiar_datos_cuentas() {
+        $("#error_descripcion").html('');
+        $("#error_descripcion_edit").html('');
+        $("#error_cuenta_contable").html('');
+        $("#error_cuenta_contable_edit").html('');
+    }
+
 
 });
 </script>

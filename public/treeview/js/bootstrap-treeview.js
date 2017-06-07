@@ -34,8 +34,8 @@
 
         levels: 2,
 
-        expandIcon: 'fa fa-level-up fa-rotate-90',
-        collapseIcon: 'fa fa-level-up fa-rotate-90',
+        expandIcon: 'fa fa-folder-o',
+        collapseIcon: 'fa fa-folder-open-o',
         emptyIcon: 'fa',
         nodeIcon: '',
         selectedIcon: '',

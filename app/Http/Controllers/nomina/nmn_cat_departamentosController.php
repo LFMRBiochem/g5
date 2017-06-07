@@ -32,6 +32,8 @@ class nmn_cat_departamentosController extends Controller {
 
         return response()->json($response);
     }
+    
+
 
     /**
      * Show the form for creating a new resource.

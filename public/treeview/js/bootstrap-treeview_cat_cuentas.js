@@ -34,9 +34,9 @@
 
         levels: 2,
 
-        expandIcon: 'fa fa-level-up fa-rotate-90',
-        collapseIcon: 'fa fa-level-up fa-rotate-90',
-        emptyIcon: 'fa',
+        expandIcon: 'fa fa-folder-o',
+        collapseIcon: 'fa fa-folder-open-o',
+        emptyIcon: 'glyphicon',
         nodeIcon: '',
         selectedIcon: '',
         checkedIcon: 'glyphicon glyphicon-check',
@@ -595,7 +595,7 @@
             } else {
                 // otherwise just text
                 treeItem
-                        .append('['+ node.cuenta_contable+'] - '+ node.text);
+                        .append('[' + node.cuenta_contable + '] - ' + node.text);
             }
 
             // Add tags as badges

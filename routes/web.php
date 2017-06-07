@@ -52,6 +52,10 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
+    
+    Route::get('/ctb_cat_cuentas/tipos_centros_costo', 'contabilidad\ctb_cat_cuentasController@get_tipos_centros_costo');
+    Route::get('/ctb_cat_cuentas/conceptos_financieros', 'contabilidad\ctb_cat_cuentasController@get_concepto_financiero');
+    Route::get('/ctb_cat_cuentas/centros_costo/{cve_tipoCentroCosto}', 'contabilidad\ctb_cat_cuentasController@get_centros_costo');
     Route::get('/ctb_cat_cuentas', 'contabilidad\ctb_cat_cuentasController@listar');
     Route::get('/ctb_cat_cuentas/get_cuentas', 'contabilidad\ctb_cat_cuentasController@get_cuentas');
     Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}', 'contabilidad\ctb_cat_cuentasController@update');
