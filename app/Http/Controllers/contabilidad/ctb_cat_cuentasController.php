@@ -50,7 +50,7 @@ class ctb_cat_cuentasController extends Controller {
 
         return response()->json($response);
     }
-    
+
     public function get_tipos_centros_costo() {
         $response = DB::table('ctb_tipos_centros_costo')
                 ->get()
@@ -59,8 +59,16 @@ class ctb_cat_cuentasController extends Controller {
         return response()->json($response);
     }
 
+    public function contabilidad_asociaciones(Request $request) {
+        unset($request['_token']);
+
+        DB::table('ctb_contabilidad_asociaciones')
+                ->insert($request->input('contabilidad_asociaciones'));
+        return response()->json('ok');
+    }
+
     public function index() {
-        //
+        
     }
 
     /**

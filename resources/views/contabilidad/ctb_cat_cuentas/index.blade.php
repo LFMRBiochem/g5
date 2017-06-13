@@ -9,13 +9,11 @@
     .panel-default-transparente{
         background: rgba(255,254,240,0.3);
         border: 0px;
-
     }
 
     .well{
         background: rgba(34,34,34,0.2);
         border: 1px solid rgba(245,245,245,0.2);
-
     }
 
     li {
@@ -105,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div role="tabpanel" class="tab-pane active" id="home">
                             <div class="form-group">
@@ -138,15 +137,13 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="modal_asociaciones"  role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
@@ -166,12 +163,15 @@
                 <div id="treeview-selectable_elementos"></div>
                 <hr>
                 <div class="form-group">
-                    <label>Tipo centros de costo</label>
+                    <label>Conceptos financieros </label>
                     <select id="conceptos_financieros" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
                         <option></option>
                     </select>
                 </div>
-
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_asociaciones"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
             </div>
         </div>
     </div>
@@ -187,25 +187,26 @@
 
 
 <script>
-
+// json para el catalogo de cuentas
 var json = [];
 var id = null;
-
+// json para areas y departamentos que estamos llamando elementos
 var json_elementos = [];
 var id_elementos = null;
 
 $(document).ready(function () {
 
-//inicializamos los select2
+// inicializamos los select2
     $("#naturaleza").select2();
     $("#naturaleza_edit").select2();
     $("#tipo_centro_costo").select2({placeholder: 'Tipo centro de costo', minimumResultsForSearch: Infinity});
 
-//iniciamos el metodo para obtener las cuentas de ctb_cat_cuentas
+// iniciamos el metodo para obtener las cuentas de ctb_cat_cuentas
     get_cuentas();
     get_conceptos_financieros();
     get_tipos_centros_costo();
 
+// inicializa el arbol de las areas y departamentos (elementos)
     function iniciar(data) {
         $('#treeview-selectable_elementos').treeview({
             data: data,
@@ -227,6 +228,50 @@ $(document).ready(function () {
         if ($("#tipos_centros_costo").val() != null) {
             get_elementos($("#tipos_centros_costo").val());
         }
+    });
+
+    $("#btn_asociaciones").click(function () {
+        var cuentas = [];
+        var elementos = [];
+        var conceptos_financieros = [];
+
+        cuentas = $('#treeview-selectable').treeview('getChecked');
+        elementos = $('#treeview-selectable_elementos').treeview('getChecked');
+        conceptos_financieros = $('#conceptos_financieros').val();
+
+        var contabilidad_asociaciones = [];
+
+        $(cuentas).each(function (i, fila_cuentas) {
+            if (fila_cuentas.nodes == null) {
+                $(elementos).each(function (k, fila_elementos) {
+                    if (fila_elementos.nodes == null) {
+                        $(conceptos_financieros).each(function (j, fila_conceptos_financieros) {
+                            contabilidad_asociaciones.push({
+                                id_cuenta: fila_cuentas.id,
+                                id_centrocosto: fila_elementos.id_centrocosto,
+                                id_conceptofinanciero: fila_conceptos_financieros
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+        $.post("ctb_cat_cuentas/contabilidad_asociaciones", {
+            contabilidad_asociaciones: contabilidad_asociaciones,
+            _token: '{{ csrf_token() }}'}
+        )
+                .done(function (data) {
+console.log(data);
+                })
+                .fail(function (data) {
+////                  mostramos los errores de validacion
+//                    var errors = JSON.parse(data.responseText);
+//                    $("#error_cuenta_contable").html(errors.cuenta_contable);
+//                    $("#error_descripcion").html(errors.descripcion);
+//                    $("#error_naturaleza").html(errors.naturaleza);
+                });
+
     });
 
     function get_tipos_centros_costo() {
@@ -311,6 +356,7 @@ $(document).ready(function () {
         var cuenta_contable = $("#cuenta_contable").val();
         var naturaleza = $('#naturaleza').val();
 //mandamos guardar por el metodo post
+
         $.post("ctb_cat_cuentasC", {
             cuenta_contable: cuenta_contable,
             descripcion: descripcion,
@@ -469,7 +515,6 @@ $(document).ready(function () {
         $("#error_cuenta_contable").html('');
         $("#error_cuenta_contable_edit").html('');
     }
-
 
 });
 </script>

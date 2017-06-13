@@ -10,22 +10,15 @@ Route::get('/conceptos', function() {
     return ctb_cat_concepto_financiero::where('catalogo_sat', 'like', '105.%')->count();
 });
 
-
-
-
 Route::group(['middleware' => ['web']], function() {
     Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
 });
-
 
 Route::get('autentificacion/login', 'autentificacion\loginController@index');
 Route::post('autentificacion/logincontroller', 'autentificacion\loginController@login');
 Route::get('autentificacion/logincontroller/logout', 'autentificacion\loginController@logout');
 
-
-
 Route::group(['middleware' => 'autentificacion'], function () {
-
 
     Route::get('/inicio', function () {
         return view('welcome');
@@ -58,7 +51,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_cuentas/centros_costo/{cve_tipoCentroCosto}', 'contabilidad\ctb_cat_cuentasController@get_centros_costo');
     Route::get('/ctb_cat_cuentas', 'contabilidad\ctb_cat_cuentasController@listar');
     Route::get('/ctb_cat_cuentas/get_cuentas', 'contabilidad\ctb_cat_cuentasController@get_cuentas');
-    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}', 'contabilidad\ctb_cat_cuentasController@update');
+    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}',   'contabilidad\ctb_cat_cuentasController@update');
+    Route::post('/ctb_cat_cuentas/contabilidad_asociaciones', 'contabilidad\ctb_cat_cuentasController@contabilidad_asociaciones');
     Route::resource('ctb_cat_cuentasC', 'contabilidad\ctb_cat_cuentasController');
 
 // ---------- Misceláneo
