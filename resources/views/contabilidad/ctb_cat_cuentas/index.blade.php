@@ -239,40 +239,102 @@ $(document).ready(function () {
         elementos = $('#treeview-selectable_elementos').treeview('getChecked');
         conceptos_financieros = $('#conceptos_financieros').val();
 
-        var contabilidad_asociaciones = [];
+        var cuentas_id_cuenta = [];
+        var elementos_id_centrocosto = [];
+        var cuentas_id_conceptofinanciero = [];
 
         $(cuentas).each(function (i, fila_cuentas) {
             if (fila_cuentas.nodes == null) {
-                $(elementos).each(function (k, fila_elementos) {
-                    if (fila_elementos.nodes == null) {
-                        $(conceptos_financieros).each(function (j, fila_conceptos_financieros) {
-                            contabilidad_asociaciones.push({
-                                id_cuenta: fila_cuentas.id,
-                                id_centrocosto: fila_elementos.id_centrocosto,
-                                id_conceptofinanciero: fila_conceptos_financieros
-                            });
-                        });
-                    }
-                });
+                cuentas_id_cuenta.push(fila_cuentas.id);
             }
         });
+        $(elementos).each(function (k, fila_elementos) {
+            if (fila_elementos.nodes == null) {
+                elementos_id_centrocosto.push(fila_elementos.id_centrocosto);
+            }
+        });
+        $(conceptos_financieros).each(function (j, fila_conceptos_financieros) {
+            cuentas_id_conceptofinanciero.push(fila_conceptos_financieros);
+        });
+        console.log(cuentas_id_cuenta);
+        console.log(elementos_id_centrocosto);
+        console.log(cuentas_id_conceptofinanciero);
+
+        console.log('cuentas_id_cuenta: ' + memorySizeOf(cuentas_id_cuenta));
+        console.log('elementos_id_centrocosto: ' + memorySizeOf(elementos_id_centrocosto));
+        console.log('cuentas_id_conceptofinanciero: ' + memorySizeOf(cuentas_id_conceptofinanciero));
 
         $.post("ctb_cat_cuentas/contabilidad_asociaciones", {
-            contabilidad_asociaciones: contabilidad_asociaciones,
-            _token: '{{ csrf_token() }}'}
+            _token: '{{ csrf_token() }}',
+            id_cuenta: cuentas_id_cuenta,
+            id_centrocosto: elementos_id_centrocosto,
+            id_conceptofinanciero: cuentas_id_conceptofinanciero,
+        }
         )
                 .done(function (data) {
-console.log(data);
+
                 })
                 .fail(function (data) {
+                    //---------------------------------------
+
 ////                  mostramos los errores de validacion
 //                    var errors = JSON.parse(data.responseText);
 //                    $("#error_cuenta_contable").html(errors.cuenta_contable);
 //                    $("#error_descripcion").html(errors.descripcion);
 //                    $("#error_naturaleza").html(errors.naturaleza);
+
+// -----------------------------------------
                 });
 
     });
+
+    function memorySizeOf(obj) {
+        var bytes = 0;
+
+        function sizeOf(obj) {
+            if (obj !== null && obj !== undefined) {
+                switch (typeof obj) {
+                    case 'number':
+                        bytes += 8;
+                        break;
+                    case 'string':
+                        bytes += obj.length * 2;
+                        break;
+                    case 'boolean':
+                        bytes += 4;
+                        break;
+                    case 'object':
+                        var objClass = Object.prototype.toString.call(obj).slice(8, -1);
+                        if (objClass === 'Object' || objClass === 'Array') {
+                            for (var key in obj) {
+                                if (!obj.hasOwnProperty(key))
+                                    continue;
+                                sizeOf(obj[key]);
+                            }
+                        } else
+                            bytes += obj.toString().length * 2;
+                        break;
+                }
+            }
+            return bytes;
+        }
+        ;
+
+        function formatByteSize(bytes) {
+            if (bytes < 1024)
+                return bytes + " bytes";
+            else if (bytes < 1048576)
+                return(bytes / 1024).toFixed(3) + " KiB";
+            else if (bytes < 1073741824)
+                return(bytes / 1048576).toFixed(3) + " MiB";
+            else
+                return(bytes / 1073741824).toFixed(3) + " GiB";
+        }
+        ;
+
+        return formatByteSize(sizeOf(obj));
+    }
+    ;
 
     function get_tipos_centros_costo() {
         $.get("ctb_cat_cuentas/tipos_centros_costo", function (data) {

@@ -60,11 +60,26 @@ class ctb_cat_cuentasController extends Controller {
     }
 
     public function contabilidad_asociaciones(Request $request) {
-        unset($request['_token']);
+        $data = array();
+        foreach ($request->input('id_cuenta') as $fila_id_cuenta) {
+            foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
+                foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
+                    array_push($data, array(
+//                                    id_conceptofinanciero
+                        'id_conceptofinanciero' => $fila_id_conceptofinanciero,
+//                                    id_centrocosto
+                        'id_centrocosto' => $fila_id_centrocosto,
+//                                    id cuenta
+                        'id_cuenta' => $fila_id_cuenta
+                    ));
+                }
+            }
+        }
 
-        DB::table('ctb_contabilidad_asociaciones')
-                ->insert($request->input('contabilidad_asociaciones'));
-        return response()->json('ok');
+        $response = DB::table('ctb_contabilidad_asociaciones')
+                ->insert($data);
+
+        return response()->json($response);
     }
 
     public function index() {
