@@ -107,14 +107,14 @@
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <!--                                        <li><a href="#">Arbol de cuentas</a></li>-->
-                                        <li><a href="{{URL::to('/').'/catalogo-de-cuentas-contables'}}">Cuestas contables</a></li>
+                                        <li><a href="{{URL::to('/').'/ctb_cat_cuentas'}}">Cuentas contables</a></li>
                                         <li><a href="{{URL::to('/').'/ctb_cat_concepto_financiero'}}">Concepto financiero</a></li>
                                         <li><a href="{{URL::to('/').'/ctb_tipos_cambio'}}">Tipos de cambio</a></li>
 
                                         <li><a href="{{URL::to('/').'/ctb_cat_centros_costo'}}">Centros costo</a></li>
                                         <li><a href="{{URL::to('/').'/ctb_tipos_centros'}}">Tipos centros costo</a></li>
                                         <li><a href="{{URL::to('/').'/ctb_documentos_partidas'}}">Documentos partidas</a></li>
-                                        <li><a href="{{URL::to('/').'/ctb_reservacfdi'}}">Tipos de cambio</a></li>
+                                    
                                     </ul>
                                 </li>
 <!--                                <li><a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Procesos<span class="caret"></span></a>
@@ -227,32 +227,7 @@
                                 </li>
                             </ul>
                         </li>-->
-                        <li><a href="#">Inventarios <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="{{URL::to('/').'/inv_cat_productos'}}">Productos</a></li>
-                                        <!--                                        <li><a href="#">Proveedores</a></li>
-                                                                                <li><a href="#">Vehículos</a></li>-->
-                                    </ul>
-                                </li>
-<!--                                <li><a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Procesos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                                                                <li><a href="#">Editor orden de compra</a></li>
-                                                                                <li><a href="#">Entrada a almacen</a></li>
-                                                                                <li><a href="#">Ajustes de precios de ME</a></li>
-                                    </ul>
-                                </li>-->
-<!--                                <li><a href="#"><i class="fa fa-print" aria-hidden="true"></i> Reportes<span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                                                                <li><a href="#">Ordenes de compra</a></li>
-                                                                                <li><a href="#">Seguimiento de OC</a></li>
-                                                                                <li><a href="#">Histórico de compras por producto</a></li>
-                                    </ul>
-                                </li>-->
-                            </ul>
-                        </li>
+                        
                         <li><a href="#">Tesorería <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>

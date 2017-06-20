@@ -10,23 +10,16 @@ Route::get('/conceptos', function() {
     return ctb_cat_concepto_financiero::where('catalogo_sat', 'like', '105.%')->count();
 });
 
-
-
-
 Route::group(['middleware' => ['web']], function() {
     Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
     
 });
 
-
 Route::get('autentificacion/login', 'autentificacion\loginController@index');
 Route::post('autentificacion/logincontroller', 'autentificacion\loginController@login');
 Route::get('autentificacion/logincontroller/logout', 'autentificacion\loginController@logout');
 
-
-
 Route::group(['middleware' => 'autentificacion'], function () {
-
 
     Route::get('/inicio', function () {
         return view('welcome');
@@ -53,6 +46,16 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
+    
+    Route::get('/ctb_cat_cuentas/tipos_centros_costo', 'contabilidad\ctb_cat_cuentasController@get_tipos_centros_costo');
+    Route::get('/ctb_cat_cuentas/conceptos_financieros', 'contabilidad\ctb_cat_cuentasController@get_concepto_financiero');
+    Route::get('/ctb_cat_cuentas/centros_costo/{cve_tipoCentroCosto}', 'contabilidad\ctb_cat_cuentasController@get_centros_costo');
+    Route::get('/ctb_cat_cuentas', 'contabilidad\ctb_cat_cuentasController@listar');
+    Route::get('/ctb_cat_cuentas/get_cuentas', 'contabilidad\ctb_cat_cuentasController@get_cuentas');
+    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}',   'contabilidad\ctb_cat_cuentasController@update');
+    Route::post('/ctb_cat_cuentas/contabilidad_asociaciones', 'contabilidad\ctb_cat_cuentasController@contabilidad_asociaciones');
+    Route::resource('ctb_cat_cuentasC', 'contabilidad\ctb_cat_cuentasController');
+
 // ---------- Misceláneo
 
     Route::get('/autentificacion/usuarios', 'autentificacion\usuariosController@listar');
@@ -77,9 +80,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
     # Rutas para los tipos de contrato en Nómina
 
-    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@listar');
+    Route::get('/nmn_cat_tipo_contrato', 'nomina\nmn_cat_tipo_contratoController@listar');
     #Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoContrato');
-    Route::get('/nmn_cat_tipo_contrato','nomina\nmn_cat_tipo_contratoController@getTipoJornada');
+    Route::get('/nmn_cat_tipo_contrato', 'nomina\nmn_cat_tipo_contratoController@getTipoJornada');
 
 
     Route::get('/ctb_tipos_cambio', 'contabilidad\ctb_tipos_cambioController@listar');
@@ -128,8 +131,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
     #solicitú de pago
     Route::get('/cmp_solicitud_pago/beneficiario/', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
     Route::get('/cmp_solicitud_pago/conceptos/', 'compras\cmp_solicitud_pagoController@get_conceptos');
-    Route::post('/cmp_solicitud_pagoC2','compras\cmp_solicitud_pagoController@storePartidas');
-    Route::resource('/cmp_solicitud_pagoC','compras\cmp_solicitud_pagoController');
+    Route::post('/cmp_solicitud_pagoC2', 'compras\cmp_solicitud_pagoController@storePartidas');
+    Route::resource('/cmp_solicitud_pagoC', 'compras\cmp_solicitud_pagoController');
 
     #ordenes de compra
     Route::get('/cmp_orden_compra/products', 'compras\cmp_orden_compraController@getProducts');
@@ -153,6 +156,7 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/nmn_cat_departamentos/departamentos', 'nomina\nmn_cat_departamentosController@get_departamentos');
     Route::get('/nmn_cat_departamentos', 'nomina\nmn_cat_departamentosController@listar');
     Route::resource('/nmn_cat_departamentosC', 'nomina\nmn_cat_departamentosController');
+    Route::post('/nmn_cat_departamentos/editar_departamento/{id_centrocosto}', 'nomina\nmn_cat_departamentosController@update');
 
 
 // ---------   Compras

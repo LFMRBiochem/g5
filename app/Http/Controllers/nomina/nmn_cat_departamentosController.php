@@ -6,6 +6,7 @@ use App\Models\nomina\nmn_cat_departamentos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class nmn_cat_departamentosController extends Controller {
 
@@ -14,23 +15,6 @@ class nmn_cat_departamentosController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        //
-        $items = inv_cat_productos::paginate(6);
-
-        $response = [
-            'pagination' => [
-                'total' => $items->total(),
-                'per_page' => $items->perPage(),
-                'current_page' => $items->currentPage(),
-                'last_page' => $items->lastPage(),
-                'from' => $items->firstItem(),
-                'to' => $items->lastItem()
-            ],
-            'data' => $items
-        ];
-        return response()->json($response);
-    }
 
     public function listar() {
         return view('nomina/nmn_cat_departamentos/index');
@@ -39,13 +23,17 @@ class nmn_cat_departamentosController extends Controller {
     public function get_departamentos() {
         $response = DB::table('ctb_cctipos_asociaciones')
                 ->join('ctb_cat_centros_costo', 'ctb_cat_centros_costo.id_centrocosto', '=', 'ctb_cctipos_asociaciones.id_centrocosto')
-                ->where('cve_tipoCentroCosto', 'DEP')
-                ->select('ctb_cat_centros_costo.id_centrocosto', 'ctb_cat_centros_costo.id_centrocosto AS id', 'ctb_cat_centros_costo.id_centrocosto_padre', DB::raw('replace(ctb_cat_centros_costo.nombre_centrocosto,"|","") as text'))
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto', 'DEP')
+                ->where('ctb_cat_centros_costo.estatus', 'A')
+                ->select('ctb_cat_centros_costo.id_centrocosto', 'ctb_cat_centros_costo.id_centrocosto AS id', 'ctb_cat_centros_costo.id_centrocosto_padre', 'ctb_cat_centros_costo.cve_centrocosto', DB::raw(' replace(ctb_cat_centros_costo.nombre_centrocosto,"|"," ") as text'))
+                ->orderBy('ctb_cat_centros_costo.id_centrocosto_padre', 'asc')
                 ->get()
                 ->toArray();
-        
+
         return response()->json($response);
     }
+    
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,24 +51,41 @@ class nmn_cat_departamentosController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        
-        $id_centrocosto = DB::table('ctb_cat_centros_costo')->insertGetId(
-                array(
-                    'cve_compania' => '019',
-                    'nombre_centrocosto' => $request->input('nombre_centrocosto'),
-                    'id_centrocosto_padre' => $request->input('id_centrocosto_padre'),
-                    'estatus' => 'A'
-                )
-        );
+        unset($request['_token']);
 
-        DB::table('ctb_cctipos_asociaciones')->insert(
-                array(
-                    'cve_compania' => '019',
-                    'cve_tipoCentroCosto' => 'DEP',
-                    'id_centrocosto' => $id_centrocosto,
-                )
-        );
-        return response()->json($id_centrocosto);
+        $validator = Validator::make($request->all(), [
+                    'nombre_centrocosto' => 'required|max:75',
+                    'cve_centrocosto' => 'required|max:8',
+                        ], [
+                    'nombre_centrocosto.required' => 'El campo es obligatorio.',
+                    'nombre_centrocosto.max' => 'El campo debe contener :max caracteres como máximo.',
+                    'cve_centrocosto.max' => 'El campo debe contener :max caracteres como máximo.',
+                    'cve_centrocosto.required' => 'El campo es obligatorio.',
+        ]);
+
+        if ($validator->validate()) {
+            return response()->json($validator->fails());
+        } else {
+
+            $id_centrocosto = DB::table('ctb_cat_centros_costo')->insertGetId(
+                    array(
+                        'cve_compania' => '019',
+                        'nombre_centrocosto' => $request->input('nombre_centrocosto'),
+                        'cve_centrocosto' => $request->input('cve_centrocosto'),
+                        'id_centrocosto_padre' => $request->input('id_centrocosto_padre'),
+                        'estatus' => 'A'
+                    )
+            );
+
+            DB::table('ctb_cctipos_asociaciones')->insert(
+                    array(
+                        'cve_compania' => '019',
+                        'cve_tipoCentroCosto' => 'DEP',
+                        'id_centrocosto' => $id_centrocosto,
+                    )
+            );
+            return response()->json();
+        }
     }
 
     /**
@@ -110,8 +115,34 @@ class nmn_cat_departamentosController extends Controller {
      * @param  \App\Models\nomina\nmn_cat_departamentos  $nmn_cat_departamentos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, nmn_cat_departamentos $nmn_cat_departamentos) {
-        //
+    public function update(Request $request, $id) {
+        unset($request['_token']);
+
+
+        $validator = Validator::make($request->all(), [
+                    'nombre_centrocosto' => 'required|max:75',
+                    'cve_centrocosto' => 'required|max:8',
+                        ], [
+                    'nombre_centrocosto.required' => 'El campo es obligatorio.',
+                    'nombre_centrocosto.max' => 'El campo debe contener :max caracteres como máximo.',
+                    'cve_centrocosto.required' => 'El campo es obligatorio.',
+                    'cve_centrocosto.max' => 'El campo debe contener :max caracteres como máximo.'
+        ]);
+
+        if ($validator->validate()) {
+            return response()->json($validator->fails());
+        } else {
+
+            DB::table('ctb_cat_centros_costo')
+                    ->where('id_centrocosto', $id)
+                    ->update(array(
+                        'nombre_centrocosto' => $request->input('nombre_centrocosto'),
+                        'id_centrocosto_padre' => $request->input('id_centrocosto'),
+                        'cve_centrocosto' => $request->input('cve_centrocosto'),
+            ));
+
+            return response()->json();
+        }
     }
 
     /**
