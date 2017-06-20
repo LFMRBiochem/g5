@@ -59,27 +59,76 @@ class ctb_cat_cuentasController extends Controller {
         return response()->json($response);
     }
 
-    public function contabilidad_asociaciones(Request $request) {
+    public function get_conceptofinanciero_edit($id_cuenta, $cve_tipoCentroCosto) {
+        $response = DB::table('ctb_contabilidad_asociaciones')
+                ->distinct()
+                ->select('ctb_contabilidad_asociaciones.id_conceptofinanciero')
+                ->join('ctb_cctipos_asociaciones', 'ctb_cctipos_asociaciones.id_centrocosto', '=', 'ctb_contabilidad_asociaciones.id_centrocosto')
+                ->where('ctb_contabilidad_asociaciones.id_cuenta', $id_cuenta)
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto', $cve_tipoCentroCosto)
+                ->get()
+                ->toArray();
+
+        return response()->json($response);
+    }
+
+    public function get_centros_costo_editar($id_cuenta) {
+        $response = DB::table('ctb_contabilidad_asociaciones')
+                ->distinct()
+                ->select('id_centrocosto')
+                ->where('id_cuenta', $id_cuenta)
+                ->get()
+                ->toArray();
+
+        return response()->json($response);
+    }
+
+    public function editar_asociaciones(Request $request, $id_cuenta, $centros_costo_change) {
+        unset($request['_token']);
+
+//        Buscamos en la tabla ctb_contabilidad_asociaciones por tipo de centro costo y por el id 
+//        y obtenemos id_contabilidad_asociacion para usarlo y eliminar las asociaciones 
+        $response = DB::table('ctb_contabilidad_asociaciones')
+                ->select('ctb_contabilidad_asociaciones.id_contabilidad_asociacion')
+                ->join('ctb_cctipos_asociaciones', 'ctb_cctipos_asociaciones.id_centrocosto', '=', 'ctb_contabilidad_asociaciones.id_centrocosto')
+                ->where('ctb_contabilidad_asociaciones.id_cuenta', $id_cuenta)
+                ->where('ctb_cctipos_asociaciones.cve_tipoCentroCosto', $centros_costo_change)
+                ->get()
+                ->toArray();
+
+        $id_contabilidad_asociacion = collect($response);
+        $plucked = $id_contabilidad_asociacion->pluck('id_contabilidad_asociacion');
+
+        DB::table('ctb_contabilidad_asociaciones')
+                ->whereIn('id_contabilidad_asociacion', $plucked->all())
+                ->delete();
+
         $data = array();
-        foreach ($request->input('id_cuenta') as $fila_id_cuenta) {
-            foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
-                foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
-                    array_push($data, array(
-//                                    id_conceptofinanciero
-                        'id_conceptofinanciero' => $fila_id_conceptofinanciero,
-//                                    id_centrocosto
-                        'id_centrocosto' => $fila_id_centrocosto,
-//                                    id cuenta
-                        'id_cuenta' => $fila_id_cuenta
-                    ));
+
+        $link = mysqli_connect("192.168.203.7", "webaccess", "W3b.4xx3z")or die('Error al conectar' . mysqli_errno($link));
+        mysqli_select_db($link, "Desarrollo");
+        $tildes = $link->query("SET NAMES 'utf8'");
+
+//      Para que se inserten las tildes correctamente
+        mysqli_query($link, "start transaction");
+
+        foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
+            foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
+                $sql = "INSERT INTO ctb_contabilidad_asociaciones (id_cuenta, id_centrocosto, id_conceptofinanciero) VALUES('$id_cuenta','$fila_id_centrocosto','$fila_id_conceptofinanciero')";
+                $query = mysqli_query($link, $sql);
+                if (!$query) {
+                    $sql = "rollback";
+                    $query = mysqli_query($link, $sql);
+                    break;
+                    die();
                 }
             }
         }
+        $sql = "commit";
+        mysqli_query($link, $sql);
+        mysqli_close($link);
 
-        $response = DB::table('ctb_contabilidad_asociaciones')
-                ->insert($data);
-
-        return response()->json($response);
+        return response()->json();
     }
 
     public function index() {
@@ -103,7 +152,6 @@ class ctb_cat_cuentasController extends Controller {
      */
     public function store(Request $request) {
         unset($request['_token']);
-
 
         $validator = Validator::make($request->all(), [
                     'descripcion' => 'required|max:160',

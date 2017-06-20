@@ -34,7 +34,6 @@ class nmn_cat_departamentosController extends Controller {
     }
     
 
-
     /**
      * Show the form for creating a new resource.
      *

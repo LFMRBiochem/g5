@@ -45,14 +45,16 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/ctb_cat_concepto_financiero', 'contabilidad\ctb_cat_concepto_financieroController@listar');
     Route::resource('ctb_cat_concepto_financieroC', 'contabilidad\ctb_cat_concepto_financieroController');
 
-    
+
     Route::get('/ctb_cat_cuentas/tipos_centros_costo', 'contabilidad\ctb_cat_cuentasController@get_tipos_centros_costo');
     Route::get('/ctb_cat_cuentas/conceptos_financieros', 'contabilidad\ctb_cat_cuentasController@get_concepto_financiero');
     Route::get('/ctb_cat_cuentas/centros_costo/{cve_tipoCentroCosto}', 'contabilidad\ctb_cat_cuentasController@get_centros_costo');
+    Route::get('/ctb_cat_cuentas/asociaciones_edit/conceptofinanciero/{id_cuenta}/{cve_tipoCentroCosto}', 'contabilidad\ctb_cat_cuentasController@get_conceptofinanciero_edit');
+    Route::get('/ctb_cat_cuentas/asociaciones_edit/centros_costo/{id_cuenta}', 'contabilidad\ctb_cat_cuentasController@get_centros_costo_editar');
     Route::get('/ctb_cat_cuentas', 'contabilidad\ctb_cat_cuentasController@listar');
     Route::get('/ctb_cat_cuentas/get_cuentas', 'contabilidad\ctb_cat_cuentasController@get_cuentas');
-    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}',   'contabilidad\ctb_cat_cuentasController@update');
-    Route::post('/ctb_cat_cuentas/contabilidad_asociaciones', 'contabilidad\ctb_cat_cuentasController@contabilidad_asociaciones');
+    Route::post('/ctb_cat_cuentas/editar_asociaciones/{id_cuenta}/{centros_costo_change}', 'contabilidad\ctb_cat_cuentasController@editar_asociaciones');
+    Route::post('/ctb_cat_cuentas/get_cuentas/{id_cuenta}', 'contabilidad\ctb_cat_cuentasController@update');
     Route::resource('ctb_cat_cuentasC', 'contabilidad\ctb_cat_cuentasController');
 
 // ---------- Misceláneo
