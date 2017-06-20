@@ -1,18 +1,5 @@
 @extends('layout.app')
-@section('content')
-<div class="form-group row add">
-    <div class="page-header">
-        <h1>Listar proveedores</h1>
-    </div>
-    <div class="col-md-12">
-        <div class="text-right">
-            <button type="button"  data-toggle="modal" data-target="#create-item" class="btn btn-primary" @click.prevent="cleanItem()" @keydown.enter.prevent="">
-                <i class="fa fa-plus" aria-hidden="true"></i> Crear
-            </button>
-        </div>
-    </div>
-</div>
-
+@section('stilous')
 <style>
     .panel-default-transparente{
         background: rgba(255,254,240,0.3);
@@ -38,14 +25,39 @@
     .table-borderless > thead > tr > th {
         border: none;
     }
+    .v-select input[type=search]{
+        text-transform: uppercase
+    }
+    #er33{
+        background: rgba(245,245,245,0.5);border: 0px;
+    }
 </style>
+<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
+<script src="https://unpkg.com/vue-select@1.3.3"></script>
+@stop
+@section('content')
+<div class="form-group row add">
+    <div class="page-header">
+        <h1>Listar proveedores</h1>
+    </div>
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button"  data-toggle="modal" data-target="#create-item" class="btn btn-primary" @click.prevent="cleanItem()" @keydown.enter.prevent="">
+                <i class="fa fa-plus" aria-hidden="true"></i> Crear
+            </button>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="row">
     <div class="panel panel-default-transparente">
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-borderless">
-                    <tr style="background: rgba(245,245,245,0.5);border: 0px">
+                    <tr id="er33">
                         <th class="text-center">Razón social</th>
                         <th class="text-center">RFC</th>
                         <th class="text-center">Entidad</th>
@@ -120,11 +132,6 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="createItem" @keydown.enter.prevent=""/>
-                <style>
-                    .v-select input[type=search]{
-                        text-transform: uppercase
-                    }
-                </style>
                 <div class="text-right">
                     <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
@@ -316,11 +323,6 @@
             </div>
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="updateItem(fillItem.id_proveedor)" @keydown.enter.prevent="">
-                    <style>
-                        .v-select input[type=search]{
-                            text-transform: uppercase
-                        }
-                    </style>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary"    ><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>

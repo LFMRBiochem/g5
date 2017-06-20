@@ -98,6 +98,7 @@ class cmp_cat_proveedoresController extends Controller {
                         'cve_compania' => '019',
                         'id_centrocosto' => $id_centrocosto)
             );
+            $update_asociaciones=0;
             //Verificamos que el tipo de asociacion sea CMF o CMM
             foreach ($tipoCentroCosto as $fila) {
                 if ($fila->cve_tipoCentroCosto == 'CMF' || $fila->cve_tipoCentroCosto == 'CMM') {

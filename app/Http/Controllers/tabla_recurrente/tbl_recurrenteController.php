@@ -123,6 +123,18 @@ class tbl_recurrenteController extends Controller {
 
         return response()->json($create);
     }
+    public function getProviders(){
+        $values = DB::table('cmp_cat_proveedores')
+        ->select('id_proveedor as value','razon_social as label')
+        ->get();
+
+        $create=array();
+        foreach ($values as $fila) {
+            array_push($create, array('value' => $fila->value, 'label' => str_replace("|", " ",$fila->label), 'addition' => $fila->label));
+        }
+
+        return response()->json($create);
+    }
 
     /*public function get_id_centrocosto_empleados(){
         $values = DB::table('ctb_cat_centros_costo')

@@ -1,6 +1,5 @@
 Vue.http.headers.common['X-CSRF-TOKEN'] = $("#token").attr("value");
 Vue.component('v-select', VueSelect.VueSelect);
-
 new Vue({
     el: '#manage-vue',
     data: {

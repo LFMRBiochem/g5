@@ -29,6 +29,9 @@
     #lu{
         background: rgba(245,245,245,0.5);border: 0px;
     }
+    textarea{
+        resize: none;
+    }
 </style>
 @section('content')
 
@@ -49,6 +52,20 @@
         </div>
     </div>
 </div>
+<!--modal al guardar-->
+<div class="modal fade" id="modalillo2" tabindex="-1"  aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Mensaje del sistema</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="modalillo_content2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalillo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -69,7 +86,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-default-transparente col-md-12">
+    <div class="panel panel-default-transparente col-md-12 slug">
         <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -96,41 +113,53 @@
                                     </td>
                                     <td>
                                         <label for="comments_solicitud">Comentarios de la solicitud</label><br/>
-                                        <textarea id="comments_solicitud" cols="30" rows="3" class="form-control" v-model="newItem.comentarios"></textarea>
+                                        <textarea id="comments_solicitud" cols="25" rows="5" class="form-control" v-model="newItem.comentarios"
+                                        placeholder="Ejemplo: Mantenimiento correctivo automóvil Placas ABC-12345. Ajuste de motor"></textarea>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <label for="comments_pago">Instrucciones de pago</label><br/>
+                                        <textarea id="comments_pago" cols="25" rows="5" class="form-control" v-model="newItem.instrucciones_pago"
+                                        placeholder="Ejemplo: 50% Anticipo del servicio y 50% contra entrega."></textarea>
+                                    </td>
                                     <td></td>
                                 </tr>                         
                             </table>    
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lblConceptos">
+                                            <i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 18pt; color:blue;'></i> Conceptos
+                                        </label>
+                                        <v-select :options="conceptos_financieros"  placeholder="Concepto..." v-model="selectedConcepto">     
+                                        <i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 18pt;'></i>            
+                                        </v-select>
+                            </div>
+                        </div><br/>
                     <div class="row" id="partidas_solicitud" style="/*display: none;">
                         <div class="col-md-12">                            
                             <!--<table id="tableConceptos" name="tableConceptos" class="table table-holder" v-model="newItem.tableConceptos">-->
-                            <table class="table table-holder table-hover table-striped sortable" id="tableConceptos">
+                            <table class="table table-holder table-hover table-striped table-bordered" id="tableConceptos">
+                                    <!--<tr><td colspan="3">
+                                        </td>
+                                    </tr>-->
                                 <thead>
                                 <tr id="lu" align='center'>
-                                    <td><strong>Concepto</strong></td>
-                                    <td><strong>Descripcion<br/>Complementaria</strong></td>
-                                    <td><strong>Cantidad</strong></td>
-                                    <td><strong>Monto</strong></td>
-                                    <td><strong>&nbsp;</strong></td>
+                                    <th><label class=""><strong>Concepto</strong></label></th>
+                                    <th><label class=""><strong>Descripcion Complementaria</strong></label></th>
+                                    <th><label class=""><strong>Cantidad</strong></label></th>
+                                    <th><label class=""><strong>Monto</strong></label></th>
+                                    <th><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(row, index) in rows">
-                                        <td><input type="text" v-model="row.concepto" class="form-control" style="text-align: center; width: auto;" disabled="disabled"></td>
-                                        <td><input type="text" v-model="row.descrip" class="form-control" style="text-align: center; width: auto;"></td>
-                                        <td><input type="text" v-model="row.cantidad" class="form-control" style="text-align: center; width: auto;" v-on:keypress="isNumber(event)"></td>
-                                        <td><input type="text" v-model="row.monto" class="form-control montillo" style="text-align: center; width: auto;" v-on:keypress="isNumber(event)"></td>
+                                        <!--<td><input type="text" v-model="row.concepto" class="form-control" style="text-align: center; width: auto;" disabled="disabled"></td>-->
+                                        <td><textarea name="" id="concep" cols="15" disabled="disabled" class="form-control" v-model="row.concepto" ></textarea></td>
+                                        <!--<td><input type="text" v-model="row.descrip" class="form-control" style="text-align: center; width: auto;" placeholder="Descripci&oacute;n adicional"></td>-->
+                                        <td><textarea name="" rows="4" cols="3" id="desc" v-model="row.descrip" class="form-control" placeholder="Descripci&oacute;n adicional"></textarea></td>
+                                        <td><input id="cant" type="text" v-model="row.cantidad" class="form-control" style="text-align: center; width: auto;" v-on:keypress="isNumber(event)"></td>
+                                        <td><input id="mont" type="text" v-model="row.monto" class="form-control montillo" style="text-align: center; width: auto;" v-on:keypress="isNumber(event)"></td>
                                         <td><a v-on:click="removeRow(index)" class="btn btn-danger">Quitar</a></td>
-                                    </tr>
-                                    <tr><td colspan="3">
-                                        <label for="lblConceptos">
-                                            <i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 18pt; color:blue;'></i>Agregar Conceptos
-                                        </label>
-                                        <v-select :options="conceptos_financieros"  placeholder="Concepto..." v-model="selectedConcepto">     
-                                        <i class='fa fa-plus-circle' aria-hidden='true' style='font-size: 18pt;'></i>            
-                                        </v-select></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -142,6 +171,14 @@
 @stop
 
 @section('javascript')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#manage-vue").removeClass("container");
+        $("#manage-vue").addClass("container-fluid");
+
+        $("#manage-vue").addClass("col-md-10 col-md-offset-1");
+     });
+</script>
 <script type="text/javascript" src="{{ asset('js/cmp_solicitudpago.js') }}"></script>
     <script type="text/javascript">
      

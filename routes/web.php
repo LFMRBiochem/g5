@@ -15,6 +15,7 @@ Route::get('/conceptos', function() {
 
 Route::group(['middleware' => ['web']], function() {
     Route::get('solicitud_pagos', 'compras\cmp_solicitud_pagoController@listar');
+    
 });
 
 
@@ -124,10 +125,15 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/cmp_cat_proveedores/edit/{id_proveedores}', 'compras\cmp_cat_proveedoresController@get_proveedor_edit');
     Route::resource('/cmp_cat_proveedoresC', 'compras\cmp_cat_proveedoresController');
 
+    #solicitú de pago
     Route::get('/cmp_solicitud_pago/beneficiario/', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
     Route::get('/cmp_solicitud_pago/conceptos/', 'compras\cmp_solicitud_pagoController@get_conceptos');
     Route::post('/cmp_solicitud_pagoC2','compras\cmp_solicitud_pagoController@storePartidas');
     Route::resource('/cmp_solicitud_pagoC','compras\cmp_solicitud_pagoController');
+
+    #ordenes de compra
+    Route::get('/cmp_orden_compra/products', 'compras\cmp_orden_compraController@getProducts');
+
 
 // ----------   Nomina
     Route::get('/nmn_cat_conceptos', 'nomina\nmn_cat_conceptosController@listar');
@@ -153,6 +159,9 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/cmp_solicitud_pagoController/beneficiario', 'compras\cmp_solicitud_pagoController@get_beneficiarios');
     Route::get('/cmp_solicitud_pagoController/conceptos', 'compras\cmp_solicitud_pagoController@get_conceptos');
 
+    #ordenes de compra
+    Route::get('/orden_compra','compras\cmp_orden_compraController@indice');
+
 
 
 // ----------   Tabla recurrente   -----------------
@@ -165,6 +174,7 @@ Route::group(['middleware' => 'autentificacion'], function () {
     Route::get('/tabla_recurrente/sat_banco/', 'tabla_recurrente\tbl_recurrenteController@get_sat_banco');
     Route::get('/tabla_recurrente/razon_social/', 'tabla_recurrente\tbl_recurrenteController@get_razon_social');
     Route::get('/tabla_recurrente/id_centrocosto/', 'tabla_recurrente\tbl_recurrenteController@get_id_centrocosto');
+    Route::get('/tabla_recurrente/providers','tabla_recurrente\tbl_recurrenteController@getProviders');
 
     Route::get('/nmn_cat_empleados/cp/{estado}/{municipio}/{asentamiento}/{tipo_asentamiento}', 'nomina\nmn_cat_empleadosController@get_cps');
 

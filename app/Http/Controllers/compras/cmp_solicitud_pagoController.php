@@ -62,29 +62,33 @@ class cmp_solicitud_pagoController extends Controller {
                         'cve_usuario_genero' => $request->input('cve_usuario_genero'),
                         'cve_usuario_autorizo' => '',
                         'comentarios' => $request->input('comentarios'),
+                        'instrucciones_pago' => $request->input('instrucciones_pago'),
                         'id_tipo_cambio' => $request->input('id_tipo_cambio'),
                         'estatus' => $request->input('estatus'),
                         'importe_solicitado' => $request->input('importe_solicitado'),
                         'importe_depositado' => 0.00,
             ]));
         $id_solicitudpago_max = DB::table('ctb_solicitudpago_encabezado')->where('cve_compania', '019')->max('id_solicitudpago');
-
+        $response=($id_solicitudpago_max)?$id_solicitudpago_max:-404;
+        sleep(3.5);
         echo $id_solicitudpago_max;
     }
 
     public function storePartidas(Request $request){
-        $rule = array();
+        $data = array();
         $request2=$request->input();
         $longitud_array=count($request2);
-        /*foreach ($request2 as $key=>$fila){
-            $rule['descripcion_adicional']='numeric';
-            print_r($fila);
-            $validator = Validator::make($fila, $rule);
-            if ($validator->validate()) {
-                return response()->json($validator->fails());
-            }
-        }*/
-        print_r($request2);
+        $num_solicitud="";
+        foreach ($request2 as $key=>$fila){
+            $data[$key]['cve_compania']=$fila['cve_compania'];
+            $data[$key]['id_solicitudpago']=$fila['id_solicitudpago'];
+            $data[$key]['num_partida']=$fila['num_partida'];
+            $data[$key]['id_conceptofinanciero']=$fila['id_concepto_financiero'];
+            $data[$key]['descripcion_adicional']=$fila['descripcion_adicional'];
+            $data[$key]['importe_concepto']=$fila['importe_concepto'];
+            $num_solicitud=$fila['id_solicitudpago'];
+        }
+        //print_r($request2);
         $validator = Validator::make($request2, [
             '*.importe_concepto'=>'numeric',
             '*.descripcion_adicional'=>'max:255'
@@ -93,6 +97,9 @@ class cmp_solicitud_pagoController extends Controller {
             return response()->json($validator->fails());
         }else{
             //$create = ctb_solicitudpago_partidas::create
+            $r= DB::table('ctb_solicitudpago_partidas')->insert($data);
+            $respuesta=($r)?$num_solicitud:-404;
+            echo $respuesta;
         }
     }
 

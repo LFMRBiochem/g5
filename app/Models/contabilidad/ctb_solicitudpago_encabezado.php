@@ -17,6 +17,7 @@ class ctb_solicitudpago_encabezado extends Model{
 		'cve_usuario_genero',
 		'cve_usuario_autorizo',
 		'comentarios',
+		'instrucciones_pago',
 		'id_tipo_cambio',
 		'estatus',
 		'importe_solicitado',

@@ -77,14 +77,13 @@
                                 <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Catálogos<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="{{URL::to('/').'/cmp_cat_proveedores'}}">Proveedores</a></li>
-                                        <li><a href="{{URL::to('/').'/solicitud_pagos'}}">Solicitud de pago</a></li>
-                                        
                                         <!--<li><a href="#">Vehículos</a></li>-->
                                     </ul>
                                 </li>
-                                <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Operaciones<span class="caret"></span></a>
+                                <li><a href="#"><i class="fa fa-cog fa-spin fa-fw"></i> Operaciones<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{URL::to('/').'/solicitud_pagos'}}">Solicitud de pago</a></li>
+                                        <li><a href="{{URL::to('/').'/solicitud_pagos'}}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Solicitud de pago</a></li>
+                                        <li><a href="{{URL::to('/').'/orden_compra'}}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Orden de compra</a></li>
                                     </ul>
                                 </li>
 <!--                                <li><a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Procesos<span class="caret"></span></a>
@@ -299,36 +298,22 @@
             <!-- /container -->
         </div>
 
+        <script type="text/javascript"  src="{{ asset('jquery/jquery-2.2.4.min.js') }}"></script>
+        <script type="text/javascript"  src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+        <script src="https://unpkg.com/vue-select@latest"></script>
+        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
+        <div class="stilos">
+            @yield('stilous')
+        </div>
         <div class="container" id="manage-vue">
             @yield('content')
         </div>
-
-        <!-- jQuery (necessary for Bootstrap's JavaSccsipt plugins) -->
-        <script type="text/javascript"  src="{{ asset('jquery/jquery-2.2.4.min.js') }}"></script>
-        <script type="text/javascript"  src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}" ></script>
-
-<!--        <script src="{{ asset('fullCalendar/moment/moment.js')}}"></script>
-        <script src="{{ asset('fullCalendar/fullcalendar/dist/fullcalendar.js')}}"></script>
-        <script src="{{ asset('fullCalendar/fullcalendar/dist/locale/es.js')}}"></script>-->
 
         <script type="text/javascript"  src="{{ asset('smartmenus/jquery.smartmenus.min.js') }}"></script>
         <script type="text/javascript"  src="{{ asset('smartmenus/addons/bootstrap/jquery.smartmenus.bootstrap.min.js') }}"></script>
 
         <script type="text/javascript" src="{{ asset('toastr/toastr.min.js') }}"></script>
-
-        <!--<script src="{{ asset('js/vue-select.js') }}" ></script>-->
-        <!--<script type="text/javascript"  src="{{ asset('vue-select/vue-select@1.3.3.js')}}"></script>-->
-        
-
-        <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>-->
-
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
-        <script src="https://unpkg.com/vue-select@latest"></script>
-        <script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>
-        <!--<script src="https://unpkg.com/vue"></script>-->
-                <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue.js') }}"></script>-->
-        <!--<script type="text/javascript" src="{{ asset('vue-1.0.28/vue-resource.js') }}"></script>-->
 
 
         @yield('javascript')
@@ -395,7 +380,7 @@ left: 'prev,next today',
         <script>
 $(function () {
     $('[data-toggle="popover"]').popover()
-})
+});
         </script>
 
         <script>
