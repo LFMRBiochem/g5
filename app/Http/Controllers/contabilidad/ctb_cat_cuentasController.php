@@ -103,24 +103,20 @@ class ctb_cat_cuentasController extends Controller {
                 ->whereIn('id_contabilidad_asociacion', $plucked->all())
                 ->delete();
 
-        $usuario = "webaccess";
-        $contraseña = "W3b.4xx3z";
-        try {
-            $mbd = new \PDO('mysql:host=192.168.203.7;dbname=Desarrollo', $usuario, $contraseña);
-            $mbd->beginTransaction();
-            foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
-                foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
-                    $sql = "INSERT INTO ctb_contabilidad_asociaciones (id_cuenta, id_centrocosto, id_conceptofinanciero) VALUES('$id_cuenta','$fila_id_centrocosto','$fila_id_conceptofinanciero')";
-                    $mbd->query($sql);
-                }
+        $data = array();
+        
+        foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
+            foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
+                array_push($data, array(
+                    'id_cuenta' => $id_cuenta,
+                    'id_centrocosto' => $fila_id_centrocosto,
+                    'id_conceptofinanciero' => $fila_id_conceptofinanciero)
+                );
             }
-            $mbd->commit();
-            $mbd = null;
-        } catch (\PDOException $e) {
-            print "¡Error!: " . $e->getMessage() . "<br/>";
-            $mbd->rollback();
-            die();
         }
+        
+        DB::table('ctb_contabilidad_asociaciones')
+                ->insert($data);
 
         return response()->json();
     }
