@@ -105,24 +105,27 @@ class ctb_cat_cuentasController extends Controller {
 
         $usuario = "webaccess";
         $contraseña = "W3b.4xx3z";
-        try {
-            $mbd = new \PDO('mysql:host=192.168.203.7;dbname=Desarrollo', $usuario, $contraseña);
-            $mbd->beginTransaction();
+
+            $mbd = mysql_connect('mysql:host=192.168.203.7;dbname=Desarrollo', $usuario, $contraseña) or die("Error de base de datos");
+            $sql="START TRANSACTION";
+            $query=mysql_query($sql);
             foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
                 foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
                     $sql = "INSERT INTO ctb_contabilidad_asociaciones (id_cuenta, id_centrocosto, id_conceptofinanciero) VALUES('$id_cuenta','$fila_id_centrocosto','$fila_id_conceptofinanciero')";
-                    $mbd->query($sql);
+                    $query=mysql_query($sql);
+                    if(!$query){
+                        $sql="ROLLBACK";
+                        $query = mysql_query($sql);
+                        die();
+                    }
                 }
             }
-            $mbd->commit();
-            $mbd = null;
-        } catch (\PDOException $e) {
-            print "¡Error!: " . $e->getMessage() . "<br/>";
-            $mbd->rollback();
-            die();
+            $sql="COMMIT";
+            $query = mysql_query($sql);
         }
 
-        return response()->json();
+        #return response()->json();
+        return response()->"<strong>GOOD</strong>";
     }
 
     public function index() {
