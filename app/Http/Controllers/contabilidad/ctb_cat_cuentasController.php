@@ -103,30 +103,24 @@ class ctb_cat_cuentasController extends Controller {
                 ->whereIn('id_contabilidad_asociacion', $plucked->all())
                 ->delete();
 
-        $data = array();
-
-        $link = mysqli_connect("192.168.203.7", "webaccess", "W3b.4xx3z")or die('Error al conectar' . mysqli_errno($link));
-        mysqli_select_db($link, "Desarrollo");
-        $tildes = $link->query("SET NAMES 'utf8'");
-
-//      Para que se inserten las tildes correctamente
-        mysqli_query($link, "start transaction");
-
-        foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
-            foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
-                $sql = "INSERT INTO ctb_contabilidad_asociaciones (id_cuenta, id_centrocosto, id_conceptofinanciero) VALUES('$id_cuenta','$fila_id_centrocosto','$fila_id_conceptofinanciero')";
-                $query = mysqli_query($link, $sql);
-                if (!$query) {
-                    $sql = "rollback";
-                    $query = mysqli_query($link, $sql);
-                    break;
-                    die();
+        $usuario = "webaccess";
+        $contraseña = "W3b.4xx3z";
+        try {
+            $mbd = new \PDO('mysql:host=192.168.203.7;dbname=Desarrollo', $usuario, $contraseña);
+            $mbd->beginTransaction();
+            foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
+                foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
+                    $sql = "INSERT INTO ctb_contabilidad_asociaciones (id_cuenta, id_centrocosto, id_conceptofinanciero) VALUES('$id_cuenta','$fila_id_centrocosto','$fila_id_conceptofinanciero')";
+                    $mbd->query($sql);
                 }
             }
+            $mbd->commit();
+            $mbd = null;
+        } catch (\PDOException $e) {
+            print "¡Error!: " . $e->getMessage() . "<br/>";
+            $mbd->rollback();
+            die();
         }
-        $sql = "commit";
-        mysqli_query($link, $sql);
-        mysqli_close($link);
 
         return response()->json();
     }
