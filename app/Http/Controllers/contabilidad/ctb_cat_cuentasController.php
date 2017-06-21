@@ -103,6 +103,7 @@ class ctb_cat_cuentasController extends Controller {
                 ->whereIn('id_contabilidad_asociacion', $plucked->all())
                 ->delete();
 
+<<<<<<< HEAD
         $usuario = "webaccess";
         $contraseña = "W3b.4xx3z";
 
@@ -122,7 +123,22 @@ class ctb_cat_cuentasController extends Controller {
             }
             $sql="COMMIT";
             $query = mysql_query($sql);
+=======
+        $data = array();
+        
+        foreach ($request->input('id_centrocosto') as $fila_id_centrocosto) {
+            foreach ($request->input('id_conceptofinanciero') as $fila_id_conceptofinanciero) {
+                array_push($data, array(
+                    'id_cuenta' => $id_cuenta,
+                    'id_centrocosto' => $fila_id_centrocosto,
+                    'id_conceptofinanciero' => $fila_id_conceptofinanciero)
+                );
+            }
+>>>>>>> origin/master
         }
+        
+        DB::table('ctb_contabilidad_asociaciones')
+                ->insert($data);
 
         #return response()->json();
         return response()->"<strong>GOOD</strong>";
