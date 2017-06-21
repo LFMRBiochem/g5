@@ -88,7 +88,7 @@ class ctb_cat_cuentasController extends Controller {
 
 //        Buscamos en la tabla ctb_contabilidad_asociaciones por tipo de centro costo y por el id 
 //        y obtenemos id_contabilidad_asociacion para usarlo y eliminar las asociaciones 
-        $response = DB::table('ctb_contabilidad_asociaciones')
+         $response = DB::table('ctb_contabilidad_asociaciones')
                 ->select('ctb_contabilidad_asociaciones.id_contabilidad_asociacion')
                 ->join('ctb_cctipos_asociaciones', 'ctb_cctipos_asociaciones.id_centrocosto', '=', 'ctb_contabilidad_asociaciones.id_centrocosto')
                 ->where('ctb_contabilidad_asociaciones.id_cuenta', $id_cuenta)
