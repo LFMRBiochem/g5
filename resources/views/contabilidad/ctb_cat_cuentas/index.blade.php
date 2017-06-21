@@ -49,9 +49,6 @@
                     <blockquote style="background: rgba(245,245,245,0.5); border-color: rgb(69,182,173)">
                         <p><i class="fa fa-exclamation-circle text-primary" aria-hidden="true"></i> Seleccione una cuenta para modificarlo y/o agregar una nueva sección. </p>
                     </blockquote>
-                    <button type="button" class="btn btn-default btn-block" id="asociaciones_cuentas">
-                        Asociaciones
-                    </button>
                 </div>
             </div>
         </div>
@@ -70,13 +67,14 @@
                 <!-- Nav tabs -->
 
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Agregar</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Modificar</a></li>
+                    <li role="presentation" class="active"><a href="#panel_agregar" aria-controls="panel_agregar" role="tab" data-toggle="tab">Agregar</a></li>
+                    <li role="presentation"><a href="#panel_modificar" aria-controls="panel_modificar" role="tab" data-toggle="tab">Modificar</a></li>
+                    <li role="presentation" id="hidden_panel_asociaciones"><a href="#panel_asociaciones" aria-controls="panel_asociaciones" role="tab" data-toggle="tab">Asociaciones</a></li>
                 </ul>
                 <br>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="home">
+                    <div role="tabpanel" class="tab-pane active" id="panel_agregar">
                         <div class="form-group">
                             <label>Cuenta contable <small>(nuevo)</small></label>
                             <input type="text" class="form-control" id="cuenta_contable" placeholder="Cuenta contable">
@@ -99,79 +97,68 @@
                             <div class="text-right">
                                 <button type="submit" id="guardar_descripcion" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
-
                             </div>
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="profile">
-                        <div role="tabpanel" class="tab-pane active" id="home">
-                            <div class="form-group">
-                                <label>Descripcion</label>
-                                <input type="text" class="form-control" id="cuenta_contable_edit">
-                                <p id="error_cuenta_contable_edit" class="text-danger"></p>
+                    <div role="tabpanel" class="tab-pane" id="panel_modificar">
+                        <div class="form-group">
+                            <label>Descripcion</label>
+                            <input type="text" class="form-control" id="cuenta_contable_edit">
+                            <p id="error_cuenta_contable_edit" class="text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label id="label_descripcion_editar"></label>
+                            <input type="text" class="form-control" id="descripcion_edit">
+                            <p id="error_descripcion_edit" class="text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Cambiar descripcion padre</label>
+                            <select id="select_descripcion"  class="js-example-data-array" style="width: 100%">
+                            </select>
+                        </div>
+                        <div>
+                            <label>Naturaleza</label>
+                            <select id="naturaleza_edit" style="width: 100%">
+                                <option></option>
+                                <option value="D">Deudora</option>
+                                <option value="A">Acreedora</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="text-right">         
+                                <button type="submit" id="editar_descripcion" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
                             </div>
-                            <div class="form-group">
-                                <label id="label_descripcion_editar"></label>
-                                <input type="text" class="form-control" id="descripcion_edit">
-                                <p id="error_descripcion_edit" class="text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <label>Cambiar descripcion padre</label>
-                                <select id="select_descripcion"  class="js-example-data-array" style="width: 100%">
-                                </select>
-                            </div>
-                            <div>
-                                <label>Naturaleza</label>
-                                <select id="naturaleza_edit" style="width: 100%">
-                                    <option></option>
-                                    <option value="D">Deudora</option>
-                                    <option value="A">Acreedora</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <div class="text-right">         
-                                    <button type="submit" id="editar_descripcion" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
-                                </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="panel_asociaciones">
+                        <div class="form-group">
+                            <label>Tipo centros de costo</label>
+                            <select id="tipos_centros_costo_editar" class="js-example-basic-hide-search form-control" style="width: 100%">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div id="treeview-selectable_elementos_editar"></div>
+                        <hr>
+                        <div class="form-group">
+                            <label>Conceptos financieros </label>
+                            <select id="conceptos_financieros_editar" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                                <option></option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="text-right">         
+                                <button type="submit" id="editar_asociaciones" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Guardar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar</button>
                             </div>
                         </div>
                     </div>
 
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modal_asociaciones"  role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Asociaciones</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Tipo centros de costo</label>
-                    <select id="tipos_centros_costo" class="js-example-basic-hide-search form-control " style="width: 100%">
-                        <option></option>
-                    </select>
-                </div>
-                <div id="treeview-selectable_elementos"></div>
-                <hr>
-                <div class="form-group">
-                    <label>Conceptos financieros </label>
-                    <select id="conceptos_financieros" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
-                        <option></option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btn_asociaciones"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-power-off" aria-hidden="true"></i> Salir</button>
             </div>
         </div>
     </div>
@@ -184,8 +171,6 @@
 <script type="text/javascript" src="{{ asset('treeview/js/bootstrap-treeview_cat_cuentas.js') }}"></script>
 <script type="text/javascript" src="{{ asset('select2-4.0.3/dist/js/select2.full.min.js') }}"></script>
 
-
-
 <script>
 // json para el catalogo de cuentas
 var json = [];
@@ -193,6 +178,10 @@ var id = null;
 // json para areas y departamentos que estamos llamando elementos
 var json_elementos = [];
 var id_elementos = null;
+var centros_costo_change = null;
+
+var centros_costo_editar = [];
+var concepto_financiero = null;
 
 $(document).ready(function () {
 
@@ -203,165 +192,96 @@ $(document).ready(function () {
 
 // iniciamos el metodo para obtener las cuentas de ctb_cat_cuentas
     get_cuentas();
-    get_conceptos_financieros();
-    get_tipos_centros_costo();
+    get_tipos_centros_costo_editar();
+    get_conceptos_financieros_editar();
 
-// inicializa el arbol de las areas y departamentos (elementos)
-    function iniciar(data) {
-        $('#treeview-selectable_elementos').treeview({
+    // inicializa el arbol de las areas y departamentos (elementos) en editar
+    function iniciar_editar(data) {
+        $('#treeview-selectable_elementos_editar').treeview({
             data: data,
             expanded: true,
             levels: 2,
             showCheckbox: true,
             onNodeChecked: function (event, node) {
 //                check los hijos
-                check_node_elemento(node);
+                check_node_elemento_editar(node);
             },
             onNodeUnchecked: function (event, node) {
 //                uncheck los hijos
-                uncheck_node_elemento(node);
+                uncheck_node_elemento_editar(node);
             }
         });
     }
 
-    $("#tipos_centros_costo").change(function () {
-        if ($("#tipos_centros_costo").val() != null) {
-            get_elementos($("#tipos_centros_costo").val());
+    $("#tipos_centros_costo_editar").change(function () {
+//        obligatorio que el if tenga el espacio en blanco si no no lo reconoce el pluggin de select2
+        if ($("#tipos_centros_costo_editar").val() != ' ') {
+            if ($("#tipos_centros_costo_editar").val() != null) {
+//            Tipo de centro costo DEP por ejemplo
+                centros_costo_change = $("#tipos_centros_costo_editar").val();
+                get_elementos_editar(centros_costo_change);
+                get_asociaciones_edit(id, centros_costo_change);
+            }
         }
     });
 
-    $("#btn_asociaciones").click(function () {
-        var cuentas = [];
-        var elementos = [];
-        var conceptos_financieros = [];
-
-        cuentas = $('#treeview-selectable').treeview('getChecked');
-        elementos = $('#treeview-selectable_elementos').treeview('getChecked');
-        conceptos_financieros = $('#conceptos_financieros').val();
-
-        var cuentas_id_cuenta = [];
-        var elementos_id_centrocosto = [];
-        var cuentas_id_conceptofinanciero = [];
-
-        $(cuentas).each(function (i, fila_cuentas) {
-            if (fila_cuentas.nodes == null) {
-                cuentas_id_cuenta.push(fila_cuentas.id);
-            }
-        });
-        $(elementos).each(function (k, fila_elementos) {
-            if (fila_elementos.nodes == null) {
-                elementos_id_centrocosto.push(fila_elementos.id_centrocosto);
-            }
-        });
-        $(conceptos_financieros).each(function (j, fila_conceptos_financieros) {
-            cuentas_id_conceptofinanciero.push(fila_conceptos_financieros);
-        });
-        console.log(cuentas_id_cuenta);
-        console.log(elementos_id_centrocosto);
-        console.log(cuentas_id_conceptofinanciero);
-
-        console.log('cuentas_id_cuenta: ' + memorySizeOf(cuentas_id_cuenta));
-        console.log('elementos_id_centrocosto: ' + memorySizeOf(elementos_id_centrocosto));
-        console.log('cuentas_id_conceptofinanciero: ' + memorySizeOf(cuentas_id_conceptofinanciero));
-
-        $.post("ctb_cat_cuentas/contabilidad_asociaciones", {
-            _token: '{{ csrf_token() }}',
-            id_cuenta: cuentas_id_cuenta,
-            id_centrocosto: elementos_id_centrocosto,
-            id_conceptofinanciero: cuentas_id_conceptofinanciero,
-        }
-        )
-                .done(function (data) {
-
-                })
-                .fail(function (data) {
-                    //---------------------------------------
-
-////                  mostramos los errores de validacion
-//                    var errors = JSON.parse(data.responseText);
-//                    $("#error_cuenta_contable").html(errors.cuenta_contable);
-//                    $("#error_descripcion").html(errors.descripcion);
-//                    $("#error_naturaleza").html(errors.naturaleza);
-
-// -----------------------------------------
-                });
-
-    });
-
-    function memorySizeOf(obj) {
-        var bytes = 0;
-
-        function sizeOf(obj) {
-            if (obj !== null && obj !== undefined) {
-                switch (typeof obj) {
-                    case 'number':
-                        bytes += 8;
-                        break;
-                    case 'string':
-                        bytes += obj.length * 2;
-                        break;
-                    case 'boolean':
-                        bytes += 4;
-                        break;
-                    case 'object':
-                        var objClass = Object.prototype.toString.call(obj).slice(8, -1);
-                        if (objClass === 'Object' || objClass === 'Array') {
-                            for (var key in obj) {
-                                if (!obj.hasOwnProperty(key))
-                                    continue;
-                                sizeOf(obj[key]);
-                            }
-                        } else
-                            bytes += obj.toString().length * 2;
-                        break;
-                }
-            }
-            return bytes;
-        }
-        ;
-
-        function formatByteSize(bytes) {
-            if (bytes < 1024)
-                return bytes + " bytes";
-            else if (bytes < 1048576)
-                return(bytes / 1024).toFixed(3) + " KiB";
-            else if (bytes < 1073741824)
-                return(bytes / 1048576).toFixed(3) + " MiB";
-            else
-                return(bytes / 1073741824).toFixed(3) + " GiB";
-        }
-        ;
-
-        return formatByteSize(sizeOf(obj));
-    }
-    ;
-
-    function get_tipos_centros_costo() {
-        $.get("ctb_cat_cuentas/tipos_centros_costo", function (data) {
-            $(data).each(function (i, fila) {
-                $("#tipos_centros_costo").append('<option value="' + fila.cve_tipoCentroCosto + '">' + fila.tipo_cc + '</option>');
+    function get_asociaciones_edit(id_cuenta, cve_tipoCentroCosto) {
+        var id_conceptofinanciero = [];
+        $.get("ctb_cat_cuentas/asociaciones_edit/conceptofinanciero/" + id_cuenta + '/' + cve_tipoCentroCosto, function (data) {
+            $(data).each(function (i, element) {
+                id_conceptofinanciero.push(element.id_conceptofinanciero);
             });
-            $("#tipos_centros_costo").select2({placeholder: 'Conceptos financieros'});
+            $("#conceptos_financieros_editar").val(id_conceptofinanciero).trigger("change");
+        });
+        $.get("ctb_cat_cuentas/asociaciones_edit/centros_costo/" + id_cuenta, function (data) {
+            centros_costo_editar = data;
         });
     }
 
-    function get_conceptos_financieros(cve_tipoCentroCosto) {
+    function get_tipos_centros_costo_editar() {
+        $.get("ctb_cat_cuentas/tipos_centros_costo", function (data) {
+            $("#tipos_centros_costo_editar").append('<option value=" "> </option>');
+            $(data).each(function (i, fila) {
+                $("#tipos_centros_costo_editar").append('<option value="' + fila.cve_tipoCentroCosto + '">' + fila.tipo_cc + '</option>');
+            });
+            $("#tipos_centros_costo_editar").select2({placeholder: 'Conceptos financieros'});
+        });
+    }
+
+
+    function get_conceptos_financieros_editar(cve_tipoCentroCosto) {
         $.get("ctb_cat_cuentas/conceptos_financieros", function (data) {
             $(data).each(function (i, fila) {
-                $("#conceptos_financieros").append('<option value="' + fila.id_conceptofinanciero + '">' + fila.nombre_concepto + '</option>');
+                $("#conceptos_financieros_editar").append('<option value="' + fila.id_conceptofinanciero + '">' + fila.nombre_concepto + '</option>');
             });
-            $("#conceptos_financieros").select2({placeholder: 'Conceptos financieros', minimumResultsForSearch: Infinity});
+            $("#conceptos_financieros_editar").select2({placeholder: 'Conceptos financieros', minimumResultsForSearch: Infinity});
         });
     }
 
-    function get_elementos(cve_tipoCentroCosto) {
+    function get_elementos_editar(cve_tipoCentroCosto) {
         toastr.success('Cargando información.', 'Espere...');
         $.get("ctb_cat_cuentas/centros_costo/" + cve_tipoCentroCosto, function (data) {
             json_elementos = convert_elemento(data);
             json_elementos = limpiar_nodes(json_elementos);
-            iniciar(json_elementos);
+            json_elementos = check(json_elementos);
+            iniciar_editar(json_elementos);
         });
         toastr.clear();
+    }
+
+    function check(data) {
+        $(data).each(function (i, element) {
+            if (element.nodes && element.nodes.length > 0) {
+                check(element.nodes);
+            } else {
+                $(centros_costo_editar).each(function (j, fila) {
+                    if (fila.id_centrocosto === element.id_centrocosto) {
+                        element.state = {checked: true};
+                    }
+                });
+            }
+        });
+        return data;
     }
 
 // data es el json donde estan cargados todos los datos para la creacion del arbol 
@@ -370,16 +290,15 @@ $(document).ready(function () {
             data: json,
             expanded: true,
             levels: 2,
-            showCheckbox: true,
             onNodeSelected: function (event, node) {
 
                 limpiar_datos_cuentas();
-//                    Agregar
+//              Agregar
                 $('#label_descripcion').html('Agregar sub-descripcion a ' + node.text.split("|").join(" "));
                 $('#descripcion').val('');
                 $('#naturaleza').val(node.naturaleza).change();
 
-//                    Modificar
+//              Modificar
                 $('#cuenta_contable_edit').val(node.cuenta_contable);
                 $('#descripcion_edit').val(node.text);
                 $('#label_descripcion_editar').html('Modificar descripcion ' + node.text.split("|").join(" "));
@@ -388,7 +307,11 @@ $(document).ready(function () {
                 $('#naturaleza_edit').val(node.naturaleza).change();
 
                 id = node.id;
-//                    ocultamos el modal
+                if ("undefined" === typeof node.nodes) {
+                    $('#hidden_panel_asociaciones').show();
+                } else {
+                    $('#hidden_panel_asociaciones').hide();
+                }
                 $('#myModal').modal('show');
             },
             onNodeUnselected: function (event, node) {
@@ -406,14 +329,8 @@ $(document).ready(function () {
         });
     }
 
-    $("#asociaciones_cuentas").click(function () {
-        $("#modal_asociaciones").modal('show');
-//        console.log($('#treeview-selectable').treeview('getChecked'));
-    });
-
     $("#guardar_descripcion").click(function () {
         limpiar_datos_cuentas();
-
         var descripcion = $("#descripcion").val();
         var cuenta_contable = $("#cuenta_contable").val();
         var naturaleza = $('#naturaleza').val();
@@ -467,20 +384,54 @@ $(document).ready(function () {
                 });
     });
 
-    function check_node_elemento(data) {
+    $("#editar_asociaciones").click(function () {
+        var elementos = [];
+        var conceptos_financieros = [];
+
+        elementos = $('#treeview-selectable_elementos_editar').treeview('getChecked');
+        conceptos_financieros = $('#conceptos_financieros_editar').val();
+
+        var cuentas_id_cuenta = id;
+        var elementos_id_centrocosto = [];
+        var cuentas_id_conceptofinanciero = [];
+
+        $(elementos).each(function (k, fila_elementos) {
+            if (fila_elementos.nodes == null) {
+                elementos_id_centrocosto.push(fila_elementos.id_centrocosto);
+            }
+        });
+        $(conceptos_financieros).each(function (j, fila_conceptos_financieros) {
+            cuentas_id_conceptofinanciero.push(fila_conceptos_financieros);
+        });
+
+        $.post("ctb_cat_cuentas/editar_asociaciones/" + cuentas_id_cuenta + '/' + centros_costo_change, {
+            _token: '{{ csrf_token() }}',
+            id_centrocosto: elementos_id_centrocosto,
+            id_conceptofinanciero: cuentas_id_conceptofinanciero,
+        })
+                .done(function (data) {
+                    get_cuentas();
+                    $('#myModal').modal('hide');
+                })
+                .fail(function (data) {
+
+                });
+    });
+
+    function check_node_elemento_editar(data) {
         $(data).each(function (i, element) {
-            $('#treeview-selectable_elementos').treeview('checkNode', [element.nodeId, {silent: true}]);
+            $('#treeview-selectable_elementos_editar').treeview('checkNode', [element.nodeId, {silent: true}]);
             if (element.nodes && element.nodes.length > 0) {
-                check_node_elemento(element.nodes);
+                check_node_elemento_editar(element.nodes);
             }
         });
     }
 
-    function uncheck_node_elemento(data) {
+    function uncheck_node_elemento_editar(data) {
         $(data).each(function (i, element) {
-            $('#treeview-selectable_elementos').treeview('uncheckNode', [element.nodeId, {silent: true}]);
+            $('#treeview-selectable_elementos_editar').treeview('uncheckNode', [element.nodeId, {silent: true}]);
             if (element.nodes && element.nodes.length > 0) {
-                uncheck_node_elemento(element.nodes);
+                uncheck_node_elemento_editar(element.nodes);
             }
         });
     }
@@ -505,16 +456,15 @@ $(document).ready(function () {
 
     function get_cuentas() {
         toastr.success('Cargando información.', 'Espere...');
-//vamos a la ruta donde se encuentra la query de ctb_cat_cuentas por el metodo get
+//      vamos a la ruta donde se encuentra la query de ctb_cat_cuentas por el metodo get
         $.get("ctb_cat_cuentas/get_cuentas", function (data) {
-
             $(".js-example-data-array").select2({
                 data: data
             });
-//            con este metodo se crea la estructura gerarquica del arbol
+//          con este metodo se crea la estructura gerarquica del arbol
             json = convert(data);
             json = limpiar_nodes(json);
-//            iniciamos la estructura del arbol desde este metodo pasandole el json
+//          iniciamos la estructura del arbol desde este metodo pasandole el json
             iniciar_arbol_cuentas();
         });
         toastr.clear();
@@ -533,7 +483,6 @@ $(document).ready(function () {
     }
 
     function convert_elemento(array) {
-
         var map = {};
         for (var i = 0; i < array.length; i++) {
             var obj = array[i];
@@ -572,10 +521,11 @@ $(document).ready(function () {
 
 //limpiamos los campos de errores
     function limpiar_datos_cuentas() {
-        $("#error_descripcion").html('');
         $("#error_descripcion_edit").html('');
-        $("#error_cuenta_contable").html('');
         $("#error_cuenta_contable_edit").html('');
+        $('#treeview-selectable_elementos_editar').empty();
+        $('.js-example-basic-multiple').val(null).trigger("change");
+        $('.js-example-basic-hide-search').val(' ').trigger("change");
     }
 
 });
