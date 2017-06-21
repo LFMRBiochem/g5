@@ -81,7 +81,7 @@ class cmp_solicitud_pagoController extends Controller {
         $num_solicitud="";
         foreach ($request2 as $key=>$fila){
             $data[$key]['cve_compania']=$fila['cve_compania'];
-            $data[$key]['id_solicitudpago']=$fila['id_solicitudpago'];
+            $data[$key]['num_orden']=$fila['id_solicitudpago'];
             $data[$key]['num_partida']=$fila['num_partida'];
             $data[$key]['id_conceptofinanciero']=$fila['id_concepto_financiero'];
             $data[$key]['descripcion_adicional']=$fila['descripcion_adicional'];

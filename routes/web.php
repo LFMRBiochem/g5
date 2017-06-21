@@ -165,7 +165,8 @@ Route::group(['middleware' => 'autentificacion'], function () {
 
     #ordenes de compra
     Route::get('/orden_compra','compras\cmp_orden_compraController@indice');
-
+    Route::post('/orden_compraE','compras\cmp_orden_compraController@storeEncabezado');
+    Route::post('/orden_compraP','compras\cmp_orden_compraController@storePartidas');
 
 
 // ----------   Tabla recurrente   -----------------
