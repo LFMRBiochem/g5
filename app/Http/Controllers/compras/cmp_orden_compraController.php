@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\compras\cmp_ordenescompra_encabezado;
 use App\Models\compras\cmp_ordenescompra_partidas;
+use Validator;
 
 class cmp_orden_compraController extends Controller
 {
@@ -66,31 +67,34 @@ class cmp_orden_compraController extends Controller
         $data = array();
         $request2=$request->input();
         $longitud_array=count($request2);
-        $num_solicitud="";
+        $num_orden="";
         foreach ($request2 as $key=>$fila){
             $data[$key]['cve_compania']=$fila['cve_compania'];
             $data[$key]['num_orden']=$fila['num_orden'];
             $data[$key]['num_partida']=$fila['num_partida'];
-            $data[$key]['folio_GTIN']=$fila['id_concepto_financiero'];
-            $data[$key]['descripcion_adicional']=$fila['descripcion_adicional'];
-            $data[$key]['importe_concepto']=$fila['importe_concepto'];
-            $num_solicitud=$fila['id_solicitudpago'];
+            $data[$key]['folio_GTIN']=$fila['folio_GTIN'];
+            $data[$key]['descripcion_complementaria']=$fila['descripcion_complementaria'];
+            $data[$key]['cantidad']=$fila['cantidad'];
+            $data[$key]['precio_unitario']=$fila['precio_unitario'];
+            $data[$key]['porcentaje_impuesto']=$fila['porcentaje_impuesto'];
+            $data[$key]['cantidad_recibida']=$fila['cantidad_recibida'];
+            $data[$key]['cve_unidad_medida']=$fila['cve_unidad_medida'];
+            $data[$key]['estatus']='A';
+            $num_orden=$fila['num_orden'];
         }
-        //print_r($request2);
+        #print_r($request2);
         $validator = Validator::make($request2, [
-            '*.importe_concepto'=>'numeric',
-            '*.descripcion_adicional'=>'max:255'
+            '*.precio_unitario'=>'numeric',
+            '*.descripcion_complementaria'=>'max:255'
             ]);
         if ($validator->validate()) {
             return response()->json($validator->fails());
         }else{
             //$create = ctb_solicitudpago_partidas::create
-            $r= DB::table('ctb_solicitudpago_partidas')->insert($data);
-            $respuesta=($r)?$num_solicitud:-404;
+            $r = DB::table('cmp_ordenescompra_partidas')->insert($data);
+            $respuesta = ($r)?$num_orden:-404;
             echo $respuesta;
         }
    }
-
-
 
 }

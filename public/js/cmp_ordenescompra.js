@@ -237,12 +237,12 @@ new Vue({
 					  			for(i=0;i<OrdenPartidas.length;i++){
 					  				OrdenPartidas[i]['num_orden']=num_ord;
 					  			}
-					  			console.log(solicitud_Partidas);
-					  			var input = solicitud_Partidas;
+					  			console.log(OrdenPartidas);
+					  			var input = OrdenPartidas;
 						  		this.$http.post('orden_compraP', input).then((response) => {
 						  			if(response.data!=(-404)){
 						  				$("#modalillo2").modal('hide');
-						  				msjeError="La solicitud de pago se guard&oacute; correctamente con el n&uacute;mero <strong>"+response.data+"</strong>";
+						  				msjeError="La orden de compra se guard&oacute; correctamente con el n&uacute;mero <strong>"+response.data+"</strong>";
 										$("#modalillo_content").html(msjeError);
 										$("#modalillo").modal('show');
 						  			}
