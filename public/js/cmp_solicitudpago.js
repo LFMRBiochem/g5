@@ -59,7 +59,7 @@ new Vue({
 			}
 		}
 	},
-	methods:{
+	methods:{		
 		isNumber: function(evt) {
 	      evt = (evt) ? evt : window.event;
 	      var charCode = (evt.which) ? evt.which : evt.keyCode;

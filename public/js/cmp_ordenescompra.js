@@ -64,6 +64,9 @@ new Vue({
 		}
 	},
 	methods:{
+		refreshTo:function(){
+			location.reload();
+		},
 		inputGood:function(element){
 			$(element).css({
 				"outline":"none !important",
@@ -243,8 +246,8 @@ new Vue({
 						  			if(response.data!=(-404)){
 						  				$("#modalillo2").modal('hide');
 						  				msjeError="La orden de compra se guard&oacute; correctamente con el n&uacute;mero <strong>"+response.data+"</strong>";
-										$("#modalillo_content").html(msjeError);
-										$("#modalillo").modal('show');
+										$("#modalillo_content3").html(msjeError);
+										$("#modalillo3").modal('show');
 						  			}
 						  			else{
 
